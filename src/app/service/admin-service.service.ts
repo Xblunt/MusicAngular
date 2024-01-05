@@ -1,5 +1,6 @@
 
 
+
 import { Page } from 'src/app/service/page';
 import { Observable } from 'rxjs';
 import { IbaseServiceService } from './ibase-service.service';
@@ -61,12 +62,12 @@ export class AdminServiceService extends IbaseServiceService {
   }
 
   addNewUser(user: User): Observable<User> {
-    console.log('addNewStudent');
+    console.log('addNewUser');
     return this.post<User>(this.adminUrl, user);
   }
 
   editUser(user: User): Observable<User> {
-    console.log('editStudent');
+    console.log('editUser');
     return this.put<User>(`${this.adminUrl}/${user.id}`, user);
   }
 
@@ -74,4 +75,36 @@ export class AdminServiceService extends IbaseServiceService {
     console.log(user.id);
     return this.delete<User>(`${this.adminUrl}/${user.id}`);
   }
+
+
+
+  addNewTrack(track: Track): Observable<Track> {
+    console.log('addNewTrack');
+    return this.post<Track>(this.adminUrlTrack, track);
+  }
+
+  editTrack(track: Track): Observable<Track> {
+    console.log('editTrack');
+    return this.put<Track>(`${this.adminUrlTrack}/${track.id}`, track);
+  }
+
+  deleteTrack(track: Track): Observable<Track> {
+    console.log(track.id);
+    return this.delete<Track>(`${this.adminUrlTrack}/${track.id}`);
+  }
+  addNewAlbum(album: Album): Observable<Album> {
+    console.log('addNewAlbum');
+    return this.post<Album>(this.adminUrlAl, album);
+  }
+
+  editAlbum(album: Album): Observable<Album> {
+    console.log('editAlbum');
+    return this.put<Album>(`${this.adminUrlAl}/${album.id}`, album);
+  }
+
+  deleteUAlbum(album: Album): Observable<Album> {
+    console.log(album.id);
+    return this.delete<Album>(`${this.adminUrlAl}/${album.id}`);
+  }
 }
+

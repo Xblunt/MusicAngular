@@ -1,7 +1,7 @@
 import { AdminServiceService } from 'src/app/service/admin-service.service';
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Track } from 'src/app/model/track';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
@@ -16,8 +16,8 @@ import { AlbumscComponent } from 'src/app/components/basic-components/albums/alb
   styleUrls: ['./open-album.component.css']
 })
 export class OpenAlbumComponent implements OnInit {
-  // displayedColumns2: string[] = ['id',  'name', 'author', 'action'];
-  displayedColumns: string[] = [  'nameAlbum', 'tracks'];
+  displayedColumns: string[] = ['id',  'name', 'author', 'action'];
+  // displayedColumns: string[] = [  'nameAlbum', 'tracks'];
   // displayedColumns2: string[] = ['id', 'nameAlbum'];
   // displayedColumns: string[] = [ 'id', 'name', 'author'];
   // dataSource4 = new MatTableDataSource<Track>();
@@ -33,7 +33,7 @@ export class OpenAlbumComponent implements OnInit {
   totalElements: number = 0;
   length!: number;
   idalbum: number;
-  constructor(@Inject(MAT_DIALOG_DATA) public data:any, private adminService: AdminServiceService) {
+  constructor(public dialogRef: MatDialogRef<OpenAlbumComponent>, @Inject(MAT_DIALOG_DATA) public data:any, private adminService: AdminServiceService) {
    this.idalbum = data.id;
     }
 
@@ -67,6 +67,10 @@ export class OpenAlbumComponent implements OnInit {
     this.currentPage = event.pageIndex;
     this.loadTracks();
   }
+  close(): void {
+
+    this.dialogRef.close();
+   }
   // getTracksByAlbum(albumId: number) {
   //   return this.dataSource4.filter(dataSource4 => dataSource4.albumId === albumId);
   // }
@@ -92,3 +96,4 @@ export class OpenAlbumComponent implements OnInit {
   //       }
   //     );
   // }
+

@@ -4,4 +4,5 @@ export class Track {
   author!: string;
   text!:string;
   file!:string;
+  album_id!:number;
 }

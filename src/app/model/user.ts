@@ -3,5 +3,5 @@ export class User {
   fio!:string;
   text!: string;
   photo!:string;
-  date!:Date;
+  date!:string;
 }

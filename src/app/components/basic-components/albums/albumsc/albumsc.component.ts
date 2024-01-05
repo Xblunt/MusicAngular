@@ -16,6 +16,8 @@ import { Page } from 'src/app/service/page';
 import { Album } from 'src/app/model/album';
 import { Track } from 'src/app/model/track';
 import { OpenAlbumComponent } from 'src/app/components/dialog/open-album/open-album/open-album.component';
+import { DeleteComponentComponent } from 'src/app/components/dialog/delete-component/delete-component/delete-component.component';
+import { EditComponent } from 'src/app/components/dialog/edit-component/edit/edit.component';
 // import { AlbumService } from 'src/app/service/album.service';
 
 @Component({
@@ -25,7 +27,7 @@ import { OpenAlbumComponent } from 'src/app/components/dialog/open-album/open-al
 })
 export class AlbumscComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'nameAlbum', 'picture',  'action'];
+  displayedColumns: string[] = ['id', 'name_album', 'picture',  'action'];
 
 
   dataSource2 = new MatTableDataSource<Album>();
@@ -40,6 +42,7 @@ export class AlbumscComponent implements AfterViewInit {
   length!: number;
   user!: CredentialResponse;
   selectedAlbum!: Album;
+  fromAlbumComponent: boolean = true;
  constructor(private baseService: BaseServiceService, private _liveAnnouncer: LiveAnnouncer,
     public dialog:MatDialog, private http: HttpClient, private authService:AuthService, private adminService:AdminServiceService) {
       // this.baseService.getAllStudents().subscribe(data => this.dataSource = new MatTableDataSource(data));
@@ -100,9 +103,56 @@ export class AlbumscComponent implements AfterViewInit {
           console.log('Изменения сохранены:', result);
         } else {
 
-          console.log('Диалоговое окно закрыто без сохранения изменений.');
+          console.log(' Окно закрыто без сохранения изменений.');
         }
       });
     }
+
+    deleteAlbum(album: Album){
+      const dialogAddingNewStudent = this.dialog.open(DeleteComponentComponent, {
+        width: '700px',
+        data: null
+      });
+       dialogAddingNewStudent.afterClosed().subscribe((confirmDelete: boolean) => {
+
+        if(album != null) {
+          console.log("delete track: ");
+          this.adminService.deleteUAlbum(album).subscribe(k=>
+            this.adminService.getAllAlbum(this.currentPage, this.pageSize, this.sort.active,this.sort.direction).subscribe(data => this.dataSource2.data= data.content) );
+        }
+      });
+    }
+    editAlbum(album: Album) {
+      const dialogAddingNewStudent = this.dialog.open(EditComponent, {
+        width: '700px',
+        // data: {id: student.id, fio: student.fio, group: student.group, phoneNumber: student.phoneNumber}
+       data: {id: album.id, name_album: album.name_album,  picture: album.picture, fromAlbumComponent: this.fromAlbumComponent}
+      // data: {student: student}
+      });
+      dialogAddingNewStudent.afterClosed().subscribe((editedAlbum: Album) => {
+        // debugger
+        if(editedAlbum  != null) {
+        // debugger
+          console.log("edit student: " + album.name_album);
+          this.adminService.editAlbum(editedAlbum).subscribe(k=>
+            this.adminService.getAllAlbum(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource2.data = data.content) );
+        }
+      });
+    }
+    addNewAlbum() {
+      const dialogAddingNewStudent = this.dialog.open(EditComponent, {
+        width: '700px',
+        data: {fromAlbumComponent: this.fromAlbumComponent}
+      });
+      dialogAddingNewStudent.afterClosed().subscribe((result: Album) => {
+        if(result != null) {
+          result.name_album = result.name_album;
+          console.log("adding new student: " + result.name_album);
+          this.adminService.addNewAlbum(result).subscribe(k=>
+            this.adminService.getAllAlbum(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource2.data = data.content) );
+        }
+      });
+    }
+
 
 }

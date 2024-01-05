@@ -13,10 +13,10 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
       <td mat-cell *matCellDef="let user">
-        <!-- <div>
-          <button  class="custom-btn btn-1" (click)="editUser(student)">Edit</button>
-          <button  class="custom-btn btn-1" (click)="deleteUser(student)">Delete</button>
-        </div> -->
+        <div>
+          <button  class="custom-btn btn-1" (click)="editUser(user)">Edit</button>
+          <button  class="custom-btn btn-1" (click)="deleteUser(user)">Delete</button>
+        </div>
         </td>
     </ng-container>
 
@@ -26,7 +26,7 @@
   </table>
 
 
-  <!-- <button  class="custom-btn btn-1" (click)="addNewStudent()">Add</button> -->
+  <button  class="custom-btn btn-1" (click)="addNewUser()">Add</button>
     <mat-paginator #paginator
 
                   [pageSize]="pageSize"

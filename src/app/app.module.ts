@@ -27,6 +27,9 @@ import { SessionStorageService } from 'angular-web-storage';
 import { AlbumscComponent } from './components/basic-components/albums/albumsc/albumsc.component';
 import { TrackscComponent } from './components/basic-components/tracks/tracksc/tracksc.component';
 import { OpenAlbumComponent } from './components/dialog/open-album/open-album/open-album.component';
+import { DeleteComponentComponent } from './components/dialog/delete-component/delete-component/delete-component.component';
+import { EditComponent } from './components/dialog/edit-component/edit/edit.component';
+import { MatSelectModule } from "@angular/material/select";
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +42,9 @@ import { OpenAlbumComponent } from './components/dialog/open-album/open-album/op
     LoginComponent,
     AlbumscComponent,
     TrackscComponent,
-    OpenAlbumComponent
+    OpenAlbumComponent,
+    DeleteComponentComponent,
+    EditComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +57,7 @@ import { OpenAlbumComponent } from './components/dialog/open-album/open-album/op
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSelectModule,
     HttpClientModule,
     MatButtonModule,
     MatGridListModule
