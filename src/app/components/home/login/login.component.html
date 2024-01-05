@@ -1,0 +1,21 @@
+<div>
+  <div>
+      <h1>Вход</h1>
+      <div>
+          <input matInput type="text" placeholder="Аккаунт"
+              [(ngModel)]="credential.username">
+      </div>
+      <div>
+          <input matInput type="password" placeholder="Пароль"
+            [(ngModel)]="credential.password">
+      </div>
+      <div *ngIf="errorAuth" style="margin-bottom: 25px; color: red">
+          Неправильное имя или пароль
+      </div>
+
+      <button class="right-align" mat-raised-button color="primary" (click)="login()">
+          Войти
+      </button>
+  </div>
+</div>
+

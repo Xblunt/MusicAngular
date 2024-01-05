@@ -1,0 +1,42 @@
+ <p>Dialog works track!</p>
+
+
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource4" matSort>
+
+
+    <ng-container matColumnDef="nameAlbum">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Album Name</th>
+      <td mat-cell *matCellDef="let album">{{ album.nameAlbum }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="tracks">
+      <th mat-header-cell *matHeaderCellDef>Tracks</th>
+      <td mat-cell *matCellDef="let album">
+        <table>
+          <tr *ngFor="let track of album.tracks">
+            <td>{{ track.id }}</td>
+            <td>{{ track.name }}</td>
+            <td>{{ track.author }}</td>
+          </tr>
+        </table>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  </table>
+  <mat-paginator #paginator
+
+                [pageSize]="pageSize"
+                [length]="totalElements"
+                [pageSizeOptions]="[2, 8, 10, 25]"
+
+                [showFirstLastButtons]="true"
+                (page)="updatePageSizeTrackss($event)"></mat-paginator>
+
+
+
+</div>

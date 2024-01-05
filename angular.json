@@ -66,6 +66,9 @@
               "browserTarget": "MusicAngular:build:development"
             }
           },
+          "options": {
+            "proxyConfig": "proxy.conf.ts"
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
@@ -94,5 +97,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "939d32c1-3c82-4b3c-af54-31a5bcf643e2"
   }
 }
