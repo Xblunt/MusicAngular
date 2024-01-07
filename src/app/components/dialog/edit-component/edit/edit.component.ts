@@ -36,13 +36,15 @@ albums:Album[] = [];
 
 
 
+
     }
 
   ngOnInit(): void {
     this.isEditMode = this.data;
-    this.editingUser = this.isEditMode ? { ...this.data } : new User();
-    this.editingAlbum = this.isEditMode ? { ...this.data } : new Album();
-    this.editingTrack = this.isEditMode ? { ...this.data } : new Track();
+    this.editingUser = this.isEditMode ? this.data  : new User();
+    this.editingAlbum = this.isEditMode ? this.data  : new Album();
+    this.editingTrack = this.isEditMode ? this.data  : new Track();
+    // this.editingTrack.album_id = Number(this.editingTrack.album_id);
     // Assign the tracks data to the tracks array
 
   }
@@ -67,12 +69,13 @@ albums:Album[] = [];
      this.dialogRef.close();
     }
     onYesClick() {
-      const editedUser: User = { ...this.editingUser };
-      const editedAlbum: Album = { ...this.editingAlbum };
-      const editedTrack: Track = { ...this.editingTrack };
+      const editedUser: User = this.editingUser ;
+      const editedAlbum: Album = this.editingAlbum ;
+      const editedTrack: Track = this.editingTrack ;
 
       if (this.isEditMode) {
         if (this.fromTrackComponent) {
+
           this.dialogRef.close(editedTrack);
         } else if (this.fromAlbumComponent) {
           this.dialogRef.close(editedAlbum);
@@ -85,7 +88,7 @@ albums:Album[] = [];
           this.adminService.addNewTrack(this.editingTrack);
             this.editingTrack = new Track();
 
-
+            console.log(this.editingTrack);
           this.dialogRef.close(editedTrack);
         }
         else if (this.fromAlbumComponent) {
@@ -93,7 +96,7 @@ albums:Album[] = [];
             this.editingAlbum = new Album();
 
 
-          this.dialogRef.close(this.editingAlbum);
+          this.dialogRef.close(editedAlbum);
         }
         else if (this.fromUserComponent) {
           this.adminService.addNewUser(this.editingUser);

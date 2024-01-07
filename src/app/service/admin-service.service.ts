@@ -80,11 +80,21 @@ export class AdminServiceService extends IbaseServiceService {
 
   addNewTrack(track: Track): Observable<Track> {
     console.log('addNewTrack');
-    return this.post<Track>(this.adminUrlTrack, track);
+    console.log(track.id);
+    console.log(track.name);
+    console.log(track.file);
+    console.log(track.author);
+    console.log(track.album_id);
+    return this.post<Track>(`${this.adminUrlAl}/${track.album_id}/tracks`, track);
   }
 
   editTrack(track: Track): Observable<Track> {
     console.log('editTrack');
+    console.log(track.id);
+    console.log(track.name);
+    console.log(track.file);
+    console.log(track.author);
+    console.log(track.album_id);
     return this.put<Track>(`${this.adminUrlTrack}/${track.id}`, track);
   }
 

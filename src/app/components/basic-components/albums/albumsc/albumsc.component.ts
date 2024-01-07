@@ -146,7 +146,7 @@ export class AlbumscComponent implements AfterViewInit {
       });
       dialogAddingNewStudent.afterClosed().subscribe((result: Album) => {
         if(result != null) {
-          result.name_album = result.name_album;
+
           console.log("adding new student: " + result.name_album);
           this.adminService.addNewAlbum(result).subscribe(k=>
             this.adminService.getAllAlbum(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource2.data = data.content) );

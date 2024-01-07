@@ -6,6 +6,15 @@
   <mat-form-field class="full-width-input">
     <input matInput type="text" placeholder="picture" [(ngModel)]="editingAlbum.picture" required>
   </mat-form-field>
+
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button class="right-align" mat-raised-button color="primary"
+    [mat-dialog-close]="editingAlbum" (click)="onYesClick()">Save</button>
+
+    <!-- <button (click)="editStudent()">Edit</button> -->
+
+</div>
 </div>
 
 
@@ -28,7 +37,7 @@
   </mat-form-field>
   <mat-form-field class="full-width-input">
 
-    <input matInput type="text" placeholder="album_id" [(ngModel)]="editingTrack.album_id" required>
+    <input matInput type="text"   placeholder="album_id" [(ngModel)]="editingTrack.album_id" required>
   </mat-form-field>
   <!-- <mat-form-field class="full-width-input">
     <mat-label>Album</mat-label>
@@ -38,6 +47,15 @@
       </mat-option>
     </mat-select>
   </mat-form-field> -->
+
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Cancel</button>
+  <button class="right-align" mat-raised-button color="primary"
+    [mat-dialog-close]="editingTrack" (click)="onYesClick()">Save</button>
+
+    <!-- <button (click)="editStudent()">Edit</button> -->
+
+</div>
 </div>
 
 
@@ -58,9 +76,6 @@
 
     <input matInput type="text" placeholder="photo" [(ngModel)]="editingUser.photo" required>
   </mat-form-field>
-  <!-- Добавьте остальные поля, связанные с пользователем -->
-</div>
-
 
 <div mat-dialog-actions>
   <button mat-raised-button (click)="onNoClick()">Cancel</button>
@@ -70,3 +85,7 @@
     <!-- <button (click)="editStudent()">Edit</button> -->
 
 </div>
+  <!-- Добавьте остальные поля, связанные с пользователем -->
+</div>
+
+

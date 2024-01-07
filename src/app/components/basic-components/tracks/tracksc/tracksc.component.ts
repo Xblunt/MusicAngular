@@ -24,7 +24,7 @@ import { DeleteComponentComponent } from 'src/app/components/dialog/delete-compo
 })
 export class TrackscComponent implements  AfterViewInit{
 
-  displayedColumns: string[] = ['id', 'name', 'author',  'action'];
+  displayedColumns: string[] = ['id', 'name', 'author', 'album_id', 'action'];
 
   dataSource3 = new MatTableDataSource<Track>();
 
@@ -115,7 +115,9 @@ export class TrackscComponent implements  AfterViewInit{
           console.log("edit student: " + track.name);
           this.adminService.editTrack(editedTrack).subscribe(k=>
             this.adminService.getAllTrack(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource3.data = data.content) );
-        }
+
+          }
+          this.adminService.getAllTrack(this.currentPage, this.pageSize, this.sort.active, this.sort.direction).subscribe(data => this.dataSource3.data = data.content);
       });
     }
     addNewTrack() {
