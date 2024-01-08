@@ -52,6 +52,15 @@ export class AdminServiceService extends IbaseServiceService {
     console.log(albumId);
     return this.get<Page<Track>>(`${this.adminUrlAl}/${albumId}/tracks`, params);
   }
+  getAllTracksAlbumsAdd(page: number,trackId: number, albumId: number, size: number, sortColumn: string, sortDirection: string): Observable<Page<Track>> {
+    let params = new HttpParams()
+    .set('page', page.toString())
+    .set('size', size.toString())
+    .set("sortColumn", sortColumn)
+    .set("sortDirection", sortDirection);
+    console.log(albumId);
+    return this.get<Page<Track>>(`${this.adminUrlAl}/${albumId}/tracks/add`, params);
+  }
   getAllTrack(page: number, size: number, sortColumn: string, sortDirection: string): Observable<Page<Track>> {
     let params = new HttpParams()
       .set('page', page.toString())
@@ -97,7 +106,15 @@ export class AdminServiceService extends IbaseServiceService {
     console.log(track.album_id);
     return this.put<Track>(`${this.adminUrlTrack}/${track.id}`, track);
   }
-
+  editTrackAlbum(track: Track): Observable<Track> {
+    console.log('editTrack');
+    console.log(track.id);
+    console.log(track.name);
+    console.log(track.file);
+    console.log(track.author);
+    console.log(track.album_id);
+    return this.put<Track>(`${this.adminUrlAl}/${track.album_id}/tracks/add/${track.id}`, track);
+  }
   deleteTrack(track: Track): Observable<Track> {
     console.log(track.id);
     return this.delete<Track>(`${this.adminUrlTrack}/${track.id}`);

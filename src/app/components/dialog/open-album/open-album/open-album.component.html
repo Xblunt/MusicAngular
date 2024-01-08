@@ -46,28 +46,59 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
         <td mat-cell *matCellDef="let track">
-          <!-- <div>
-            <button  class="custom-btn btn-1" (click)="editUser(student)">Edit</button>
-            <button  class="custom-btn btn-1" (click)="deleteUser(student)">Delete</button>
-          </div> -->
+          <div>
+            <!-- <button  class="custom-btn btn-1" (click)="editUser(student)">Edit</button>
+            <button  class="custom-btn btn-1" (click)="deleteUser(student)">Delete</button> -->
+
+          </div>
           </td>
       </ng-container>
-
+      <!-- <td mat-cell *matCellDef="let album"> <button  class="custom-btn btn-1" mat-raised-button (click)="Addtracks(album)">Add</button></td> -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     </table>
 
-  <mat-paginator #paginator
+    <mat-paginator #paginator
 
-                [pageSize]="pageSize"
-                [length]="totalElements"
-                [pageSizeOptions]="[2, 8, 10, 25]"
+    [pageSize]="pageSize"
+    [length]="totalElements"
+    [pageSizeOptions]="[2, 8, 10, 25]"
 
-                [showFirstLastButtons]="true"
-                (page)="updatePageSizeTrackss($event)"></mat-paginator>
-
-
-
+    [showFirstLastButtons]="true"
+    (page)="updatePageSizeTrackss($event)"></mat-paginator>
 </div>
+
+        <!-- <button  class="custom-btn btn-1" (click)="editUser(student)">Edit</button>
+        <button  class="custom-btn btn-1" (click)="deleteUser(student)">Delete</button> -->
+        <!-- <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource4" matSort >
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+          <td mat-cell *matCellDef="let album">
+            <div>
+              <button  class="custom-btn btn-1" mat-raised-button (click)="Addtracks(album)">Add</button>
+              <button mat-raised-button (click)="close()">Cancel</button>
+            </div>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+      </table> -->
+      <!-- <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource2">
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let album">
+              <div>
+                <button class="custom-btn btn-1" mat-raised-button (click)="Addtracks(album)">Add</button>
+                <button mat-raised-button (click)="close()">Cancel</button>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+        </table>
+      </div> -->
+      <!-- <button  class="custom-btn btn-1" mat-raised-button (click)="Addtracks(selectedAlbum)">Add</button> -->
 <button mat-raised-button (click)="close()">Cancel</button>

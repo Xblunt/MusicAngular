@@ -18,10 +18,10 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
       <td mat-cell *matCellDef="let album">
         <div>
-          <button  class="custom-btn btn-1" (click)="editAlbum(album)">Edit</button>
+          <button  class="custom-btn btn-1"mat-raised-button   (click)="editAlbum(album)">Edit</button>
           <!-- <button  class="custom-btn btn-1" (click)="deleteAlbum(album)">Delete</button> -->
-
-          <button  class="custom-btn btn-1" (click)="openAlbum(album)">Open</button>
+     <button  class="custom-btn btn-1" mat-raised-button (click)="Addtracks(album)">Add</button>
+          <button  class="custom-btn btn-1" mat-raised-button (click)="openAlbum(album)">Open</button>
           <!-- <a [routerLink]="['/admin/album/:id']"> Открыть </a> -->
         </div>
         </td>

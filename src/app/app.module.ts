@@ -30,6 +30,7 @@ import { OpenAlbumComponent } from './components/dialog/open-album/open-album/op
 import { DeleteComponentComponent } from './components/dialog/delete-component/delete-component/delete-component.component';
 import { EditComponent } from './components/dialog/edit-component/edit/edit.component';
 import { MatSelectModule } from "@angular/material/select";
+import { AddTrackAlbumComponent } from './components/dialog/addTrackAlbum/add-track-album/add-track-album.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,8 @@ import { MatSelectModule } from "@angular/material/select";
     TrackscComponent,
     OpenAlbumComponent,
     DeleteComponentComponent,
-    EditComponent
+    EditComponent,
+    AddTrackAlbumComponent
   ],
   imports: [
     BrowserModule,

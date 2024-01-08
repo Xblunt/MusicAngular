@@ -1,0 +1,49 @@
+<p>add-track-album works!</p>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource3" matSort >
+    <!-- (matSortChange)="announceSortChange($event)"> -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let track"> {{track.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> name </th>
+      <td mat-cell *matCellDef="let track"> {{track.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="author">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> author </th>
+      <td mat-cell *matCellDef="let track"> {{track.author}} </td>
+    </ng-container>
+    <ng-container matColumnDef="album_id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> album_id </th>
+      <td mat-cell *matCellDef="let track"> {{track.album_id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+      <td mat-cell *matCellDef="let track">
+        <!-- <div><button  class="custom-btn btn-1" (click)="editTrack(track)">Edit</button>
+          <button  class="custom-btn btn-1" (click)="deleteTrack(track)">Delete</button></div> -->
+          <div><button  class="custom-btn btn-1" (click)="editalbumTrack(track)">Edit</button></div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+  <!-- <button  class="custom-btn btn-1" (click)="addNewTrack()">Add</button> -->
+
+  <!-- <button  class="custom-btn btn-1" (click)="addNewStudent()">Add</button> -->
+    <mat-paginator #paginator
+
+                  [pageSize]="pageSize"
+                  [length]="totalElements"
+                  [pageSizeOptions]="[2, 8, 10, 25]"
+
+                  [showFirstLastButtons]="true"
+                  (page)="updatePageSizeTrackss($event)"></mat-paginator>
+
+
+
+</div>
+<button mat-raised-button (click)="close()">Cancel</button>

@@ -1,5 +1,6 @@
 
 
+
 import { AdminServiceService } from 'src/app/service/admin-service.service';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { HttpClient } from '@angular/common/http';
@@ -18,6 +19,7 @@ import { Track } from 'src/app/model/track';
 import { OpenAlbumComponent } from 'src/app/components/dialog/open-album/open-album/open-album.component';
 import { DeleteComponentComponent } from 'src/app/components/dialog/delete-component/delete-component/delete-component.component';
 import { EditComponent } from 'src/app/components/dialog/edit-component/edit/edit.component';
+import { AddTrackAlbumComponent } from 'src/app/components/dialog/addTrackAlbum/add-track-album/add-track-album.component';
 // import { AlbumService } from 'src/app/service/album.service';
 
 @Component({
@@ -43,6 +45,8 @@ export class AlbumscComponent implements AfterViewInit {
   user!: CredentialResponse;
   selectedAlbum!: Album;
   fromAlbumComponent: boolean = true;
+
+
  constructor(private baseService: BaseServiceService, private _liveAnnouncer: LiveAnnouncer,
     public dialog:MatDialog, private http: HttpClient, private authService:AuthService, private adminService:AdminServiceService) {
       // this.baseService.getAllStudents().subscribe(data => this.dataSource = new MatTableDataSource(data));
@@ -153,6 +157,18 @@ export class AlbumscComponent implements AfterViewInit {
         }
       });
     }
+  Addtracks(album: Album): void {
+    const dialogRef = this.dialog.open(AddTrackAlbumComponent, {
+      data: { id: album.id},
+    });
 
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        console.log('Изменения сохранены:', result);
+      } else {
+        console.log('Окно закрыто без сохранения изменений.');
+      }
+    });
+  }
 
 }

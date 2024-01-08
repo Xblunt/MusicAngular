@@ -3,7 +3,7 @@
 import { AdminServiceService } from 'src/app/service/admin-service.service';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,7 +23,7 @@ import { DeleteComponentComponent } from 'src/app/components/dialog/delete-compo
   styleUrls: ['./tracksc.component.css']
 })
 export class TrackscComponent implements  AfterViewInit{
-
+@Input() track!:Track;
   displayedColumns: string[] = ['id', 'name', 'author', 'album_id', 'action'];
 
   dataSource3 = new MatTableDataSource<Track>();
@@ -112,13 +112,13 @@ export class TrackscComponent implements  AfterViewInit{
         // debugger
         if(editedTrack  != null) {
         // debugger
-          console.log("edit student: " + track.name);
+          console.log("edit student: " + editedTrack.name);
           this.adminService.editTrack(editedTrack).subscribe(k=>
             this.adminService.getAllTrack(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource3.data = data.content) );
-
           }
-          this.adminService.getAllTrack(this.currentPage, this.pageSize, this.sort.active, this.sort.direction).subscribe(data => this.dataSource3.data = data.content);
-      });
+          // this.adminService.getAllTrack(this.currentPage, this.pageSize, this.sort.active, this.sort.direction).subscribe(data => this.dataSource3.data = data.content);
+
+        });
     }
     addNewTrack() {
       const dialogAddingNewStudent = this.dialog.open(EditComponent, {
