@@ -16,10 +16,16 @@ import { Authority } from './model/auth/authority';
     providedIn: 'root'
 })
 export class AuthService {
-  private studentsUrl = 'api/home';
-  private adminUrl = 'api/admin/users';
-  private tUrl = 'api/teacher/users';
 
+  private username: string = '';
+
+  setUsername(username: string): void {
+    this.username = username;
+  }
+
+  getUsername(): string {
+    return this.username;
+  }
     private loggedIn = new BehaviorSubject<boolean>(false);
 
 
@@ -46,9 +52,9 @@ export class AuthService {
         return JSON.parse(auth);
     }
 
-    isUser(): boolean {
+    isStudent(): boolean {
         return this.LoggedUser.authorities.filter((auth: Authority) => {
-            return auth.authority == ROLE.USER;
+            return auth.authority == ROLE.CLIENT;
         }).length != 0;
     }
 
@@ -92,20 +98,21 @@ export class AuthService {
         const response: CredentialResponse = CredentialResponse.convertToObj(data);
 
         if(response.authenticated == true) {
-            this.updateAuth(response);
-            this.loggedIn.next(true);
-            if(this.isAdmin())
-            this.router.navigate(['admin']);
-            else
-          this.router.navigate(['student']);
-            return true;
-        }
-        else {
-            failureHandler();
-        }
+          this.updateAuth(response);
+          this.loggedIn.next(true);
+          if(this.isAdmin())
+          this.router.navigate(['admin']);
+        else if(this.isStudent())
+        this.router.navigate(['client']);
 
-        return false;
-    }
+          return true;
+      }
+      else {
+          failureHandler();
+      }
+
+      return false;
+  }
 
     private updateAuth(response: CredentialResponse) {
         this.sessionStorage.set('auth', JSON.stringify(response));
@@ -113,6 +120,12 @@ export class AuthService {
 
 
 
+
+
+
+    // getAllStudents(): Observable<Student[]> {
+    //   return this.http.get<Student[]>(this.studentsUrl);
+    // }
 
     logout() {
         this.clearLoginData();
@@ -130,13 +143,20 @@ export class AuthService {
         this.sessionStorage.remove('auth');
     }
 
+    // authentication(headers: any): Observable<any> {
+    //     return this.http.get('api/user', { headers: headers })
+    //         .pipe(
+    //             tap(data => console.log('login data:', data)),
+    //             catchError(this.handleLoginError('login error', []))
+    //         );
+    // }
     authentication(headers: any): Observable<any> {
-        return this.http.get('api/user', { headers: headers })
-            .pipe(
-                tap(data => console.log('login data:', data)),
-                catchError(this.handleLoginError('login error', []))
-            );
-    }
+      return this.http.get('api/user', { headers: headers })
+          .pipe(
+              tap(data => console.log('login data:', data)),
+              catchError(this.handleLoginError('login error', []))
+          );
+  }
 
     private isAuthNotEmpty = (auth: string) => {
         return auth != null && auth != "";

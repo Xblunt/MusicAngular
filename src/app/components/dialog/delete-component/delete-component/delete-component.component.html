@@ -1,21 +1,7 @@
-<p>delete-component works!</p>
 <h1 mat-dialog-title class="center">Do you want to remove?</h1>
-<div mat-dialog-content style="display: inline; padding: 0px; margin: auto;">
-
-  <!-- <div mat-dialog-actions>
-  <button  mat-raised-button (click)="onNoClick()">No</button>
-
-  <button class="right-align"   mat-raised-button color="primary"(click)="onYesClick()">Yes</button>
-
-     <button (click)="editStudent()">Edit</button> -->
-
-<!-- </div>  -->
-
-  <button  class="custom-btn btn-1"(click)="onNoClick()">No</button>
-  <button class=" custom-btn btn-1 right-align" (click)="onYesClick()">Yes</button>
-
-   <!-- <button (click)="editStudent()">Edit</button> -- -->
-
-
+<div mat-dialog-content>
+  <div class="button-container" style="display: flex; justify-content: space-between;">
+    <button class="custom-btn btn-1 "  (click)="onNoClick()">No</button>
+    <button class="custom-btn btn-1 right-align "  (click)="onYesClick()">Yes</button>
+  </div>
 </div>
-

@@ -16,8 +16,8 @@ export abstract class IbaseServiceService {
   protected get<T>(url: string, params?: HttpParams): Observable<T> {
     return this.http.get<T>(`${this.endpoint}/${url}`, { params });
   }
-  protected post<T>(url: string, body: any): Observable<T> {
-    return this.http.post<T>(`${this.endpoint}/${url}`, body);
+  protected post<T>(url: string, body: any,  params?: HttpParams): Observable<T> {
+    return this.http.post<T>(`${this.endpoint}/${url}`, body, { params });
   }
 
   protected put<T>(url: string, body: any): Observable<T> {

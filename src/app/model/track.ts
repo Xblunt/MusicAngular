@@ -5,4 +5,5 @@ export class Track {
   text!:string;
   file!:string;
   album_id!:number;
+  // playlist_id!: number;
 }

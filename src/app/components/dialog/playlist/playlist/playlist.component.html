@@ -1,0 +1,56 @@
+<div class="screen">
+  <div class="panel panel-right new-flex-container">
+
+
+
+>
+
+
+
+
+
+
+      <div *ngFor="let track of tracks" class="track-container">
+        <div class="panel panel-wh">
+        <div class="panel panel-gray pau">
+
+          <p>
+            <audio class="custom-audio" preload="none" controls>
+              <source src="data:audio/mpeg;base64,{{ track.file }}" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </p>
+             <p class="track-id"> {{ track.name }}   -   {{ track.author }} </p>
+             <div class="right-align">
+             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="send"
+             (click)="Createmtrack(track)">
+
+    </mat-icon>
+             </div>
+          <!-- <div class="right-align" *ngIf="authService.isAdmin()">
+
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit" (click)="editTrack(track)"> </mat-icon>
+
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="restore_from_trash" (click)="deleteTrack(track)"> </mat-icon>
+
+          </div> -->
+        </div>
+        </div>
+      </div>
+      <div class="paginator-wrapper">
+        <div class="paginator-container">
+          <mat-paginator  class="pag" #paginator
+                        [pageSize]="pageSize"
+                        [length]="totalElements"
+                        [pageSizeOptions]="[2, 7, 10, 25]"
+                        [showFirstLastButtons]="true"
+                        (page)="updatePageSizeTrack($event)"  aria-label="Select page">
+          </mat-paginator>
+        </div>
+        <button  class="custom-btn btn-1 " (click)="onNoClick()">Cancel</button>
+      </div>
+    </div>
+
+
+  </div>
+

@@ -1,49 +1,53 @@
-<p>admin works!</p>
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource4" matSort >
-    <!-- (matSortChange)="announceSortChange($event)"> -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let user"> {{user.id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="fio">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-      <td mat-cell *matCellDef="let user"> {{user.fio}} </td>
-    </ng-container>
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-      <td mat-cell *matCellDef="let user">
-        <div>
-          <button  class="custom-btn btn-1" (click)="editUser(user)">Edit</button>
-          <button  class="custom-btn btn-1" (click)="deleteUser(user)">Delete</button>
+<div class="screen">
+  <div class="panel panel-right new-flex-container">
+    <div class="content-wrapper">
+      <div class=" panel-right top-right-menu">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="menu align-left" [matMenuTriggerFor]="menu" > </mat-icon>
+        <!-- <button class="menu right-align" mat-button [matMenuTriggerFor]="menu" >Menu</button> -->
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/admin/tracks']">Перейти к трекам</button>
+          <button mat-menu-item [routerLink]="['/login']">Logout</button>
+        </mat-menu>
+
+      </div>
+<br>
+<br>
+
+
+
+
+      <div *ngFor="let user of users" class="track-container">
+        <div class="panel panel-wh">
+        <div class="panel panel-gray pau">
+          {{ user.id }}: {{ user.fio }}
+          <div class="right-align">
+            <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="restore_from_trash"> </mat-icon> -->
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit" (click)="editUser(user)"> </mat-icon>
+            <!-- <button fontIcon="restore_from_trash" (click)="editUser(user) ">Edit</button> -->
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="restore_from_trash" (click)="deleteUser(user)"> </mat-icon>
+            <!-- <button (click)="deleteUser(user)">Delete</button> -->
+          </div>
         </div>
-        </td>
-    </ng-container>
+        </div>
+      </div>
+      <div class="paginator-wrapper">
+        <div class="paginator-container">
+          <mat-paginator  class="pag" #paginator
+                        [pageSize]="pageSize"
+                        [length]="totalElements"
+                        [pageSizeOptions]="[2, 7, 10, 25]"
+                        [showFirstLastButtons]="true"
+                        (page)="updatePageSize($event)"  aria-label="Select page">
+          </mat-paginator>
+        </div>
+        <button class="custom-btn btn-1 right-align" (click)="addNewUser()">Add User</button>
+      </div>
+    </div>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-  </table>
-
-
-  <button  class="custom-btn btn-1" (click)="addNewUser()">Add</button>
-    <mat-paginator #paginator
-
-                  [pageSize]="pageSize"
-                  [length]="totalElements"
-                  [pageSizeOptions]="[2, 8, 10, 25]"
-
-                  [showFirstLastButtons]="true"
-                  (page)="updatePageSize($event)"></mat-paginator>
-
-
-
+    <!-- <div class="panel-right content-wrapper">
+      <a [routerLink]="['/admin/album']">Перейти к альбомам</a>
+      <a [routerLink]="['/admin/tracks']">Перейти к трекам</a>
+      <a [routerLink]="['/login']">Logout</a>
+    </div> -->
+  </div>
 </div>
-
-<!-- <button mat-button routerLink="/admin/album">Перейти к альбомам</button>
-<button mat-button routerLink="/admin/tracks">Перейти к трекам</button> -->
-<a [routerLink]="['/admin/album']">Перейти к альбомам      </a>
-
-<a [routerLink]="['/admin/tracks']">    Перейти к трекам    </a>
-
-<a [routerLink]="['/login']">     Logout     </a>

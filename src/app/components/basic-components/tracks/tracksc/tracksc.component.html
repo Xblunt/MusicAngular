@@ -1,7 +1,31 @@
-<p>admin works track!</p>
+<!--
+<ng-container div *ngIf="authService.isAdmin()">
+  <mat-form-field>
+    <mat-label>Menu</mat-label>
+    <mat-select>
+      <mat-option  [routerLink]="['/admin']">Перейти к пользователям </mat-option>
+      <mat-option [routerLink]="['/admin/album']"> Перейти к альбомам </mat-option>
+      <mat-option  [routerLink]="['/login']"> Logout </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  </ng-container>
+<ng-container div *ngIf="authService.isStudent()">
+  <mat-form-field>
+    <mat-label>Menu</mat-label>
+    <mat-select>
+
+      <mat-option [routerLink]="['/user/album']"> Перейти к альбомам </mat-option>
+      <mat-option [routerLink]="['/user/auth-user']"> lk </mat-option>
+      <mat-option  [routerLink]="['/login']"> Logout </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  </ng-container> -->
+<!-- <p>admin works track!</p>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource3" matSort >
-    <!-- (matSortChange)="announceSortChange($event)"> -->
+
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
       <td mat-cell *matCellDef="let track"> {{track.id}} </td>
@@ -18,6 +42,8 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header> album_id </th>
       <td mat-cell *matCellDef="let track"> {{track.album_id}} </td>
     </ng-container>
+
+    <ng-container div *ngIf="authService.isAdmin()">
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
       <td mat-cell *matCellDef="let track">
@@ -25,30 +51,190 @@
           <button  class="custom-btn btn-1" (click)="deleteTrack(track)">Delete</button></div>
         </td>
     </ng-container>
+  </ng-container>
+  <ng-container div *ngIf="authService.isStudent()">
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+      <td mat-cell *matCellDef="let track">
+       <div></div>
+        </td>
+    </ng-container>
+  </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
   </table>
-  <button  class="custom-btn btn-1" (click)="addNewTrack()">Add</button>
+  <button  class="custom-btn btn-1" (click)="addNewTrack()">Add</button> -->
 
   <!-- <button  class="custom-btn btn-1" (click)="addNewStudent()">Add</button> -->
-    <mat-paginator #paginator
-
-                  [pageSize]="pageSize"
-                  [length]="totalElements"
-                  [pageSizeOptions]="[2, 8, 10, 25]"
-
-                  [showFirstLastButtons]="true"
-                  (page)="updatePageSizeTrack($event)"></mat-paginator>
 
 
 
-</div>
+
+<!-- </div> -->
 <!-- <button mat-button routerLink="/admin">Перейти к пользователям</button>
 <button mat-button routerLink="/admin/album">Перейти к альбомам</button> -->
 
+<!-- <div *ngFor="let track of tracks"   class="track-container">
+  <div class="track-image">
+    <p class="track-id">{{ track.id }}</p> -->
+    <!-- <p class="album-picture">{{ album.picture }}</p> -->
+    <!-- <p>
+      <audio preload="none" controls>
+        <source src="data:audio/mpeg;base64,{{ track.file }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </p>
+    <div class="track-info">
+      <p class="track-name">{{ track.name }}</p>
+      <p class="track-author">{{ track.author }}</p>
+      <div *ngIf="authService.isAdmin()">
+      <button  class="custom-btn btn-1" mat-raised-button (click)="editTrack(track)">Edit</button>
+
+      <button  class="custom-btn btn-1" mat-raised-button (click)="deleteTrack(track)">Delete Track</button>
+    </div>
+    <div *ngIf="authService.isStudent()">
+
+    </div>
+    </div>
+  </div>
+  <div div *ngIf="authService.isAdmin()">
+    <button  class="custom-btn btn-1" (click)="addNewTrack()">Add</button> -->
+  <!-- </div> -->
+<!-- <ng-container div *ngIf="authService.isAdmin()">
 <a [routerLink]="['/admin']">Перейти к пользователям</a>
 <a [routerLink]="['/admin/album']">Перейти к альбомам</a>
+</ng-container>
+<ng-container div *ngIf="authService.isStudent()">
 
-<a [routerLink]="['/login']">Logout</a>
+  <a [routerLink]="['/user/album']">Перейти к альбомам</a>
+  </ng-container>
+<a [routerLink]="['/login']">Logout</a> -->
+<!-- </div> -->
+<!-- <div *ngFor="let track of tracks" class="track-container">
+  <div class="track-image">
+    <p class="track-id">{{ track.id }}</p> -->
+    <!-- <p class="album-picture">{{ album.picture }}</p> -->
+    <!-- <p>
+      <audio class="custom-audio" preload="none" controls>
+        <source src="data:audio/mpeg;base64,{{ track.file }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </p>
+    <div class="track-info">
+      <div class="track-details">
+        <p class="track-name">{{ track.name }}</p>
+        <p class="track-author">{{ track.author }}</p>
+        <p>
+          <audio class="custom-audio" preload="none" controls>
+            <source src="data:audio/mpeg;base64,{{ track.file }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </p>
+      </div>
+      <div *ngIf="authService.isAdmin()">
+        <button class="custom-btn btn-1" mat-raised-button (click)="editTrack(track)">Edit</button>
+        <button class="custom-btn btn-1" mat-raised-button (click)="deleteTrack(track)">Delete Track</button>
+      </div>
+      <div *ngIf="authService.isStudent()">
+      </div>
+    </div>
+  </div>
+  <div div *ngIf="authService.isAdmin()">
+    <button class="custom-btn btn-1" (click)="addNewTrack()">Add</button>
+  </div>
+</div>-->
+
+
+<div class="screen">
+  <div class="panel panel-right new-flex-container">
+    <div class="content-wrapper">
+
+
+      <div *ngIf="authService.isStudent()">
+      <div class=" panel-right top-right-menu">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="menu align-left" [matMenuTriggerFor]="menu" > </mat-icon>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/client']">Перейти к чатам</button>
+          <button mat-menu-item [routerLink]="['/client/auth-user']">Перейти к лк</button>
+          <button mat-menu-item [routerLink]="['/login']">Logout</button>
+        </mat-menu>
+
+      </div>
+    </div>
+    <div *ngIf="authService.isAdmin()">
+      <div class=" panel-right top-right-menu">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="menu align-left" [matMenuTriggerFor]="menu" > </mat-icon>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/admin']">Перейти к пользователям</button>
+
+          <button mat-menu-item [routerLink]="['/login']">Logout</button>
+        </mat-menu>
+
+      </div>
+    </div>
+
+<br>
+<br>
+<div class="center-buttons">
+  <button mat-button color="primary" class=" bbt2"> <h1>Tracks</h1></button>
+  <div *ngIf="authService.isAdmin()">
+  <button  mat-button class="bbt" [routerLink]="['/admin/album']" ><h1>Albums</h1></button>
+  </div>
+  <div *ngIf="authService.isStudent()">
+    <button  mat-button class="bbt" [routerLink]="['/client/album']" ><h1>Albums</h1></button>
+    </div>
+</div>
+
+
+
+
+
+      <div *ngFor="let track of tracks" class="track-container">
+        <div class="panel panel-wh">
+        <div class="panel panel-gray pau">
+
+          <p>
+            <audio class="custom-audio" preload="none" controls>
+              <source src="data:audio/mpeg;base64,{{ track.file }}" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </p>
+             <p class="track-id"> {{ track.name }}   -   {{ track.author }} </p>
+          <div class="right-align" *ngIf="authService.isAdmin()">
+            <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="restore_from_trash"> </mat-icon> -->
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit" (click)="editTrack(track)"> </mat-icon>
+            <!-- <button fontIcon="restore_from_trash" (click)="editUser(user) ">Edit</button> -->
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="restore_from_trash" (click)="deleteTrack(track)"> </mat-icon>
+            <!-- <button (click)="deleteUser(user)">Delete</button> -->
+          </div>
+          <div class="right-align" *ngIf="authService.isStudent()">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="favorite_border"
+            (click)="handleUserButtonClick(track)" [ngClass]="{'active': isIconActive}">
+        </mat-icon>
+           </div>
+        </div>
+        </div>
+      </div>
+      <div class="paginator-wrapper">
+        <div class="paginator-container">
+          <mat-paginator  class="pag" #paginator
+                        [pageSize]="pageSize"
+                        [length]="totalElements"
+                        [pageSizeOptions]="[2, 7, 10, 25]"
+                        [showFirstLastButtons]="true"
+                        (page)="updatePageSizeTrack($event)"  aria-label="Select page">
+          </mat-paginator>
+        </div>
+        <div *ngIf="authService.isAdmin()">
+        <button class="custom-btn btn-1 right-align" (click)="addNewTrack()">Add Track</button>
+      </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

@@ -4,4 +4,5 @@ export class User {
   text!: string;
   photo!:string;
   date!:string;
+  username!:string;
 }

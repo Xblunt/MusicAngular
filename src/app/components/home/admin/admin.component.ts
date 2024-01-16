@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -29,15 +30,16 @@ export class AdminComponent implements  AfterViewInit{
 
 
   currentPage: number = 0;
-  pageSize: number = 2;
+  pageSize: number = 7;
   // active: string = 'user_id';
   sortColumn: string = 'id';
   sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
   length!: number;
-  user!: CredentialResponse;
+  usera!: CredentialResponse;
   fromUserComponent: boolean = true;
+  users : any[]=[];
  constructor(private baseService: BaseServiceService, private _liveAnnouncer: LiveAnnouncer,
     public dialog:MatDialog, private http: HttpClient, private authService:AuthService, private adminService:AdminServiceService) {
       // this.baseService.getAllStudents().subscribe(data => this.dataSource = new MatTableDataSource(data));
@@ -50,7 +52,7 @@ export class AdminComponent implements  AfterViewInit{
 
   ngAfterViewInit(): void {
     // throw new Error('Method not implemented.');
-    this.user = this.authService.LoggedUser;
+    this.usera = this.authService.LoggedUser;
   }
   ngOnInit(): void {
 
@@ -62,7 +64,7 @@ export class AdminComponent implements  AfterViewInit{
       this.adminService.getAllUsers(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection)
         .subscribe((page: Page<User>) => {
           console.log(page);
-          this.dataSource4.data = page.content;
+          this.users = page.content;
 
           this.totalPages = page.totalPages;
 
@@ -89,12 +91,13 @@ export class AdminComponent implements  AfterViewInit{
 
     deleteUser(user: User){
       const dialogAddingNewStudent = this.dialog.open(DeleteComponentComponent, {
-        width: '700px',
+        width: '1000px',
+
         data: null
       });
        dialogAddingNewStudent.afterClosed().subscribe((confirmDelete: boolean) => {
 
-        if(user != null) {
+        if(confirmDelete == true) {
           console.log("delete student: ");
           this.adminService.deleteUser(user).subscribe(k=>
             this.adminService.getAllUsers(this.currentPage, this.pageSize, this.sort.active,this.sort.direction).subscribe(data => this.dataSource4.data= data.content) );
@@ -103,7 +106,8 @@ export class AdminComponent implements  AfterViewInit{
     }
     editUser(user: User) {
       const dialogAddingNewStudent = this.dialog.open(EditComponent, {
-        width: '700px',
+        width: '1000px',
+        height: '300px',
         // data: {id: student.id, fio: student.fio, group: student.group, phoneNumber: student.phoneNumber}
        data: {id: user.id, fio: user.fio,  text: user.text,  date: user.date, photo: user.photo, fromUserComponent: this.fromUserComponent}
       // data: {student: student}
@@ -120,7 +124,8 @@ export class AdminComponent implements  AfterViewInit{
     }
     addNewUser() {
       const dialogAddingNewStudent = this.dialog.open(EditComponent, {
-        width: '700px',
+        width: '1000px',
+        height: '300px',
         data:  { fromUserComponent: this.fromUserComponent}
       });
       dialogAddingNewStudent.afterClosed().subscribe((result: User) => {

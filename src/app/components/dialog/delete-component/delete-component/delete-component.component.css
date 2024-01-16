@@ -1,0 +1,43 @@
+.custom-btn {
+  width: 120px;
+  height: 35px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 90;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+.btn-1 {
+  background: #2C5420;
+  background: linear-gradient(0deg, #2C5420 0%, #2C5420 100%);
+  border: none;
+}
+.btn-1:hover {
+  background: rgb(47, 88, 1);
+background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
+}
+.right-align {
+  /* margin: 0 0 0 auto !important; */
+  margin-left: auto;
+}
+.center{
+  text-align: center;
+}
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.mat-dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -17,19 +17,22 @@ import { Album } from 'src/app/model/album';
 import { Track } from 'src/app/model/track';
 import { EditComponent } from 'src/app/components/dialog/edit-component/edit/edit.component';
 import { DeleteComponentComponent } from 'src/app/components/dialog/delete-component/delete-component/delete-component.component';
+import { HomeService } from 'src/app/service/home.service';
+import { Pttt } from 'src/app/model/pt';
 @Component({
   selector: 'app-tracksc',
   templateUrl: './tracksc.component.html',
   styleUrls: ['./tracksc.component.css']
 })
 export class TrackscComponent implements  AfterViewInit{
-@Input() track!:Track;
-  displayedColumns: string[] = ['id', 'name', 'author', 'album_id', 'action'];
 
-  dataSource3 = new MatTableDataSource<Track>();
+  // displayedColumns: string[] = ['id', 'name', 'author', 'album_id',   'action'];
 
+  // dataSource3 = new MatTableDataSource<Track>();
+ tracks: any [] = [];
+ selectedButton!: string;
   currentPage: number = 0;
-  pageSize: number = 2;
+  pageSize: number = 8;
   // active: string = 'user_id';
   sortColumn: string = 'id';
   sortDirection: string = 'asc';
@@ -39,10 +42,21 @@ export class TrackscComponent implements  AfterViewInit{
   user!: CredentialResponse;
   // album!: Album;
   fromTrackComponent: boolean = true;
+  service: any;
+  usernamell!: string ;
+  pt: Pttt;
+  clickedUserId!: number;
+  isIconActive: boolean = false;
  constructor(private baseService: BaseServiceService, private _liveAnnouncer: LiveAnnouncer,
-    public dialog:MatDialog, private http: HttpClient, private authService:AuthService, private adminService:AdminServiceService) {
+    public dialog:MatDialog, private http: HttpClient, public authService:AuthService, private adminService:AdminServiceService, private userService:HomeService) {
       // this.baseService.getAllStudents().subscribe(data => this.dataSource = new MatTableDataSource(data));
-
+      if (this.authService.isAdmin()){
+        this.service = this.adminService;
+      }
+      else {
+        this.service = this.userService;
+      }
+      this.pt = new Pttt;
     }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -54,7 +68,8 @@ export class TrackscComponent implements  AfterViewInit{
     this.user = this.authService.LoggedUser;
   }
   ngOnInit(): void {
-
+    const storedUsername = localStorage.getItem('username');
+    this.usernamell = storedUsername !== null ? storedUsername : '';
 
     this.getAllTrack();
     // this. getAllTracksAlbums(this.album);
@@ -62,11 +77,12 @@ export class TrackscComponent implements  AfterViewInit{
   }
 
     getAllTrack( ): void {
-      this.adminService.getAllTrack(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection)
+      this.service.getAllTrack(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection)
         .subscribe((page: Page<Track>) => {
           console.log(page);
-          this.dataSource3.data = page.content;
+          this.tracks = page.content;
 
+console.log(page.content);
           this.totalPages = page.totalPages;
 
 
@@ -74,7 +90,7 @@ export class TrackscComponent implements  AfterViewInit{
 
 
 
-          this.dataSource3.sort = this.sort;
+          // this.tracks = this.sort;
 
         });
 
@@ -85,11 +101,33 @@ export class TrackscComponent implements  AfterViewInit{
       this.currentPage = event.pageIndex;
       this.getAllTrack();
     }
+    handleUserButtonClick(track: Track): void {
+      this.isIconActive = true;
+      this.clickedUserId = track.id;
 
+      this.like();
+    }
+     like(): void {
+      const selectedUser = this.tracks.find(track => track.id === this.clickedUserId);
+
+      if (selectedUser) {
+
+
+
+
+       const trackId = selectedUser.id;
+        const username = this.usernamell;
+
+        this.userService.like( this.pt, username, trackId ).subscribe((newpt: Pttt) => {
+          this.getAllTrack();
+        });
+      }
+    }
 
     deleteTrack(track: Track){
       const dialogAddingNewStudent = this.dialog.open(DeleteComponentComponent, {
         width: '700px',
+
         data: null
       });
        dialogAddingNewStudent.afterClosed().subscribe((confirmDelete: boolean) => {
@@ -97,13 +135,14 @@ export class TrackscComponent implements  AfterViewInit{
         if(track != null) {
           console.log("delete track: ");
           this.adminService.deleteTrack(track).subscribe(k=>
-            this.adminService.getAllTrack(this.currentPage, this.pageSize, this.sort.active,this.sort.direction).subscribe(data => this.dataSource3.data= data.content) );
+            this.adminService.getAllTrack(this.currentPage, this.pageSize, this.sort.active,this.sort.direction).subscribe(data => this.tracks= data.content) );
         }
       });
     }
     editTrack(track: Track) {
       const dialogAddingNewStudent = this.dialog.open(EditComponent, {
         width: '700px',
+
         // data: {id: student.id, fio: student.fio, group: student.group, phoneNumber: student.phoneNumber}
        data: {id: track.id, album_id: track.album_id, name: track.name, author: track.author, text: track.text,   file: track.file,  fromTrackComponent: this.fromTrackComponent}
       // data: {student: student}
@@ -114,7 +153,7 @@ export class TrackscComponent implements  AfterViewInit{
         // debugger
           console.log("edit student: " + editedTrack.name);
           this.adminService.editTrack(editedTrack).subscribe(k=>
-            this.adminService.getAllTrack(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource3.data = data.content) );
+            this.adminService.getAllTrack(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.tracks = data.content) );
           }
           // this.adminService.getAllTrack(this.currentPage, this.pageSize, this.sort.active, this.sort.direction).subscribe(data => this.dataSource3.data = data.content);
 
@@ -123,13 +162,14 @@ export class TrackscComponent implements  AfterViewInit{
     addNewTrack() {
       const dialogAddingNewStudent = this.dialog.open(EditComponent, {
         width: '700px',
+
         data: { fromTrackComponent: this.fromTrackComponent}
       });
       dialogAddingNewStudent.afterClosed().subscribe((result: Track) => {
         if(result != null) {
           console.log("adding new student: " + result.name);
           this.adminService.addNewTrack(result).subscribe(k=>
-            this.adminService.getAllTrack(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource3.data = data.content) );
+            this.adminService.getAllTrack(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.tracks = data.content) );
         }
       });
     }

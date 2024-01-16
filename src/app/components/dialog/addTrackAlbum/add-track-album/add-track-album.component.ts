@@ -14,13 +14,13 @@ import { Page } from 'src/app/service/page';
 })
 export class AddTrackAlbumComponent implements OnInit {
   // @Output() track!: Track;
-  displayedColumns: string[] = ['id', 'name', 'author', 'album_id', 'action'];
+  // displayedColumns: string[] = ['id', 'name', 'author', 'album_id', 'action'];
   // displayedColumns: string[] = [  'nameAlbum', 'tracks'];
   // displayedColumns2: string[] = ['id', 'nameAlbum'];
   // displayedColumns: string[] = [ 'id', 'name', 'author'];
   // dataSource4 = new MatTableDataSource<Track>();
   //  dataSource5 = new MatTableDataSource<Album>();
-  dataSource3 = new MatTableDataSource<Track>();
+  // dataSource3 = new MatTableDataSource<Track>();
     // dataSource5: any;
   currentPage: number = 0;
 
@@ -33,6 +33,7 @@ export class AddTrackAlbumComponent implements OnInit {
   idalbum: number;
   editingStudent!: Track;
    trackId: number;
+   tracks: any[]=[];
   constructor(public dialogRef: MatDialogRef<AddTrackAlbumComponent>, @Inject(MAT_DIALOG_DATA) public data:any, private adminService: AdminServiceService) {
    this.idalbum = data.id;
    this.editingStudent = new Track;
@@ -55,7 +56,7 @@ export class AddTrackAlbumComponent implements OnInit {
       this.adminService.getAllTracksAlbumsAdd(this.currentPage,this.trackId , albumId ,this.pageSize,this.sortColumn,this.sortDirection
         )
         .subscribe( (response: Page<Track>) => {
-            this.dataSource3 = response.content;
+            this.tracks = response.content;
             this.totalElements = response.totalElements;
             this.totalPages = response.totalPages;
             this.length = response.content.length;
@@ -85,7 +86,8 @@ export class AddTrackAlbumComponent implements OnInit {
         author: updatedTrack.author,
         file: updatedTrack.file,
         album_id: albumId,
-        text: updatedTrack.text
+        text: updatedTrack.text,
+        // playlist_id: updatedTrack.playlist_id
       };
    // Обновляем album_id в editingStudent
 
@@ -94,7 +96,7 @@ export class AddTrackAlbumComponent implements OnInit {
   this.adminService.getAllTracksAlbumsAdd(this.currentPage, updatedTrackId, albumId ,this.pageSize,this.sortColumn,this.sortDirection
     )
     .subscribe( (response: Page<Track>) => {
-        this.dataSource3 = response.content;
+        this.tracks = response.content;
         this.totalElements = response.totalElements;
         this.totalPages = response.totalPages;
         this.length = response.content.length;

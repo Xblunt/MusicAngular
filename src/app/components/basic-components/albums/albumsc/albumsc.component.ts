@@ -20,6 +20,7 @@ import { OpenAlbumComponent } from 'src/app/components/dialog/open-album/open-al
 import { DeleteComponentComponent } from 'src/app/components/dialog/delete-component/delete-component/delete-component.component';
 import { EditComponent } from 'src/app/components/dialog/edit-component/edit/edit.component';
 import { AddTrackAlbumComponent } from 'src/app/components/dialog/addTrackAlbum/add-track-album/add-track-album.component';
+import { HomeService } from 'src/app/service/home.service';
 // import { AlbumService } from 'src/app/service/album.service';
 
 @Component({
@@ -29,8 +30,8 @@ import { AddTrackAlbumComponent } from 'src/app/components/dialog/addTrackAlbum/
 })
 export class AlbumscComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'name_album', 'picture',  'action'];
-
+  // displayedColumns: string[] = ['id', 'name_album', 'picture',  'action'];
+albums: any[] = [];
 
   dataSource2 = new MatTableDataSource<Album>();
 
@@ -45,11 +46,17 @@ export class AlbumscComponent implements AfterViewInit {
   user!: CredentialResponse;
   selectedAlbum!: Album;
   fromAlbumComponent: boolean = true;
-
+service: any;
 
  constructor(private baseService: BaseServiceService, private _liveAnnouncer: LiveAnnouncer,
-    public dialog:MatDialog, private http: HttpClient, private authService:AuthService, private adminService:AdminServiceService) {
+    public dialog:MatDialog, private http: HttpClient, public authService:AuthService, private adminService:AdminServiceService, private homeService:HomeService) {
       // this.baseService.getAllStudents().subscribe(data => this.dataSource = new MatTableDataSource(data));
+      if (this.authService.isStudent()){
+        this.service = this.homeService;
+      }
+      else if (this.authService.isAdmin()){
+        this.service = this.adminService;
+      }
 
     }
 
@@ -62,7 +69,7 @@ export class AlbumscComponent implements AfterViewInit {
     this.user = this.authService.LoggedUser;
   }
   ngOnInit(): void {
-
+    console.log(this.albums);
 
     this.getAllAlbum();
 
@@ -73,10 +80,10 @@ export class AlbumscComponent implements AfterViewInit {
   //   this.albumService.setSelectedAlbum(album);
   // }
     getAllAlbum( ): void {
-      this.adminService.getAllAlbum(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection)
+      this.service.getAllAlbum(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection)
         .subscribe((page: Page<Album>) => {
           console.log(page);
-          this.dataSource2.data = page.content;
+          this.albums = page.content;
 
           this.totalPages = page.totalPages;
 
@@ -114,7 +121,7 @@ export class AlbumscComponent implements AfterViewInit {
 
     deleteAlbum(album: Album){
       const dialogAddingNewStudent = this.dialog.open(DeleteComponentComponent, {
-        width: '700px',
+        width: '1000px',
         data: null
       });
        dialogAddingNewStudent.afterClosed().subscribe((confirmDelete: boolean) => {

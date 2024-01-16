@@ -10,9 +10,7 @@
 .track-author {
   margin: 5px 0;
 }
-.mat-icon:active {
-  color: grey;
-}
+
 .custom-audio {
   border-radius: 10px; /* Make the audio player oval-shaped */
   background-color: #D9D9D9; /* Set the background color of the audio player */
@@ -219,4 +217,7 @@
  .bbt:hover {
   background: rgb(47, 88, 1);
 background: linear-gradient(0deg, rgb(47, 88, 1) 0%, #2C5420 100%);
+}
+.mat-icon:active {
+  color: grey;
 }

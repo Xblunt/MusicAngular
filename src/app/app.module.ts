@@ -31,6 +31,13 @@ import { DeleteComponentComponent } from './components/dialog/delete-component/d
 import { EditComponent } from './components/dialog/edit-component/edit/edit.component';
 import { MatSelectModule } from "@angular/material/select";
 import { AddTrackAlbumComponent } from './components/dialog/addTrackAlbum/add-track-album/add-track-album.component';
+import { UserInfoComponent } from './components/basic-components/user-info/user-info/user-info.component';
+import { MatMenuModule } from "@angular/material/menu";
+import { AddChatsComponent } from './components/dialog/addChats/add-chats/add-chats.component';
+import { PaginatorModule } from 'primeng/paginator';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTabsModule} from '@angular/material/tabs';
+import { PlaylistComponent } from './components/dialog/playlist/playlist/playlist.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +53,11 @@ import { AddTrackAlbumComponent } from './components/dialog/addTrackAlbum/add-tr
     OpenAlbumComponent,
     DeleteComponentComponent,
     EditComponent,
-    AddTrackAlbumComponent
+    AddTrackAlbumComponent,
+    UserInfoComponent,
+    AddChatsComponent,
+    PlaylistComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -62,7 +73,14 @@ import { AddTrackAlbumComponent } from './components/dialog/addTrackAlbum/add-tr
     MatSelectModule,
     HttpClientModule,
     MatButtonModule,
-    MatGridListModule
+    MatGridListModule,
+    MatInputModule,
+    MatMenuModule,
+    PaginatorModule,
+    MatIconModule,
+    MatTabsModule
+
+
   ],
   providers: [BaseServiceService, SessionStorageService],
   bootstrap: [AppComponent]

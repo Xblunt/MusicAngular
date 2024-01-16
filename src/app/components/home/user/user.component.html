@@ -1,0 +1,84 @@
+<div class="screen">
+  <div class="panel panel-left" >
+
+      <div *ngFor="let chat of chats" class="track-container">
+        <div class="track-image">
+          <div class="panel panel-wh">
+            <button class=" panel-gray pau" mat-menu-item (click)=" loadMessage(chat)" >{{ chat.chatname }}</button>
+          <!-- <p class="album-picture">{{ album.picture }}</p> -->
+
+
+        </div>
+            </div>
+          </div>
+
+          <button class="panel panel-wh  btn-1 " (click)="addChat()">Add chat</button>
+          <!-- <button class="custom-btn btn-1 " (click)="OpenPlay()">open playlist</button> -->
+          <div class=" trr  left-alig">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="music_note" (click)="OpenPlay()"> </mat-icon>
+        </div>
+
+        </div>
+
+
+    <!-- </div> -->
+  <!-- <button class="but" mat-menu-item >000000000</button> -->
+  <!-- </div> -->
+  <div class="panel panel-right new-flex-container">
+    <div class="content-wrapper">
+      <div class=" panel-right top-right-menu">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="menu align-left" [matMenuTriggerFor]="menu" > </mat-icon>
+        <!-- <button class="menu right-align" mat-button [matMenuTriggerFor]="menu" >Menu</button> -->
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/client/auth-user']">Перейти к лк</button>
+          <button mat-menu-item [routerLink]="['/client/tracks']">Перейти к трекам</button>
+          <button mat-menu-item [routerLink]="['/login']">Logout</button>
+        </mat-menu>
+
+      </div>
+  </div>
+  <div class="message text-only">
+    <div class="response">
+
+
+  <div *ngFor="let message of mess" class="track-container">
+    <!-- <div class="but" [ngClass]="{'text': this.firstid === message.first, 'text2': this.firstid === message.second}" >
+      <p  class = "text2" *ngIf="message.textMess">{{ message.textMess }}</p>
+    </div> -->
+    <div class="but" *ngIf="this.firstid" >
+      <p  class= "text" *ngIf="message.textMess">{{ message.textMess }}</p>
+    </div>
+
+    <div class="but" *ngIf="this.secondid" >
+      <p  class= "tex" *ngIf="message.textMess">{{ message.textMess }}</p>
+    </div>
+      <!-- <p class="album-picture">{{ album.picture }}</p> -->
+      <p *ngIf="message.track">
+        <audio class="custom-audio" preload="none" controls>
+          <source src="data:audio/mpeg;base64,{{ message.track}}" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      </p>
+      </div></div>
+  </div>
+
+
+<input  [(ngModel)]="messageText" type="text" class="write-message" placeholder="Type your message here">
+<button class="custom-bt btn-2 left-align" (click)="Createmess(chat)">Send</button>
+
+
+      <!-- <mat-form-field>
+        <mat-label>Menu</mat-label>
+        <mat-select [(opened)]="opened" [class.menu-select]="opened">
+          <mat-option [routerLink]="['/user']">Перейти к чату</mat-option>
+          <mat-option [routerLink]="['/user/tracks']">Перейти к трекам</mat-option>
+          <mat-option [routerLink]="['/login']">Logout</mat-option>
+        </mat-select>
+      </mat-form-field> -->
+
+
+    </div>
+</div>
+
+  <!-- <button mat-raised-button (click)="addChat()">Add chat</button> -->
+

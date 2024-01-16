@@ -7,6 +7,7 @@ import { AdminComponent } from './components/home/admin/admin.component';
 import { UserComponent } from './components/home/user/user.component';
 import { AlbumscComponent } from './components/basic-components/albums/albumsc/albumsc.component';
 import { TrackscComponent } from './components/basic-components/tracks/tracksc/tracksc.component';
+import { UserInfoComponent } from './components/basic-components/user-info/user-info/user-info.component';
 
 
 const routes: Routes = [
@@ -23,16 +24,19 @@ const routes: Routes = [
     component: AdminComponent,
     canActivate: [AuthGuard]
     },
-
+    {
+      path: 'client',
+     component: UserComponent,
+     canActivate: [AuthGuard]
+     },
     { path: 'admin/album', component: AlbumscComponent },
     // { path: 'admin/album/:id', component: TrackscComponent },
     { path: 'admin/tracks', component: TrackscComponent },
-    {
-    // path: 'user',
-    path: '',
-    component: UserComponent,
-    // canActivate: [AuthGuard]
-    },
+    { path: 'client/album', component: AlbumscComponent },
+    // { path: 'admin/album/:id', component: TrackscComponent },
+    { path: 'client/tracks', component: TrackscComponent },
+    { path: 'client/auth-user', component: UserInfoComponent },
+
   ];
 
 @NgModule({

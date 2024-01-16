@@ -1,0 +1,73 @@
+<!--
+<mat-form-field>
+  <mat-label>Menu</mat-label>
+  <mat-select>
+    <mat-option [routerLink]="['/user']"> Перейти к чатам </mat-option>
+    <mat-option [routerLink]="['/user/tracks']"> Перейти к трекам </mat-option>
+    <mat-option [routerLink]="['/user/album']"> Перейти к альбомам </mat-option>
+    <mat-option  [routerLink]="['/login']"> Logout </mat-option>
+  </mat-select>
+</mat-form-field>
+<div class="album-container">
+  <div class="album-image" *ngFor="let user of user">
+    <p class="album-id">{{ user.id }}</p>
+    <p class="album-id">{{ user.fio }}</p>
+    <p class="album-id">{{ user.text }}</p>
+
+    <img class="picture" [src]="'data:picture/jpg;base64,' + user.photo">
+    <p class="album-id">{{ user.date }}</p>
+    <p class="album-id">{{ user.username }}</p>
+  </div>
+</div> -->
+
+<div class="screen">
+  <div class="panel panel-right new-flex-container">
+    <div class="content-wrapper">
+      <div class=" panel-right top-right-menu">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="menu align-left" [matMenuTriggerFor]="menu"></mat-icon>
+        <!-- <button class="menu right-align" mat-button [matMenuTriggerFor]="menu" >Menu</button> -->
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [routerLink]="['/client/tracks']">Перейти к трекам</button>
+          <button mat-menu-item [routerLink]="['/client']">Перейти к чатам</button>
+          <button mat-menu-item [routerLink]="['/login']">Logout</button>
+        </mat-menu>
+      </div>
+      <br>
+      <br>
+      <div *ngFor="let user of user" class="track-container">
+        <div>
+          <div class="picture">
+            <img [src]="'data:picture/jpg;base64,' + user.photo" alt="Album picture">
+          </div>
+
+        <div class="panel panel-wh">
+          <div class="panel panel-gray pau">
+
+            <h4>ID:   </h4> <pre>  </pre>  {{ user.id }}
+          </div>
+        </div>
+        <div class="panel panel-wh">
+          <div class="panel panel-gray pau">
+            <h4>FIO:   </h4> <pre>  </pre> {{ user.fio }}
+          </div>
+        </div>
+        <div class="panel panel-wh">
+          <div class="panel panel-gray pau">
+            <h4>Date of Birth:   </h4> <pre>  </pre> {{ user.date }}
+          </div>
+        </div>
+        <div class="panel panel-wh">
+          <div class="panel panel-gray pau">
+            <h4>Username:   </h4> <pre>  </pre> {{ user.username }}
+          </div>
+        </div>
+        <div class="panel panel-wh">
+          <div class="panel panel-gray pau">
+            <h4>Description:   </h4> <pre>  </pre> {{ user.text }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

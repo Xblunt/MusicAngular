@@ -1,6 +1,6 @@
 import { ROLE, ROLE_MAPPER } from './role';
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { AuthService } from './auth.service';
@@ -9,50 +9,51 @@ import { CredentialResponse } from './model/auth/credentialResponse';
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild, CanLoad{
-    constructor(private authService : AuthService,
-        private router: Router) {}
+export class AuthGuard{
+  constructor(private authService : AuthService,
+      private router: Router) {}
 
-    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-        return this.authService.isLoggedIn.pipe(
-            take(1),
-            map((isLoggedIn: boolean) => {
-                if(!isLoggedIn){
-                    this.redirectToLogin();
-                    return false;
-                }
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-                const loggedUser: CredentialResponse = this.authService.LoggedUser;
-                if(loggedUser != null && loggedUser.authenticated){
-                    for(let role in ROLE) {
-                        let checkAuthRole: boolean = false;
-                        loggedUser.authorities.forEach(el => checkAuthRole = el.authority == role);
-                        if(checkAuthRole){
-                            let access = AuthService.checkAuthUser(loggedUser, role);
+    return this.authService.isLoggedIn.pipe(
+          take(1),
+          map((isLoggedIn: boolean) => {
+              if(!isLoggedIn){
+                  this.redirectToLogin();
+                  return false;
+              }
 
-                            if(!access && checkAuthRole){
-                                this.redirectToLogin();
-                            }
+              const loggedUser: CredentialResponse = this.authService.LoggedUser;
+              if(loggedUser != null && loggedUser.authenticated){
+                  for(let role in ROLE) {
+                      let checkAuthRole: boolean = false;
+                      loggedUser.authorities.forEach(el => checkAuthRole = el.authority == role);
+                      if(checkAuthRole){
+                          let access = AuthService.checkAuthUser(loggedUser, role);
 
-                            return access;
-                        }
-                    }
-                }
+                          if(!access && checkAuthRole){
+                              this.redirectToLogin();
+                          }
 
-                return false;
-            })
-        );
-    }
+                          return access;
+                      }
+                  }
+              }
 
-    private redirectToLogin(){
-        this.router.navigate(['login']);
-    }
+              return false;
+          })
+      );
+  }
 
-    canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree  {
-        return true;
-    }
+  private redirectToLogin(){
+      this.router.navigate(['login']);
+  }
 
-    canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
-        return true;
-    }
+  canActivateChild(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree  {
+      return true;
+  }
+
+  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+      return true;
+  }
 };

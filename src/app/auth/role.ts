@@ -1,12 +1,12 @@
 export enum ROLE {
   SUPER_USER = 'SUPER_USER',
-  USER = 'USER',
+  CLIENT = 'CLIENT',
 
 }
 
 export const ROLE_MAPPER = {
   [ROLE.SUPER_USER]: 'SUPER_USER',
-  [ROLE.USER]: 'USER',
+  [ROLE.CLIENT]: 'CLIENT',
 
 }
 // {[char: string]: string}

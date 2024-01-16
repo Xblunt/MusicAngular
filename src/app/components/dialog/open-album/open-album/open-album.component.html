@@ -1,36 +1,8 @@
- <p>Dialog works track!</p>
 
-
-
-<!-- <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource4" matSort>
-
-
-    <ng-container matColumnDef="nameAlbum">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Album Name</th>
-      <td mat-cell *matCellDef="let album">{{ album.nameAlbum }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="tracks">
-      <th mat-header-cell *matHeaderCellDef>Tracks</th>
-      <td mat-cell *matCellDef="let album">
-        <table>
-          <tr *ngFor="let track of album.tracks">
-            <td>{{ track.id }}</td>
-            <td>{{ track.name }}</td>
-            <td>{{ track.author }}</td>
-          </tr>
-        </table>
-      </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-  </table> -->
+<!--
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource4" matSort >
-      <!-- (matSortChange)="announceSortChange($event)"> -->
+
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
         <td mat-cell *matCellDef="let track"> {{track.id}} </td>
@@ -43,18 +15,27 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> author </th>
         <td mat-cell *matCellDef="let track"> {{track.author}} </td>
       </ng-container>
+      <ng-container div *ngIf="authService.isAdmin()">
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <td mat-cell *matCellDef="let track">
+            <div>
+
+            </div>
+            </td>
+        </ng-container>
+      </ng-container>
+      <ng-container div *ngIf="authService.isStudent()">
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
         <td mat-cell *matCellDef="let track">
           <div>
-            <!-- <button  class="custom-btn btn-1" (click)="editUser(student)">Edit</button>
-            <button  class="custom-btn btn-1" (click)="deleteUser(student)">Delete</button> -->
 
           </div>
           </td>
       </ng-container>
-      <!-- <td mat-cell *matCellDef="let album"> <button  class="custom-btn btn-1" mat-raised-button (click)="Addtracks(album)">Add</button></td> -->
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    </ng-container>
+     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     </table>
@@ -69,36 +50,37 @@
     (page)="updatePageSizeTrackss($event)"></mat-paginator>
 </div>
 
-        <!-- <button  class="custom-btn btn-1" (click)="editUser(student)">Edit</button>
-        <button  class="custom-btn btn-1" (click)="deleteUser(student)">Delete</button> -->
-        <!-- <div class="mat-elevation-z8">
-          <table mat-table [dataSource]="dataSource4" matSort >
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-          <td mat-cell *matCellDef="let album">
-            <div>
-              <button  class="custom-btn btn-1" mat-raised-button (click)="Addtracks(album)">Add</button>
-              <button mat-raised-button (click)="close()">Cancel</button>
-            </div>
-            </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-      </table> -->
-      <!-- <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource2">
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let album">
-              <div>
-                <button class="custom-btn btn-1" mat-raised-button (click)="Addtracks(album)">Add</button>
-                <button mat-raised-button (click)="close()">Cancel</button>
-              </div>
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-        </table>
-      </div> -->
-      <!-- <button  class="custom-btn btn-1" mat-raised-button (click)="Addtracks(selectedAlbum)">Add</button> -->
-<button mat-raised-button (click)="close()">Cancel</button>
+
+<button mat-raised-button (click)="close()">Cancel</button> -->
+<div *ngFor="let track of tracks" class="track-container">
+  <div class="panel panel-wh">
+  <div class="panel panel-gray pau">
+    <p>
+      <audio class="custom-audio" preload="none" controls>
+        <source src="data:audio/mpeg;base64,{{ track.file }}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </p>
+
+       <p class="track-id"> {{ track.name }}   -   {{ track.author }}</p>
+       <div class="right-align" *ngIf="authService.isStudent()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="favorite_border"
+        (click)="handleUserButtonClick(track)" [ngClass]="{'active': isIconActive}">
+    </mat-icon>
+       </div>
+  </div>
+  </div>
+</div>
+<div class="paginator-wrapper">
+  <div class="paginator-container">
+    <mat-paginator  class="pag" #paginator
+                  [pageSize]="pageSize"
+                  [length]="totalElements"
+                  [pageSizeOptions]="[2, 7, 10, 25]"
+                  [showFirstLastButtons]="true"
+                  (page)="updatePageSizeTrackss($event)"  aria-label="Select page">
+    </mat-paginator>
+  </div>
+
+  <button class="custom-btn btn-1 right-align cc" (click)="close()">Close</button>
+</div>
