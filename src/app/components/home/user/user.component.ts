@@ -1,4 +1,5 @@
-import { Track } from 'src/app/model/track';
+import { Track } from './../../../model/track';
+
 import { Chat } from './../../../model/chat';
 import { HomeService } from 'src/app/service/home.service';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
@@ -38,8 +39,9 @@ export class UserComponent implements  AfterViewInit{
   // dataSource4 = new MatTableDataSource<User>();
 
   usernamell!: string ;
+  name!: string;
   currentPage: number = 0;
-  pageSize: number = 100;
+  pageSize: number = 10;
   // active: string = 'user_id';
   sortColumn: string = 'id';
   sortDirection: string = 'asc';
@@ -50,8 +52,11 @@ export class UserComponent implements  AfterViewInit{
   fromUserComponent: boolean = true;
 chats: any[] = [];
 mess: any[]=[];
-tracks: any[]=[];
+tracks: Track[]=[];
 chat!: Chat;
+track!: Track;
+
+
 message: Message;
 messageText!: string;
 selectedChat!: number;
@@ -76,8 +81,8 @@ firstid!:number;
   ngOnInit(): void {
     const storedUsername = localStorage.getItem('username');
     this.usernamell = storedUsername !== null ? storedUsername : '';
-    const trackfile = localStorage.getItem('trackId');
-
+    const name = localStorage.getItem('trackname');
+    this.name = name !== null ? name : '';
     this.getAllUser();
 
 
@@ -214,26 +219,124 @@ console.log('After assigning page.content:', data);
             });
           }
 
-          loadMessage(chat: Chat): void {
-            const chatId = chat.id;
-            this.selectedChat = chat.id;
-            this.secondid = chat.second_id;
-            this.firstid = chat.first_id;
-            console.log("first:"  +  this.firstid);
-            console.log("sec:"  +  this.secondid);
+          // loadMessage(chat: Chat): void {
+          //   const chatId = chat.id;
+          //   this.selectedChat = chat.id;
+          //   this.secondid = chat.second_id;
+          //   this.firstid = chat.first_id;
+
+          //   console.log("first:"  +  this.firstid);
+          //   console.log("sec:"  +  this.secondid);
+            // this.homeService.getAllMess(
+            //   this.currentPage,
+            //   chatId,
+            //   this.pageSize,
+            //   this.sortColumn,
+            //   this.sortDirection
+            // ).subscribe((response: Page<Message>) => {
+            //   this.mess = response.content;
+            //   const trackId = response.content.track;
+            //   console.log('ddddddddddddddd',response.content);
+            //   // this.homeService.getMessTrack(trackId).subscribe((ttt: Track[]) => {
+            //   //    this.tracks = ttt; });
+            // // const trackId = this.mess.track;
+            //   this.totalElements = response.totalElements;
+            //   this.totalPages = response.totalPages;
+            //   this.length = response.content.length;
+
+            // // const trackId = this.mess;
+            // // this.homeService.getMessTrack(trackId).subscribe((ttt: Track[]) => {
+            // //    this.tracks = ttt;
+            // });
+            loadMessage(chat: Chat): void {
+              const chatId = chat.id;
+              this.selectedChat = chat.id;
+              this.secondid = chat.second_id;
+              this.firstid = chat.first_id;
+
+              console.log("first:"  +  this.firstid);
+              console.log("sec:"  +  this.secondid);
+
             this.homeService.getAllMess(
               this.currentPage,
               chatId,
               this.pageSize,
               this.sortColumn,
               this.sortDirection
-            ).subscribe((response: Page<Chat>) => {
+           ).subscribe((response: Page<Message>) => {
               this.mess = response.content;
+              console.log('Received messages:', this.mess);
+
               this.totalElements = response.totalElements;
               this.totalPages = response.totalPages;
               this.length = response.content.length;
-            });
+              this.mess.forEach((message: Message) => {
+                 const trackId = message.track_id;
+                 console.log('TrackId for message:', trackId);
+
+
+                //  const trackIdArray: number[] = this.mess
+                //  .map(message => message.track_id)
+                //  .filter(trackId => trackId !== null && trackId !== 0);
+
+
+                  // if (trackIdArray.length > 0) {
+                    if(trackId !== null && trackId !== 0) {
+                      // let trackIdArray: number[] = [];
+
+                        this.homeService.getTrackid(trackId).subscribe((ttt: Track) => {
+                           this.track = ttt;
+
+                           console.log('trackkk', trackId);
+                           console.log('trackmass', ttt);
+                           message.track = this.track;
+                        });
+                     } else {
+                        console.log('Trackid = null');
+                     }
+             });
+           });
+
+
+
+          // }
+
+          // let trackIdArray: number[] = [];
+    //     this.homeService.getAllMess(
+    //        this.currentPage,
+    //        chatId,
+    //        this.pageSize,
+    //        this.sortColumn,
+    //        this.sortDirection
+    //     ).subscribe((response: Page<Message>) => {
+    //        this.mess = response.content;
+    //        console.log('Received messages:', this.mess);
+
+    //       this.mess.forEach((message: Message) => {
+    //       const trackId = message.track_id;
+    //       console.log('TrackId for message:', trackId);
+
+    //      if (trackId !== null && trackId !== 0) {
+
+
+
+    //      this.homeService.getTrackid(trackId).subscribe((ttt: Track[]) => {
+    //     this.tracks = ttt;
+    //     console.log('Received tracks:', this.tracks);
+    //     });
+
+    //    this.totalElements = response.totalElements;
+    //    this.totalPages = response.totalPages;
+    //    this.length = response.content.length;
+    //   }
+    // });
+    //   });
           }
+            //     trackIdArray.push(trackId);
+        //  } else {
+        //      console.log('TrackId = null');
+        //  }
+        // });
 
           Createmess(chat:Chat):void{
             const chatId = this.selectedChat;
@@ -273,7 +376,11 @@ console.log('After assigning page.content:', data);
               } else {
                 console.log('Окно закрыто без сохранения изменений.');
               }
+
+
+              this.loadMessage(this.chat);
             });
+
           }
           //   updatePageSizeTrackss(event: PageEvent): void {
           //   this.pageSize = event.pageSize;

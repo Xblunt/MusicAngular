@@ -40,26 +40,103 @@
   <div class="message text-only">
     <div class="response">
 
+      <div *ngIf="this.mess && this.mess.length === 0 && (!this.tracks || this.tracks.length === 0)">
+        <p>Нет доступных сообщений или треков.</p>
+      </div>
 
-  <div *ngFor="let message of mess" class="track-container">
+
+<!--
+  <div *ngFor="let message of mess" class="track-container"> -->
     <!-- <div class="but" [ngClass]="{'text': this.firstid === message.first, 'text2': this.firstid === message.second}" >
       <p  class = "text2" *ngIf="message.textMess">{{ message.textMess }}</p>
     </div> -->
-    <div class="but" *ngIf="this.firstid" >
+    <!-- <div class="but" *ngIf="this.firstid" >
       <p  class= "text" *ngIf="message.textMess">{{ message.textMess }}</p>
     </div>
+   -->
 
-    <div class="but" *ngIf="this.secondid" >
+    <!-- <div class="but" *ngIf="this.secondid" >
       <p  class= "tex" *ngIf="message.textMess">{{ message.textMess }}</p>
-    </div>
+    </div> -->
       <!-- <p class="album-picture">{{ album.picture }}</p> -->
-      <p *ngIf="message.track">
-        <audio class="custom-audio" preload="none" controls>
-          <source src="data:audio/mpeg;base64,{{ message.track}}" type="audio/mpeg">
+      <!-- <div *ngFor="let track of tracks" class="track-container">
+      <p>
+        <audio class="custom-audio text" preload="none" controls>
+          <source src="data:audio/mpeg;base64,{{ track.file}}" type="audio/mpeg">
           Your browser does not support the audio element.
         </audio>
       </p>
-      </div></div>
+      </div> -->
+      <!-- <div *ngIf="this.mess && this.mess.length > 0"> -->
+<!--
+        <div *ngFor="let message of mess" class="track-container">
+                 <div *ngIf="message.textMess !== null">
+          <div class="but" *ngIf="this.firstid">
+            <p class="text" *ngIf="message.textMess">{{ message.textMess }}</p>
+          </div>
+        </div>
+        <div *ngIf="message.textMess === null">
+          <div *ngIf=" track  " class="track-container"> -->
+            <!-- <p>
+              <audio class="custom-audio text" preload="none" controls>
+                <source src="data:audio/mpeg;base64,{{ track.file}}" type="audio/mpeg">
+
+              </audio>
+            </p> -->
+
+                  <!-- <p class="text2" >{{track.name}}<p>
+          </div>
+
+
+        </div>
+      </div> -->
+
+      <div *ngFor="let message of mess" class="track-container">
+
+        <div *ngIf="message.textMess !== null">
+            <div class="but"  >
+              <p [ngClass]="{'text': this.firstid == message.first, 'tex': this.secondid == message.first}">{{ message.textMess }}</p>
+            </div>
+        </div>
+        <div *ngIf="message.textMess === null">
+            <div *ngIf="message.track" class="track-container">
+                <!-- Вывод информации о треке -->
+               <p [ngClass]="{'text2': this.firstid == message.first, 'tex2': this.secondid == message.first}">   <audio controls class="custom-audio">
+                    <source [src]="message.track.file" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                  </audio></p>
+
+            </div>
+
+    </div>
+  </div>
+
+  <!-- <div *ngFor="let message of mess" class="track-container">
+    <div *ngIf="this.secondid == message.first">
+      <div *ngIf="message.textMess !== null">
+          <div class="but" >
+              <p class="tex" *ngIf="message.textMess">{{ message.textMess }}</p>
+          </div>
+      </div>
+      <div *ngIf="message.textMess === null">
+          <div *ngIf="message.track" class="track-container">
+
+          <p class="tex2" >   <audio controls class="custom-audio">
+                  <source [src]="message.track.file" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio></p>
+          </div>
+      </div>
+  </div>
+</div> -->
+
+
+
+
+
+
+      <!-- <div *ngIf="this.tracks && this.tracks.length > 0"> -->
+     </div>
   </div>
 
 

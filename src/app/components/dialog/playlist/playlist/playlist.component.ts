@@ -128,11 +128,11 @@ console.log(page.content);
         this.dialogRef.close();
        }
        Createmtrack(track:Track):void{
-        localStorage.removeItem('trackId');
+
         const chatId = this.data;
         console.log('aaaaaaaaaaaaaaaaaaaaaaaaa:::'+ chatId)
        const messgg =  track.id;
-       localStorage.setItem('trackId', track.file);
+
 
     const username = this.usernamell;
        console.log('aaaaaaaaaaaaaaaaaaaaaaaaa:::'+ messgg)
@@ -141,7 +141,7 @@ console.log(page.content);
           this.getPlaylist();
 
         });
-
+        this.getPlaylist();
 
 
       }

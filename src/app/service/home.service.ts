@@ -97,6 +97,23 @@ export class HomeService extends IbaseServiceService {
     return this.get<Page<Message>>(`${this.chats}/${chatId}`, params);
   }
 
+  getMessTrack(trackId: number): Observable<Track[]> {
+    let params = new HttpParams()
+    .set("trackId", trackId);
+    // .set("name", name);
+    // console.log(name);
+    // console.log(chatId);
+    return this.get<Track[]>(`${this.homeUrlTrack}/mess`, params);
+  }
+  getTrackid(trackId:number):Observable<Track>{
+    let params = new HttpParams()
+    // trackId.forEach(trackId => {
+    //   params = params.append('trackIds', trackId.toString());
+    // });
+    .set("trackIds", trackId);
+    return this.get<Track>(`${this.homeUrlTrack}/send`, params);
+  }
+
   createMess(mess: Message,chatId: number, usernmae: string, messgg: string): Observable<Message> {
     let params = new HttpParams()
     .set('username', usernmae)
@@ -105,12 +122,14 @@ export class HomeService extends IbaseServiceService {
     console.log(chatId);
     return this.post<Message>(`${this.chats}/${chatId}`, mess, params);
   }
+
+
   createMTrack(mess: Message,chatId: number, usernmae: string, messgg: number): Observable<Message> {
     let params = new HttpParams()
     .set('username', usernmae)
     .set('messgg', messgg)
 
-    console.log(chatId);
+    console.log('rrrrrrr',chatId);
     return this.post<Message>(`${this.chats}/${chatId}/add`, mess, params);
   }
   getAllUsers(page: number, size: number, username: string, sortColumn: string, sortDirection: string): Observable<Page<User>> {

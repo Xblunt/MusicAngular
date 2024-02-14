@@ -156,8 +156,8 @@
 
 
           <!-- Большая фотография -->
-          <img class="picture" [src]="'data:picture/jpg;base64,' + album.picture" alt="Big Photo">
-
+          <!-- <img class="picture" [src]="'data:picture/jpg;base64,' + album.picture" alt="Big Photo"> -->
+          <img class="picture" src = {{album.picture}}>
         <div class="inf">
           <!-- Текст и кнопки -->
           <p>{{ album.id }}   -   {{ album.name_album }} </p>

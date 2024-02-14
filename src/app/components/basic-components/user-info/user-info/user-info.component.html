@@ -37,7 +37,8 @@
       <div *ngFor="let user of user" class="track-container">
         <div>
           <div class="picture">
-            <img [src]="'data:picture/jpg;base64,' + user.photo" alt="Album picture">
+            <!-- <img [src]="'data:picture/jpg;base64,' + user.photo" alt="Album picture"> -->
+            <img src = {{user.photo}}>
           </div>
 
         <div class="panel panel-wh">
