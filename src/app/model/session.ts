@@ -5,3 +5,4 @@ export class Session{
   pause!: boolean;
 //  chatId!: number;
  }
+///TEST OLD2
