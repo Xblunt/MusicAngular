@@ -10,6 +10,8 @@ import { User } from '../model/user';
 import { Chat } from '../model/chat';
 import { Message } from '../model/message';
 import { Pttt } from '../model/pt';
+import { WebSocetServiceService } from './web-socet-service.service';
+import { Session } from '../model/session';
 @Injectable({
   providedIn: 'root'
 })
@@ -25,13 +27,17 @@ export class HomeService extends IbaseServiceService {
   constructor(http: HttpClient) {
     super(http, 'api');
   }
-
+  getSession(chatId:number): Observable<Session>{
+    let params = new HttpParams()
+    .set("chatId", chatId)
+    return this.get<Session>("client/session", params);
+}
 
   getAllAlbum(page: number, size: number, sortColumn: string, sortDirection: string): Observable<Page<Album>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
-      .set("sortColumn", sortColumn)
+
       .set("sortDirection", sortDirection);
     return this.get<Page<Album>>(this.homeUrlAl, params);
 
@@ -113,6 +119,22 @@ export class HomeService extends IbaseServiceService {
     .set("trackIds", trackId);
     return this.get<Track>(`${this.homeUrlTrack}/send`, params);
   }
+  // updateSession(action: string, currentTime: number, chatId: number){
+  //   // Формируем сообщение для отправки на сервер
+  //   const message = {
+  //     action: action,
+  //     time: currentTime,
+  //     chatId: chatId
+  //   };
+
+  //   // Отправляем сообщение на сервер через веб-сокет и ожидаем ответа
+  //   this.webSocetServiceService.watch("/client/" + id).subscribe(() => {
+  //     this.getCurrentOrder()
+  //     .subscribe((data) => console.log("Reject from order " + data.id));
+  //     });
+  //     this.webSocetServiceService.publish({destination : "/customer/order/" + id, body: ORDER_ACTION_REQUEST.REJECT});
+  //     }
+
 
   createMess(mess: Message,chatId: number, usernmae: string, messgg: string): Observable<Message> {
     let params = new HttpParams()

@@ -14,7 +14,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { MatButtonModule } from "@angular/material/button";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { BaseServiceService } from "./service/base-service.service";
@@ -38,6 +38,9 @@ import { PaginatorModule } from 'primeng/paginator';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTabsModule} from '@angular/material/tabs';
 import { PlaylistComponent } from './components/dialog/playlist/playlist/playlist.component';
+import { WebSocetServiceService } from "./service/web-socet-service.service";
+import { WebSocketConfig } from "./auth/config/WebSocetConfig";
+import { HomeService } from "./service/home.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -82,7 +85,17 @@ import { PlaylistComponent } from './components/dialog/playlist/playlist/playlis
 
 
   ],
-  providers: [BaseServiceService, SessionStorageService],
+  providers: [BaseServiceService, SessionStorageService,
+    {
+      provide : WebSocetServiceService,
+      useFactory: (http: HttpClient)=>{
+          const service = new WebSocetServiceService();
+          service.configure(WebSocketConfig);
+          // service.activate();
+          return service;
+      }
+  }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

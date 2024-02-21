@@ -4,7 +4,7 @@
       <div *ngFor="let chat of chats" class="track-container">
         <div class="track-image">
           <div class="panel panel-wh">
-            <button class=" panel-gray pau" mat-menu-item (click)=" loadMessage(chat)" >{{ chat.chatname }}</button>
+            <button class=" panel-gray pau" mat-menu-item (click)=" loadMessage(chat);  connectToWebSocket()" [disabled]="connected" >{{ chat.chatname }}</button>
           <!-- <p class="album-picture">{{ album.picture }}</p> -->
 
 
@@ -100,12 +100,21 @@
         </div>
         <div *ngIf="message.textMess === null">
             <div *ngIf="message.track" class="track-container">
-                <!-- Вывод информации о треке -->
-               <p [ngClass]="{'text2': this.firstid == message.first, 'tex2': this.secondid == message.first}">   <audio controls class="custom-audio">
-                    <source [src]="message.track.file" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                  </audio></p>
 
+              <p [ngClass]="{'text2': this.firstid == message.first, 'tex2': this.secondid == message.first}">
+                <audio #myAudioElement controls class="custom-audio" (play)="playAudio()" (pause)="pauseAudio()" (timeupdate)="seekAudio($event)">
+                  <source [src]="message.track.file" type="audio/mpeg">
+                  Your browser does not support the audio element.
+                </audio>
+
+
+              </p>
+              <input type="number" id="timeInput" placeholder="Введите время в секундах">
+
+              <button (click)="setAudioTime()">Установить время</button>
+              <!-- <button (click)="connectToWebSocket()" [disabled]="connected">Connect</button> -->
+<button (click)="disconnectFromWebSocket()" [disabled]="!connected">Disconnect</button>
+<button (click)="update()">Обновить время</button>
             </div>
 
     </div>

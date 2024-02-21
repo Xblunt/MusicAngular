@@ -23,6 +23,9 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { AddChatsComponent } from '../../dialog/addChats/add-chats/add-chats.component';
 import { PlaylistComponent } from '../../dialog/playlist/playlist/playlist.component';
 import { Message } from 'src/app/model/message';
+import { WebSocetServiceService } from 'src/app/service/web-socet-service.service';
+import { Session } from 'src/app/model/session';
+import { WebSocketConfig } from 'src/app/auth/config/WebSocetConfig';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -62,12 +65,13 @@ messageText!: string;
 selectedChat!: number;
 secondid!:number;
 firstid!:number;
- constructor(private baseService: BaseServiceService, private _liveAnnouncer: LiveAnnouncer,
+ constructor(private baseService: BaseServiceService,private webSocetServiceService: WebSocetServiceService, private _liveAnnouncer: LiveAnnouncer,
     public dialog:MatDialog, private http: HttpClient, private authService:AuthService, private adminService:AdminServiceService, private homeService: HomeService) {
       // this.baseService.getAllStudents().subscribe(data => this.dataSource = new MatTableDataSource(data));
  this.message = new Message;
-    }
 
+    }
+    @ViewChild('myAudioElement') audioElement!: ElementRef<HTMLAudioElement>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<any>;
@@ -94,9 +98,10 @@ firstid!:number;
   someMethod() {
     this.trigger.openMenu();
   }
-    getAllUser( ): void {
-      if (this.usernamell) {
-        const username = this.usernamell;
+
+  getAllUser( ): void {
+    if (this.usernamell) {
+      const username = this.usernamell;
 
 
         this.homeService.getChats(
@@ -161,11 +166,7 @@ console.log('After assigning page.content:', data);
             const username = this.usernamell;
 
 
-            this.homeService.getChats(
-
-              username
-
-            ).subscribe((data: Chat[]) => {
+            this.homeService.getChats(username).subscribe((data: Chat[]) => {
 
               console.log( data);
               console.log('Before assigning chats:', this.chats);
@@ -290,6 +291,7 @@ console.log('After assigning page.content:', data);
                            console.log('trackkk', trackId);
                            console.log('trackmass', ttt);
                            message.track = this.track;
+
                         });
                      } else {
                         console.log('Trackid = null');
@@ -387,6 +389,178 @@ console.log('After assigning page.content:', data);
           //   this.currentPage = event.pageIndex;
           //   this.loadMessage();
           // }
+
+          oneplay: number = 1;
+          // playAudio() {
+          //   const chatId = this.selectedChat;
+          //   console.log("chatId playtrack", chatId);
+
+          //   const audioElement = this.audioElement.nativeElement as HTMLAudioElement;
+
+          //   // if (this.oneplay == 1) {
+          //     audioElement.play();
+          //     // this.oneplay = 0;
+          //     console.log("PLAAAAY");
+          //     console.log("Current time plaaaayy:", audioElement.currentTime);
+
+
+          //     const currentTime = audioElement.currentTime;
+          //     const action = 'play';
+          //     this.webSocetServiceService.updateSession(currentTime, action, chatId);
+          //   // } else {
+          //   //   this.pauseAudio();
+          //   // }
+          // }
+           updateSessionCalled: boolean = false;
+          playAudio() {
+            // let updateSessionCalled = false;
+            if(this.updateSessionCalled === false){
+            const chatId = this.selectedChat;
+            console.log("chatId playtrack", chatId);
+
+            const audioElement = this.audioElement.nativeElement as HTMLAudioElement;
+
+            console.log("PLAAAAY");
+            console.log("Current time plaaaayy:", audioElement.currentTime);
+
+            const currentTime = audioElement.currentTime;
+            const action = 'play';
+            const pause = false;
+            this.updateSessionCalled = true;
+
+            this.webSocetServiceService.updateSession(currentTime, action, chatId,pause);
+
+
+
+            audioElement.play();;
+            }
+          }
+
+              // playAudio() {
+              //   this.webSocetServiceService.getData().subscribe((data) => {
+              //     // здесь вы получите обновления данных и можете их использовать в вашем компоненте
+              //     console.log("Received data in component:", data);
+              //   });
+              // }
+
+
+          connected: boolean = false;
+          connectToWebSocket() {
+            this.webSocetServiceService.activate();
+
+
+            this.connected = true;
+            const chatId = this.selectedChat;
+            const audioElement = this.audioElement.nativeElement as HTMLAudioElement;
+            this.webSocetServiceService.getData().subscribe((session)=> {
+              console.log("session get",session );
+           if(session.action === "play"){
+
+            audioElement.currentTime = session.time;
+            audioElement.play();
+
+           }
+          else if (session.action === "stop"){
+            audioElement.currentTime = session.time;
+            audioElement.pause();
+
+            }
+
+            else {
+
+              console.log("Need play and stop")
+            }
+
+            })
+          // this.update();
+          }
+
+          nullSession(){
+            const chatId = this.selectedChat;
+            const currentTime = 0;
+            const action = "null";
+            const pause = false;
+            this.webSocetServiceService.updateSession(currentTime, action, chatId,pause);
+          }
+
+          update() {
+            console.log("update" );
+            const chatId = this.selectedChat;
+            const audioElement = this.audioElement.nativeElement as HTMLAudioElement;
+            this.homeService.getSession(chatId).subscribe((data: Session)=> {
+              console.log("session get",data );
+           if(data.action === "play"){
+
+            audioElement.currentTime = data.time + 0.2;
+            audioElement.play();
+            data.action = "play";
+            data.pause = false;
+           }
+          else if (data.action === "stop"){
+            audioElement.currentTime = data.time;
+            audioElement.pause();
+
+            data.action = "stop";
+            }
+            else if (data.pause === true){
+              audioElement.currentTime = data.time;
+              audioElement.pause();
+              data.action = "stop";
+
+              }
+            else {
+
+              console.log("Need play and stop")
+            }
+
+            })
+          }
+          disconnectFromWebSocket() {
+            this.webSocetServiceService.deactivate();
+            this.connected = false;
+            const audioElement = this.audioElement.nativeElement as HTMLAudioElement;
+            audioElement.pause();
+          }
+          pauseAudio() {
+
+           if (this.updateSessionCalled === true){
+            const audioElement = this.audioElement.nativeElement as HTMLAudioElement;
+            const chatId = this.selectedChat;
+
+            audioElement.pause();
+            const pause = true;
+
+            this.updateSessionCalled = false;
+              const currentTime = audioElement.currentTime;
+              const action = 'stop';
+              this.webSocetServiceService.updateSession(currentTime, action, chatId,pause);
+
+
+
+            console.log("STOOOOP");
+            console.log("Current time stooop:", audioElement.currentTime);
+}
+          }
+          seekAudio(event: Event) {
+            const audioElement = event.target as HTMLAudioElement;
+
+            // console.log("Current time:", time);
+            const chatId = this.selectedChat;
+            const currentTime = audioElement.currentTime;
+            const action = 'play';
+            const pause = false;
+
+            this.webSocetServiceService.updateSession(currentTime, action, chatId,pause);
+          }
+          setAudioTime() {
+            const timeInput = document.getElementById('timeInput') as HTMLInputElement;
+            const time = Number(timeInput.value);
+            const audioElement = this.audioElement.nativeElement as HTMLAudioElement;
+            audioElement.currentTime = time;
+            console.log(`Set audio time: ${time}, current`);
+            console.log("Current time set:", audioElement.currentTime);
+          }
+
           }
 
 
