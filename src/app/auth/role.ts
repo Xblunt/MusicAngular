@@ -9,4 +9,3 @@ export const ROLE_MAPPER = {
   [ROLE.CLIENT]: 'CLIENT',
 
 }
-// {[char: string]: string}

@@ -1,43 +1,13 @@
-<!-- <p>add-chats works!</p>
 <div *ngFor="let user of users" class="track-container">
-  <div class="track-image">
-     <p >{{ user.id }}</p>
-     <p >{{ user.fio }}</p>
-     <button type="button" (click)="handleUserButtonClick(user)">Create Chat</button> -->
-
-    <!-- <p class="album-picture">{{ album.picture }}</p> -->
-
-
-
-      <!-- </div>
-    </div>
-    <button mat-raised-button (click)="onNoClick()">Cancel</button>
- -->
-
-
-
-
-    <div *ngFor="let user of users" class="track-container">
       <div class="panel panel-wh">
       <div class="panel panel-gray pau">
         {{ user.id }}: {{ user.fio }}
         <div class="right-align">
-
           <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="chat" (click)="handleUserButtonClick(user)"> </mat-icon>
-
         </div>
       </div>
       </div>
     </div>
     <div class="paginator-wrapper">
-      <!-- <div class="paginator-container">
-        <mat-paginator  class="pag" #paginator
-                      [pageSize]="pageSize"
-                      [length]="totalElements"
-                      [pageSizeOptions]="[2, 7, 10, 25]"
-                      [showFirstLastButtons]="true"
-                      (page)="updatePageSize($event)"  aria-label="Select page">
-        </mat-paginator>
-      </div> -->
       <button class="custom-btn btn-1" (click)="onNoClick()">Close</button>
-    </div>
+</div>

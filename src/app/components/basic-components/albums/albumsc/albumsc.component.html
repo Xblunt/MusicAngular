@@ -1,77 +1,3 @@
-<!--
-<ng-container div *ngIf="authService.isAdmin()">
-  <mat-form-field>
-    <mat-label>Menu</mat-label>
-    <mat-select>
-      <mat-option  [routerLink]="['/admin']">Перейти к пользователям </mat-option>
-
-      <mat-option  [routerLink]="['/login']"> Logout </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  </ng-container>
-<ng-container div *ngIf="authService.isStudent()">
-  <mat-form-field>
-    <mat-label>Menu</mat-label>
-    <mat-select>
-      <mat-option [routerLink]="['/user']"> Перейти к чатам </mat-option>
-
-      <mat-option [routerLink]="['/user/auth-user']"> lk </mat-option>
-      <mat-option  [routerLink]="['/login']"> Logout </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  </ng-container> -->
-
-<!-- <div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource2" matSort >
-
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let album"> {{album.id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="name_album">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> name_album </th>
-      <td mat-cell *matCellDef="let album"> {{album.name_album}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="picture">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> picture </th>
-      <td mat-cell *matCellDef="let album"> {{album.picture}} </td>
-    </ng-container>
-    <ng-container div *ngIf="authService.isStudent()">
-      <ng-container  matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-        <td mat-cell *matCellDef="let album">
-          <div>
-            <button  class="custom-btn btn-1" mat-raised-button (click)="openAlbum(album)">Open</button>
-          </div>
-          </td>
-      </ng-container>
-    </ng-container> -->
-
-
-    <!-- <ng-container div *ngIf="authService.isAdmin()">
-    <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
-      <td mat-cell *matCellDef="let album">
-        <div>
-          <button  class="custom-btn btn-1"mat-raised-button   (click)="editAlbum(album)">Edit</button>
-
-     <button  class="custom-btn btn-1" mat-raised-button (click)="Addtracks(album)">Add</button>
-          <button  class="custom-btn btn-1" mat-raised-button (click)="openAlbum(album)">Open</button>
-
-        </div>
-        </td>
-    </ng-container>
-  </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-  </table> -->
-
-<!-- <button mat-button routerLink="/admin">Перейти к пользователям</button>
-<button mat-button routerLink="/admin/tracks">Перейти к трекам</button> -->
 
 <div class="screen">
   <div class="panel panel-right new-flex-container">
@@ -115,60 +41,18 @@
     </div>
     <button mat-button color="primary" class=" bbt2"> <h1>Albums</h1></button>
 </div>
-
-
-
-
-
-      <!-- <div *ngFor="let album of albums" class="track-container">
-
-<figure>
-
-          <div class="picture">
-            <img [src]="'data:picture/jpg;base64,' + album.picture" alt="Album picture">
-          </div>
-          <figcaption>
-             <p class="track-id"> {{ album.id }}   -   {{ album.name_album }} </p>
-          <div class="right-align" *ngIf="authService.isAdmin()">  -->
-            <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="restore_from_trash"> </mat-icon> -->
-            <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit" (click)="editAlbum(album)"> </mat-icon>
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add" (click)="Addtracks(album)"> </mat-icon>
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="folder_open" (click)="openAlbum(album)"> </mat-icon> -->
-            <!-- <button fontIcon="restore_from_trash" (click)="editUser(user) ">Edit</button> -->
-
-            <!-- <button (click)="deleteUser(user)">Delete</button> -->
-          <!-- </div>
-          <div class="right-align" *ngIf="authService.isStudent()">
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="folder_open" (click)="openAlbum(album)"> </mat-icon>
-          </div>
-        </figcaption>
-        </figure>
-        </div>
-        </div>
-      </div> -->
-
-
       <div *ngIf="authService.isAdmin()">
         <button class="custom-btn btn-1 eee" (click)="addNewAlbum()">Add Album</button>
       </div>
       <div *ngFor="let album of albums">
       <div class="square-container disc">
-
-
-          <!-- Большая фотография -->
-          <!-- <img class="picture" [src]="'data:picture/jpg;base64,' + album.picture" alt="Big Photo"> -->
           <img class="picture" src = {{album.picture}}>
         <div class="inf">
-          <!-- Текст и кнопки -->
           <p>{{ album.id }}   -   {{ album.name_album }} </p>
           <div *ngIf="authService.isAdmin()">
-            <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="restore_from_trash"> </mat-icon> -->
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit" (click)="editAlbum(album)"> </mat-icon>
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add" (click)="Addtracks(album)"> </mat-icon>
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="folder_open" (click)="openAlbum(album)"> </mat-icon>
-            <!-- <button fontIcon="restore_from_trash" (click)="editUser(user) ">Edit</button> -->
-
-            <!-- <button (click)="deleteUser(user)">Delete</button> -->
           </div>
           <div  *ngIf="authService.isStudent()">
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="folder_open" (click)="openAlbum(album)"> </mat-icon>
@@ -176,18 +60,7 @@
         </div>
       </div>
     </div>
-      <!-- <div class="paginator-wrapper">
-        <div class="paginator-container">
-          <mat-paginator  class="pag" #paginator
-                        [pageSize]="pageSize"
-                        [length]="totalElements"
-                        [pageSizeOptions]="[2, 7, 10, 25]"
-                        [showFirstLastButtons]="true"
-                        (page)="updatePageSizeAl($event)"  aria-label="Select page">
-          </mat-paginator>
-        </div> -->
-
-      </div>
+  </div>
 
 
 

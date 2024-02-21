@@ -20,10 +20,8 @@ import { MatGridListModule } from "@angular/material/grid-list";
 import { BaseServiceService } from "./service/base-service.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
-// import { DialogEditWrapperComponent } from './components/student-editor/components/dialog-edit-wrapper/dialog-edit-wrapper.component';
 import {MatInputModule} from '@angular/material/input';
 import { SessionStorageService } from 'angular-web-storage';
-
 import { AlbumscComponent } from './components/basic-components/albums/albumsc/albumsc.component';
 import { TrackscComponent } from './components/basic-components/tracks/tracksc/tracksc.component';
 import { OpenAlbumComponent } from './components/dialog/open-album/open-album/open-album.component';
@@ -40,7 +38,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { PlaylistComponent } from './components/dialog/playlist/playlist/playlist.component';
 import { WebSocetServiceService } from "./service/web-socet-service.service";
 import { WebSocketConfig } from "./auth/config/WebSocetConfig";
-import { HomeService } from "./service/home.service";
+
 @NgModule({
   declarations: [
     AppComponent,

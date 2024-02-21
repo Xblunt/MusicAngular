@@ -8,14 +8,11 @@ export abstract class IbaseServiceService {
     this.endpoint = endpoint;
   }
 
-  // abstract getUrl(): string;
 
-  // protected gets<T>(url: string, params?: HttpParams): Observable<T> {
-  //   return this.http.get<T>(`${this.getUrl()}/${url}`, { params });
-  // }
   protected get<T>(url: string, params?: HttpParams): Observable<T> {
     return this.http.get<T>(`${this.endpoint}/${url}`, { params });
   }
+
   protected post<T>(url: string, body: any,  params?: HttpParams): Observable<T> {
     return this.http.post<T>(`${this.endpoint}/${url}`, body, { params });
   }

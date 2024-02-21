@@ -1,99 +1,20 @@
-<!--
-<div *ngIf="fromAlbumComponent">
-  <mat-form-field class="full-width-input">
-    <input matInput type="text" placeholder="nameAlbum" [(ngModel)]="editingAlbum.name_album" required>
-  </mat-form-field>
-
-
-
-
-<div mat-dialog-actions>
-  <button mat-raised-button class="custom-btn btn-1"  (click)="onNoClick()">Cancel</button>
-  <button class="right-align" mat-raised-button color="primary"
-    [mat-dialog-close]="editingAlbum" class="custom-btn btn-1"  (click)="onYesClick()">Save</button>
-</div>
-</div>
-<div *ngIf="fromTrackComponent">
-  <mat-form-field class="full-width-input">
-
-    <input matInput type="text" placeholder="trackName" [(ngModel)]="editingTrack.name" required>
-  </mat-form-field>
-  <mat-form-field class="full-width-input">
-
-    <input matInput type="text" placeholder="author" [(ngModel)]="editingTrack.author" required>
-  </mat-form-field>
-  <mat-form-field class="full-width-input">
-
-    <input matInput type="text" placeholder="text" [(ngModel)]="editingTrack.text" required>
-  </mat-form-field>
-  <mat-form-field class="full-width-input">
-
-    <input matInput type="text"   placeholder="album_id" [(ngModel)]="editingTrack.album_id" required>
-  </mat-form-field>
-  <input type = "file" (change)=" handleSongFileUpload($event)" required accept=".mp3">
-  <mat-form-field class="full-width-input">
-
-</mat-form-field>
-
-
-<div mat-dialog-actions>
-  <button mat-raised-button class="custom-btn btn-1"  (click)="onNoClick()">Cancel</button>
-  <button class="right-align" mat-raised-button color="primary"
-    [mat-dialog-close]="editingTrack" class="custom-btn btn-1"  (click)="onYesClick()">Save</button>
-
-
-
-</div>
-</div>
-
-<div *ngIf="fromUserComponent">
-
-
-  <label for="imageUpload" class="picture-btn">
-    <img  [src]="'data:picture/jpg;base64,' + editingUser.photo" >
-    <input id="imageUpload" type="file" (change)="onImageFileSelected2($event)" required accept="image/jpeg" style="display: none;">
-  </label>
-  <form class="example-form">
-  <mat-form-field class="example-full-width">
-    <input matInput type="text" placeholder="fio" [(ngModel)]="editingUser.fio" required>
-  </mat-form-field>
-</form>
-  <mat-form-field class="full-width-input">
-    <input matInput type="text" placeholder="text" [(ngModel)]="editingUser.text" required>
-  </mat-form-field>
-  <mat-form-field class="full-width-input">
-    <input matInput type="text" placeholder="date" [(ngModel)]="editingUser.date" required>
-  </mat-form-field>
-
-<div mat-dialog-actions>
-  <button class="custom-btn btn-1 "  (click)="onNoClick()">Cancel</button>
-  <button  class="custom-btn btn-1 right-align " [mat-dialog-close]="editingUser" (click)="onYesClick()">Save</button>
-</div>
-</div>
- -->
 
 <div *ngIf="fromAlbumComponent"  class="user-details">
 
   <div class="photo-wrapper">
   <label for="imageUpload" class="picture-btn">
     <img [src]="'data:picture/jpg;base64,' + editingAlbum.picture">
-    <!-- <img src = {{editingAlbum.picture}}> -->
     <input id="imageUpload" type="file" (change)="onImageFileSelected($event)" required accept="image/jpeg" style="display: none;">
   </label>
-
 </div>
-
 <div class="details-wrapper ttt  center-align">
   <mat-form-field class="full-width-input">
     <input matInput type="text" placeholder="nameAlbum" [(ngModel)]="editingAlbum.name_album" required>
   </mat-form-field>
-
   <div mat-dialog-actions class="button-container baa">
     <button  class="custom-btn btn-1 " (click)="onNoClick()">Cancel</button>
-
   <div class="right-align2 ">
     <button [mat-dialog-close]="editingAlbum" class="custom-btn btn-1" (click)="onYesClick()">Save</button>
-  <!-- </div> -->
   </div>
   </div>
 </div>
@@ -102,8 +23,6 @@
 
 <div *ngIf="fromTrackComponent" class="user-details center-align">
   <div class="details-wrapper">
-
-    <!-- Данные трека -->
     <mat-form-field class="example-full-width ">
       <input matInput type="text" placeholder="trackName" [(ngModel)]="editingTrack.name" required>
     </mat-form-field>
@@ -116,9 +35,8 @@
     <mat-form-field class="example-full-width">
       <input matInput type="text" placeholder="album_id" [(ngModel)]="editingTrack.album_id" required>
     </mat-form-field>
-
-
 </div>
+
   <div class="file-upload center-align"
      (dragenter)="highlightFileUpload($event)"
      (dragover)="allowFileDrop($event)"
@@ -130,7 +48,6 @@
     <br>
     <input type="file" (change)="handleSongFileUpload($event)" accept=".mp3" required>
   </div>
-
   <div class="actions center-align">
     <div mat-dialog-actions class="button-container">
       <button mat-raised-button class="custom-btn btn-1" (click)="onNoClick()">Cancel</button>
@@ -144,36 +61,25 @@
 
 <div *ngIf="fromUserComponent" class="user-details">
   <div class="photo-wrapper">
-    <!-- Фотография -->
     <label for="imageUpload" class="picture-btn">
-      <!-- <img [src]="'data:picture/jpg;base64,' + editingUser.photo"> -->
       <img src = {{editingUser.photo}}>
       <input id="imageUpload" type="file" (change)="onImageFileSelected2($event)" required accept="image/jpeg" style="display: none;">
     </label>
   </div>
-
   <div class="details-wrapper  center-align">
-    <!-- Дополнительные поля данных -->
-
       <mat-form-field class="full-width-input">
         <input matInput type="text" placeholder="fio" [(ngModel)]="editingUser.fio" required>
       </mat-form-field>
       <mat-form-field class="full-width-input">
         <input matInput type="text" placeholder="date" [(ngModel)]="editingUser.date" required>
       </mat-form-field>
-
     <mat-form-field class="full-width-input">
       <input matInput type="text" placeholder="text" [(ngModel)]="editingUser.text" required>
     </mat-form-field>
-
-
-  <!-- <div class="actions center-align "> -->
     <div mat-dialog-actions class="button-container">
       <button  class="custom-btn btn-1 " (click)="onNoClick()">Cancel</button>
-
     <div class="right-align">
       <button [mat-dialog-close]="editingUser" class="custom-btn btn-1" (click)="onYesClick()">Save</button>
-    <!-- </div> -->
   </div>
   </div>
   </div>

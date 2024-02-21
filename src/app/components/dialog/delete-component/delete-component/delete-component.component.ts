@@ -10,26 +10,22 @@ import { AdminServiceService } from 'src/app/service/admin-service.service';
   styleUrls: ['./delete-component.component.css']
 })
 export class DeleteComponentComponent implements OnInit {
-  // editingStudent: Student;
-  // students: Student[];
-  constructor(public dialogRef: MatDialogRef<DeleteComponentComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: User, private adminService: AdminServiceService) {
 
 
-        // this.lName = this.editingStudent.name;
-        // this.lSurname = this.editingStudent.surname;
+  constructor(public dialogRef: MatDialogRef<DeleteComponentComponent>,@Inject(MAT_DIALOG_DATA) public data: User, private adminService: AdminServiceService) {
+  }
 
 
-
-    }
-    ngOnInit(): void { }
+  ngOnInit(): void { }
 
 
-    onNoClick(): void {
-      this.dialogRef.close(false);
-    }
-    onYesClick(): void {
-      this.dialogRef.close(true);
-    }
+  onNoClick(): void {
+    this.dialogRef.close(false);
+  }
+
+
+  onYesClick(): void {
+    this.dialogRef.close(true);
+  }
 
 }

@@ -10,7 +10,6 @@ import { Credential } from '../../../auth/credential';
 export class LoginComponent implements OnInit {
   credential!: Credential;
   errorAuth!: boolean;
-  // @Output() usernameEvent = new EventEmitter<string>();
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
