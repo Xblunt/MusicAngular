@@ -58,10 +58,10 @@ export class HomeService extends IbaseServiceService {
 
   getAllTracks(page: number, size: number, sortColumn: string, sortDirection: string): Observable<Page<Track>> {
     let params = new HttpParams()
-      .set('page', page.toString())
-      .set('size', size.toString())
-      .set("sortColumn", sortColumn)
-      .set("sortDirection", sortDirection);
+    .set('page', page.toString())
+    .set('size', size.toString())
+    .set("sortColumn", sortColumn)
+    .set("sortDirection", sortDirection);
     return this.get<Page<Track>>(this.homeUrlTrack, params);
   }
 
@@ -119,9 +119,9 @@ export class HomeService extends IbaseServiceService {
   //     }
 
 
-  createMessage(mess: Message,chatId: number, usernmae: string, messgg: string): Observable<Message> {
+  createMessage(mess: Message,chatId: number, username: string, messgg: string): Observable<Message> {
     let params = new HttpParams()
-    .set('username', usernmae)
+    .set('username', username)
     .set('messgg', messgg)
     console.log(chatId);
     return this.post<Message>(`${this.chats}/${chatId}`, mess, params);

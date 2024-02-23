@@ -37,12 +37,12 @@ export class AlbumscComponent implements AfterViewInit {
   service: any;
 
  constructor(public dialog:MatDialog, private http: HttpClient, public authService:AuthService, private adminService:AdminServiceService, private homeService:HomeService) {
-      if (this.authService.isStudent()){
-        this.service = this.homeService;
-      }
-      else if (this.authService.isAdmin()){
-        this.service = this.adminService;
-      }
+    if (this.authService.isStudent()){
+      this.service = this.homeService;
+    }
+    else if (this.authService.isAdmin()){
+      this.service = this.adminService;
+    }
   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -61,14 +61,13 @@ export class AlbumscComponent implements AfterViewInit {
   }
 
   getAllAlbums( ): void {
-    this.service.getAllAlbum(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection)
-      .subscribe((page: Page<Album>) => {
-        console.log(page);
-        this.albums = page.content;
-        this.totalPages = page.totalPages;
-        this.totalElements = page.totalElements;
-        this.dataSource2.sort = this.sort;
-      });
+    this.service.getAllAlbums(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection).subscribe((page: Page<Album>) => {
+      console.log(page);
+      this.albums = page.content;
+      this.totalPages = page.totalPages;
+      this.totalElements = page.totalElements;
+      this.dataSource2.sort = this.sort;
+    });
   }
 
 

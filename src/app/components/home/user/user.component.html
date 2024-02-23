@@ -42,13 +42,14 @@
             <div *ngIf="message.track" class="track-container">
 
               <p [ngClass]="{'text2': this.firstid == message.first, 'tex2': this.secondid == message.first}">
-                <audio #myAudioElement controls class="custom-audio" (play)="playAudio()" (pause)="pauseAudio()" (timeupdate)="seekAudio($event)">
+                <audio #myAudioElement controls class="custom-audio" (play)="playAudio()" (pause)="pauseAudio()" >
                   <source [src]="message.track.file" type="audio/mpeg">
                   Your browser does not support the audio element.
                 </audio>
               </p>
               <input type="number" id="timeInput" placeholder="Введите время в секундах">
-              <button (click)="setAudioTime()">Установить время</button>
+              <!-- <button (click)="setAudioTime()">Установить время</button> -->
+              <!-- (timeupdate)="seekAudio($event)" -->
               <button (click)="disconnectFromWebSocket()" [disabled]="!connected">Disconnect</button>
               <button (click)="update()">Обновить время</button>
            </div>

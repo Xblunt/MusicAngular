@@ -62,7 +62,7 @@ export class TrackscComponent implements  AfterViewInit{
   }
 
   getAllTracks( ): void {
-    this.service.getAllTrack(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection)
+    this.service.getAllTracks(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection)
       .subscribe((page: Page<Track>) => {
         console.log(page);
         this.tracks = page.content;
