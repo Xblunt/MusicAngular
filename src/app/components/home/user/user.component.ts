@@ -242,10 +242,8 @@ export class UserComponent implements  AfterViewInit{
   }
 
 
-  connectToWebSocket() {
-    this.connected = true;
+  playTrackafterConnect(){
 
-    this.webSocetService.connectToWebSocket();
     this.TimeOnDeviceConnect = Date.now();
 
     console.log("Время пользователя при подклбчении",  this.TimeOnDeviceConnect );
@@ -261,17 +259,24 @@ export class UserComponent implements  AfterViewInit{
         audioElement.currentTime = sessionData.time + ((this.TimeOnDeviceConnect/1000 - sessionData.currentTimeOnDevice/1000));
         audioElement.play();
        }
-        else if (sessionData.action === false){
-          const timepause = sessionData.time / 1000;
-          audioElement.currentTime = timepause;
-          console.log("ata.time stop",audioElement.currentTime );
-          audioElement.pause();
-          }
-        else {
-
-          console.log("Need play and stop")
+      else if (sessionData.action === false){
+        const timepause = sessionData.time / 1000;
+        audioElement.currentTime = timepause;
+        console.log("ata.time stop",audioElement.currentTime );
+        audioElement.pause();
         }
+      else {
+        console.log("Need play and stop")
+      }
   });
+  }
+
+
+  connectToWebSocket() {
+    this.connected = true;
+
+    this.webSocetService.connectToWebSocket();
+
   }
 
 

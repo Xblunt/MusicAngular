@@ -4,7 +4,7 @@
       <div *ngFor="let chat of chats" class="track-container">
         <div class="track-image">
           <div class="panel panel-wh">
-            <button class=" panel-gray pau" mat-menu-item (click)=" LoadMessages(chat);  connectToWebSocket()" [disabled]="connected" >{{ chat.chatname }}</button>
+            <button class=" panel-gray pau" mat-menu-item (click)=" LoadMessages(chat);  connectToWebSocket(); playTrackafterConnect();" [disabled]="connected" >{{ chat.chatname }}</button>
         </div>
       </div>
     </div>
