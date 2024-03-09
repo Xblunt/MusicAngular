@@ -1,0 +1,12 @@
+<div class=" component chat-list">
+  <div *ngFor="let chat of chats" (click)="selectChat(chat)">
+    <button class="panel-gray " mat-menu-item (click)=" connectToWebSocket(); " [disabled]="connected" >{{ chat.chatname }}</button>
+  </div>
+</div>
+  <div class="component add11">
+  <button class="btn-1 " (click)="addChat()">Add chat</button>
+</div>
+
+
+
+<!-- playTrackafterConnect(); -->

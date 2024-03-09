@@ -1,9 +1,9 @@
-/* .screen {
+.screen {
   position: relative;
   display: flex;
   height: 100vh;
-} */
-/*
+}
+
 .panel {
   flex: 0.5;
   padding: 20px;
@@ -12,7 +12,7 @@
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   margin: 5px;
   border-radius: 10px;
-} */
+}
 
 .panel-left {
   background-color: white;
@@ -39,7 +39,7 @@
   right: 10px;
   width: calc(50% + 310px);
 } */
-/* .panel-gray {
+.panel-gray {
 
   background-color: #D9D9D9;
   flex: 1;
@@ -51,7 +51,7 @@
   height: 8px;
 
 
-} */
+}
 .panel-green {
   background-color: #2C5420;
   flex: 1;
@@ -62,7 +62,7 @@
   border-radius: 20px;
   height: 8px;
 }
-/* .panel-wh {
+.panel-wh {
   background-color: white;
   flex: 1;
   display: flex;
@@ -72,11 +72,11 @@
   border: 1px solid #000;
   border-radius: 20px;
 
-} */
-/* .panel-right {
-  background-color: rgb(181, 38, 38);
+}
+.panel-right {
+  background-color: white;
   flex: 2;
-} */
+}
 .panel-header{
 
   background-color: white;
@@ -108,33 +108,26 @@
 }
 
 .menu{
-  width: 40px;
-  height: 40px;
-  /* margin-left:95%; */
-  /* flex: 1; */
+  width: 50px;
+  height: 50px;
+  flex: 1;
     color: #000000;
-    /* background-color: #ffffff; */
-    background-color: #6A5ACD;
-    float: right;
-    /* position:fixed;
-   left: 90%;
-    top:2%; */
-
+    background-color: #ffffff;
   }
   .top-right-menu mat-icon {
-    font-size: 40px;
+    font-size: 50px;
   }
+  /* .message{
+
+
+
+  } */
   .top-right-menu {
-    /* position: absolute; */
-     /* top: 0; */
-    /* right: 20px; */
-    margin: -2px;
-    width: 225vh;
-    /* height: 8vh; */
-    border: 2px solid #000;
-    border-radius: 10px;
-    height: 45px;
-    background-color: #6A5ACD;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    margin: 20px;
+    background-color: #ffffff;
   }
   .custom-btn {
     width: 200px;

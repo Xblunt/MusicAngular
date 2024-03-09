@@ -1,65 +1,26 @@
-<div class="screen">
-  <div class="panel panel-left" >
+<!-- <div class="screen   new-flex-container "> -->
+  <!-- <div class="panel panel-right new-flex-container"> -->
 
-      <div *ngFor="let chat of chats" class="track-container">
-        <div class="track-image">
-          <div class="panel panel-wh">
-            <button class=" panel-gray pau" mat-menu-item (click)=" LoadMessages(chat);  connectToWebSocket(); playTrackafterConnect();" [disabled]="connected" >{{ chat.chatname }}</button>
-        </div>
-      </div>
-    </div>
-          <button class="panel panel-wh  btn-1 " (click)="addChat()">Add chat</button>
-          <div class=" trr  left-alig">
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="music_note" (click)="OpenPlaylist()"> </mat-icon>
-          </div>
-  </div>
-
-  <div class="panel panel-right new-flex-container">
-    <div class="content-wrapper">
-      <div class=" panel-right top-right-menu">
+      <div class=" component top-right-menu">
         <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="menu align-left" [matMenuTriggerFor]="menu" > </mat-icon>
+
         <mat-menu #menu="matMenu">
           <button mat-menu-item [routerLink]="['/client/auth-user']">Перейти к лк</button>
           <button mat-menu-item [routerLink]="['/client/tracks']">Перейти к трекам</button>
           <button mat-menu-item [routerLink]="['/login']">Logout</button>
         </mat-menu>
       </div>
-  </div>
-  <div class="message text-only">
-    <div class="response">
-      <div *ngIf="this.mess && this.mess.length === 0 && (!this.tracks || this.tracks.length === 0)">
-        <p>Нет доступных сообщений или треков.</p>
-      </div>
 
-      <div *ngFor="let message of mess" class="track-container">
+  <!-- </div> -->
+  <div class="user-container">
+    <app-chats-list (chatSelected)="selectChat($event)"></app-chats-list>
+    <app-messages *ngIf="selectedChat" [chat]="selectedChat" [mess]="mess" [track]="track"></app-messages>
+    <app-chats *ngIf="selectedChat" [chat]="selectedChat " (messUpdated)="onMessUpdated($event)" (messTrackUpdated)="onMessTrackUpdated($event)"></app-chats>
 
-        <div *ngIf="message.textMess !== null">
-            <div class="but"  >
-              <p [ngClass]="{'text': this.firstid == message.first, 'tex': this.secondid == message.first}">{{ message.textMess }}</p>
-            </div>
-        </div>
-        <div *ngIf="message.textMess === null">
-            <div *ngIf="message.track" class="track-container">
+  </div>
 
-              <p [ngClass]="{'text2': this.firstid == message.first, 'tex2': this.secondid == message.first}">
-                <audio #myAudioElement controls class="custom-audio" (play)="playAudio()" (pause)="pauseAudio()" >
-                  <source [src]="message.track.file" type="audio/mpeg">
-                  Your browser does not support the audio element.
-                </audio>
-              </p>
-              <input type="number" id="timeInput" placeholder="Введите время в секундах">
-              <!-- <button (click)="setAudioTime()">Установить время</button> -->
-              <!-- (timeupdate)="seekAudio($event)" -->
-              <button (click)="disconnectFromWebSocket()" [disabled]="!connected">Disconnect</button>
-              <button (click)="update()">Обновить время</button>
-           </div>
-    </div>
-  </div>
-</div>
-</div>
-<input  [(ngModel)]="messageText" type="text" class="write-message" placeholder="Type your message here">
-<button class="custom-bt btn-2 left-align" (click)="CreateMessages(chat)">Send</button>
-  </div>
-</div>
+
+  <!-- </div>
+</div> -->
 
 

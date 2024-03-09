@@ -38,6 +38,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { PlaylistComponent } from './components/dialog/playlist/playlist/playlist.component';
 import { WebSocetServiceService } from "./service/web-socet-service.service";
 import { WebSocketConfig } from "./auth/config/WebSocetConfig";
+import { ChatsComponent } from './components/home/user/chats/chats/chats.component';
+import { MessagesComponent } from './components/home/user/messages/messages/messages.component';
+import { ChatsListComponent } from './components/home/user/chatsList/chats-list/chats-list.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,9 @@ import { WebSocketConfig } from "./auth/config/WebSocetConfig";
     UserInfoComponent,
     AddChatsComponent,
     PlaylistComponent,
+    ChatsComponent,
+    MessagesComponent,
+    ChatsListComponent,
 
   ],
   imports: [

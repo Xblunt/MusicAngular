@@ -32,55 +32,55 @@ export class AddTrackAlbumComponent implements OnInit {
 
 
   ngOnInit(): void {
-      this.loadTracks();
+    this.loadTracks();
   }
 
 
   loadTracks(): void {
-      const albumId = this.idalbum;
-      this.adminService.getAllTracksAlbumsAdd(this.currentPage,this.trackId , albumId ,this.pageSize,this.sortColumn,this.sortDirection
-        ).subscribe( (response: Page<Track>) => {
-            this.tracks = response.content;
-            this.totalElements = response.totalElements;
-            this.totalPages = response.totalPages;
-            this.length = response.content.length;
-        });
+    const albumId = this.idalbum;
+    this.adminService.getAllTracksAlbumsAdd(this.currentPage,this.trackId , albumId ,this.pageSize,this.sortColumn,this.sortDirection
+      ).subscribe( (response: Page<Track>) => {
+          this.tracks = response.content;
+          this.totalElements = response.totalElements;
+          this.totalPages = response.totalPages;
+          this.length = response.content.length;
+      });
   }
 
 
   updatePageSizeTrackss(event: PageEvent): void {
-      this.pageSize = event.pageSize;
-      this.currentPage = event.pageIndex;
-      this.loadTracks();
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadTracks();
   }
 
 
   close(): void {
-      this.dialogRef.close();
+    this.dialogRef.close();
   }
 
 
   editAlbumTrack(updatedTrack: Track): void {
-      const albumId = this.idalbum;
-      const updatedTrackId = updatedTrack.id;
-      const oldAlbumId = updatedTrack.album_id;
-      updatedTrack.album_id = albumId;
-      const editedTrack: Track = {
-        id: updatedTrack.id,
-        name: updatedTrack.name,
-        author: updatedTrack.author,
-        file: updatedTrack.file,
-        album_id: albumId,
-        text: updatedTrack.text,
-      };
-  this.adminService.editTrackAlbum(editedTrack).subscribe(k=>
-      this.adminService.getAllTracksAlbumsAdd(this.currentPage, updatedTrackId, albumId ,this.pageSize,this.sortColumn,this.sortDirection
-    ).subscribe( (response: Page<Track>) => {
-        this.tracks = response.content;
-        this.totalElements = response.totalElements;
-        this.totalPages = response.totalPages;
-        this.length = response.content.length;
-    }));
+    const albumId = this.idalbum;
+    const updatedTrackId = updatedTrack.id;
+    const oldAlbumId = updatedTrack.album_id;
+    updatedTrack.album_id = albumId;
+    const editedTrack: Track = {
+      id: updatedTrack.id,
+      name: updatedTrack.name,
+      author: updatedTrack.author,
+      file: updatedTrack.file,
+      album_id: albumId,
+      text: updatedTrack.text,
+    };
+    this.adminService.editTrackAlbum(editedTrack).subscribe(k=>
+        this.adminService.getAllTracksAlbumsAdd(this.currentPage, updatedTrackId, albumId ,this.pageSize,this.sortColumn,this.sortDirection
+      ).subscribe( (response: Page<Track>) => {
+          this.tracks = response.content;
+          this.totalElements = response.totalElements;
+          this.totalPages = response.totalPages;
+          this.length = response.content.length;
+      }));
   }
 
 
