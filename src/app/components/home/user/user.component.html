@@ -1,26 +1,17 @@
-<!-- <div class="screen   new-flex-container "> -->
-  <!-- <div class="panel panel-right new-flex-container"> -->
 
-      <div class=" component top-right-menu">
-        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="menu align-left" [matMenuTriggerFor]="menu" > </mat-icon>
+<div class=" component top-right-menu">
+  <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="menu align-left" [matMenuTriggerFor]="menu"></mat-icon>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/client/auth-user']">Перейти к лк</button>
+    <button mat-menu-item [routerLink]="['/client/tracks']">Перейти к трекам</button>
+    <button mat-menu-item [routerLink]="['/login']">Logout</button>
+  </mat-menu>
+</div>
+<div class="user-container">
+  <app-chats-list (chatSelected)="selectChat($event)"></app-chats-list>
+  <app-messages *ngIf="selectedChat" [chat]="selectedChat" [mess]="mess" [track]="track"></app-messages>
+  <app-chats *ngIf="selectedChat" [chat]="selectedChat " (messUpdated)="onMessUpdated($event)" (messTrackUpdated)="onMessTrackUpdated($event)"></app-chats>
+</div>
 
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item [routerLink]="['/client/auth-user']">Перейти к лк</button>
-          <button mat-menu-item [routerLink]="['/client/tracks']">Перейти к трекам</button>
-          <button mat-menu-item [routerLink]="['/login']">Logout</button>
-        </mat-menu>
-      </div>
-
-  <!-- </div> -->
-  <div class="user-container">
-    <app-chats-list (chatSelected)="selectChat($event)"></app-chats-list>
-    <app-messages *ngIf="selectedChat" [chat]="selectedChat" [mess]="mess" [track]="track"></app-messages>
-    <app-chats *ngIf="selectedChat" [chat]="selectedChat " (messUpdated)="onMessUpdated($event)" (messTrackUpdated)="onMessTrackUpdated($event)"></app-chats>
-
-  </div>
-
-
-  <!-- </div>
-</div> -->
 
 

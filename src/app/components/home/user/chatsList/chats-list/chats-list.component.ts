@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
@@ -7,7 +6,6 @@ import { AddChatsComponent } from 'src/app/components/dialog/addChats/add-chats/
 import { Chat } from 'src/app/model/chat';
 import { HomeService } from 'src/app/service/home.service';
 import { WebSocetServiceService } from 'src/app/service/web-socet-service.service';
-
 @Component({
   selector: 'app-chats-list',
   templateUrl: './chats-list.component.html',
@@ -19,14 +17,10 @@ export class ChatsListComponent {
   currentPage: number = 0;
   pageSize: number = 10;
   connected: boolean = false;
+
   @Output() chatSelected = new EventEmitter<Chat>();
-  constructor(private webSocetService: WebSocetServiceService,public dialog:MatDialog, private http: HttpClient, private authService:AuthService,  private homeService: HomeService) {
 
-  }
-  selectChat(chat: Chat) {
-    this.chatSelected.emit(chat);
-
-  }
+  constructor(private webSocetService: WebSocetServiceService, public dialog:MatDialog, private authService:AuthService, private homeService: HomeService) {}
 
 
   ngOnInit(): void {
@@ -36,6 +30,10 @@ export class ChatsListComponent {
     this.getAllUsers();
   }
 
+
+  selectChat(chat: Chat) {
+    this.chatSelected.emit(chat);
+  }
 
   getAllUsers( ): void {
     if (this.usernamell) {
@@ -58,7 +56,6 @@ export class ChatsListComponent {
     this.currentPage = event.pageIndex;
     this.getAllUsers();
   }
-
 
   addChat() {
     const dialogAddingNewStudent = this.dialog.open(AddChatsComponent, {
@@ -95,8 +92,6 @@ export class ChatsListComponent {
   disconnectFromWebSocket() {
     this.webSocetService.deactivate();
     this.connected = false;
-    // const audioElement = this.audioElement.nativeElement as HTMLAudioElement;
-    // audioElement.pause();
   }
 
 

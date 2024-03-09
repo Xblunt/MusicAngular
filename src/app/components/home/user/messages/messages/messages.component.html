@@ -1,41 +1,22 @@
-<!-- <div class="message-list">
-  <div *ngFor="let message of messages">
-    <p>{{ message.textMess }}</p>
-  </div> -->
-
-<!-- </div> -->
-
-<div class="message text-only">
-  <div class="response">
-    <div *ngIf="this.mess && this.mess.length === 0 && (!this.tracks || this.tracks.length === 0)">
-      <p>Нет доступных сообщений или треков.</p>
-    </div>
 
 <div class="component2 message">
 <div *ngFor="let message of mess" class="track-container">
-
   <div *ngIf="message.textMess !== null">
       <div class="but"  >
         <p [ngClass]="{'text': this.firstid == message.first, 'tex': this.secondid == message.first}">{{ message.textMess }}</p>
       </div>
   </div>
   <div *ngIf="message.textMess === null">
-      <div *ngIf="message.track" class="track-container">
-
-        <p [ngClass]="{'text2': this.firstid == message.first, 'tex2': this.secondid == message.first}">
-          <audio #myAudioElement controls class="custom-audio" (play)="playAudio()" (pause)="pauseAudio()" >
-            <source [src]="message.track.file" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>
-        </p>
-        <input type="number" id="timeInput" placeholder="Введите время в секундах">
-        <!-- <button (click)="setAudioTime()">Установить время</button> -->
-        <!-- (timeupdate)="seekAudio($event)" -->
-        <!-- <button (click)="disconnectFromWebSocket()" [disabled]="!connected">Disconnect</button> -->
-        <button (click)="update()">Обновить время</button>
-     </div>
+    <div *ngIf="message.track" class="track-container">
+      <p [ngClass]="{'text2': this.firstid == message.first, 'tex2': this.secondid == message.first}">
+        <audio #myAudioElement controls class="custom-audio" (play)="playAudio()" (pause)="pauseAudio()" >
+          <source [src]="message.track.file" type="audio/mpeg">
+        </audio>
+      </p>
+      <input type="number" id="timeInput" placeholder="Введите время в секундах">
+      <button (click)="update()">Обновить время</button>
     </div>
   </div>
 </div>
 </div>
-</div>
+

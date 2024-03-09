@@ -1,12 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from 'src/app/auth/auth.service';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
 import { Session } from 'src/app/model/session';
 import { Track } from 'src/app/model/track';
-import { HomeService } from 'src/app/service/home.service';
 import { WebSocetServiceService } from 'src/app/service/web-socet-service.service';
 @Component({
   selector: 'app-messages',
@@ -14,33 +10,24 @@ import { WebSocetServiceService } from 'src/app/service/web-socet-service.servic
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent {
-  // @Output() messages: Message[] = [];
-  // @Output() secondid!: Chat;
-  // @Output() firstid!: Chat;
-
-  // @Output() chatSelected = new EventEmitter<Chat>();
-  @Input() chat!: Chat;
-  @Input() mess: any[]=[];
-  @Input() track!: Track;
-  // @Input() mess: any[]=[];
-  // mess: any[]=[];
   messages:  Message[]=[];
-  // selectedChat!: Chat;
   message: Message;
   tracks: Track[]=[];
   TimeOnDeviceConnect!: number;
   secondid!:number;
   firstid!:number;
 
-  constructor(private webSocetService: WebSocetServiceService,public dialog:MatDialog, private http: HttpClient, private authService:AuthService,  private homeService: HomeService) {
+  @Input() chat!: Chat;
+  @Input() mess: any[]=[];
+  @Input() track!: Track;
+
+  constructor(private webSocetService: WebSocetServiceService) {
     this.message = new Message;
   }
+
   @ViewChild('myAudioElement') audioElement!: ElementRef<HTMLAudioElement>;
 
-
-
   playAudio() {
-    // if (this.selectedChat) {
     const chatId = this.chat.id;
     const audioElement = this.audioElement.nativeElement as HTMLAudioElement;
     console.log("PLAAAAY");
@@ -58,7 +45,6 @@ export class MessagesComponent {
       audioElement.currentTime = sessionData.time/1000;
       audioElement.play();
   });
-    // }
   }
 
 
@@ -106,10 +92,9 @@ export class MessagesComponent {
           audioElement.pause();
           }
         else {
-
           console.log("Need play and stop")
         }
-      });
+    });
   }
 
 }

@@ -1,10 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AuthService } from 'src/app/auth/auth.service';
 import { Chat } from 'src/app/model/chat';
 import { HomeService } from 'src/app/service/home.service';
-import { WebSocetServiceService } from 'src/app/service/web-socet-service.service';
 import { Message } from 'src/app/model/message';
 import { Page } from 'src/app/service/page';
 import { PlaylistComponent } from 'src/app/components/dialog/playlist/playlist/playlist.component';
@@ -15,7 +12,6 @@ import { Track } from 'src/app/model/track';
   styleUrls: ['./chats.component.css']
 })
 export class ChatsComponent {
-  // selectedChat!: number;
   secondid!:number;
   firstid!:number;
   usernamell!: string ;
@@ -30,16 +26,17 @@ export class ChatsComponent {
   track!: Track;
   message: Message;
   messageText!: string;
+
   @Input() chat!: Chat;
   @Output() messUpdated = new EventEmitter<any>();
   @Output() messTrackUpdated = new EventEmitter<any>();
-  // @Output() chatS= new EventEmitter<Chat>();
-  // @Input() selectChat!: Chat | null;
-  constructor(private webSocetService: WebSocetServiceService,public dialog:MatDialog, private http: HttpClient, private authService:AuthService,  private homeService: HomeService) {
+
+
+  constructor(public dialog:MatDialog, private homeService: HomeService) {
     this.message = new Message;
   }
-  ngOnInit(): void {
 
+  ngOnInit(): void {
     const storedUsername = localStorage.getItem('username');
     this.usernamell = storedUsername !== null ? storedUsername : '';
     this.LoadMessages(this.chat);
@@ -48,7 +45,6 @@ export class ChatsComponent {
 
   LoadMessages(chat: Chat): void {
     const chatId = chat.id;
-    // this.selectedChat = chat.id;
     this.secondid = chat.second_id;
     this.firstid = chat.first_id;
     console.log("first:"  +  this.firstid);
@@ -83,7 +79,6 @@ export class ChatsComponent {
 
 
   CreateMessages(chat:Chat):void{
-    // if(this.selectedChat){
     const chatId = this.chat.id;
     const messgg =  this.messageText;
     const username = this.usernamell;
