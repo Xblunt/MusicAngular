@@ -1,5 +1,5 @@
+import { ChatService } from './../../../../../service/chat.service';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Chat } from 'src/app/model/chat';
 import { HomeService } from 'src/app/service/home.service';
@@ -13,9 +13,7 @@ export class ChatsListComponent {
   usernamell!: string ;
   chats: Chat[] = [];
 
-  @Output() chatSelected = new EventEmitter<Chat>();
-
-  constructor(private authService:AuthService, private homeService: HomeService){
+  constructor(private authService:AuthService, private homeService: HomeService, private chatService: ChatService){
 
   }
 
@@ -26,8 +24,10 @@ export class ChatsListComponent {
   }
 
   selectChat(chat: Chat) {
-    this.chatSelected.emit(chat);
+    this.chatService.setSelectChat(chat);
+    console.log(chat);
   }
+
 
   getAllUsers( ): void {
     if (this.usernamell) {
