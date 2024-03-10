@@ -1,5 +1,4 @@
-import { Track } from './../../../model/track';
-import { Chat } from './../../../model/chat';
+
 import { Component } from '@angular/core';
 @Component({
   selector: 'app-user',

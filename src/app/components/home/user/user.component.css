@@ -4,12 +4,12 @@
 
 .chats-list {
   flex: 1;
-  order: 2;
+  order: 1;
 }
 
 .chat {
   flex: 1;
-  order: 1;
+  order: 2;
 }
 
 
