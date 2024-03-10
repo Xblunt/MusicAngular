@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component} from '@angular/core';
 import { Chat } from 'src/app/model/chat';
 import { ChatService } from 'src/app/service/chat.service';
 
@@ -8,8 +8,8 @@ import { ChatService } from 'src/app/service/chat.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent {
-  chatSelected!: EventEmitter<Chat>;
   selectChat!: Chat;
+  messageText!: string;
 
 
   constructor(private chatService: ChatService){
@@ -21,9 +21,5 @@ export class ChatComponent {
 
 
 
-
-
-
-
-
 }
+
