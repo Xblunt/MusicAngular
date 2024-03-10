@@ -1,5 +1,6 @@
 .square {
   height: 350px;
   width: 350px;
-  background-color: #30ed6c;
+  background-color: #ed3030;
+  float: right;
 }

@@ -7,23 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent{
-  mess: any[]=[];
-  track!: Track;
-  selectedChat!: Chat;
 
  constructor() {}
-
-  selectChat(chat: Chat) {
-    this.selectedChat = chat;
-  }
-
-  onMessUpdated(mess: any) {
-    this.mess = mess;
-  }
-
-  onMessTrackUpdated(track: Track) {
-    this.track = track;
-  }
 
 }
 
