@@ -1,3 +1,4 @@
-<div class="component square chats">
-  <input *ngIf="this.selectChat" [(ngModel)]="messageText" type="text" class="write-message" placeholder="Type your message here">
+<div *ngIf="this.selectChat" class="component square chats">
+  <app-message [mess]="mess" [track]="track" [selectChat]="selectChat"></app-message>
+  <input  [(ngModel)]="messageText" type="text" class="write-message" placeholder="Type your message here">
 </div>
