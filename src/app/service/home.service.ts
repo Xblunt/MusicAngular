@@ -14,7 +14,6 @@ import { Session } from '../model/session';
   providedIn: 'root'
 })
 export class HomeService extends IbaseServiceService {
-  private  homeUrl = 'client/users';
   private  homeUrlAl = 'client/album';
   private  homeUrlTrack = 'client/tracks';
   private lkUrl = 'client/auth-user';
@@ -52,7 +51,6 @@ export class HomeService extends IbaseServiceService {
     .set('size', size.toString())
     .set("sortColumn", sortColumn)
     .set("sortDirection", sortDirection);
-    console.log(albumId);
     return this.get<Page<Track>>(`${this.homeUrlAl}/${albumId}/tracks`, params);
   }
 
@@ -66,12 +64,7 @@ export class HomeService extends IbaseServiceService {
   }
 
   editTrackAlbum(track: Track): Observable<Track> {
-    console.log('editTrack');
-    console.log(track.id);
-    console.log(track.name);
-    console.log(track.file);
-    console.log(track.author);
-    console.log(track.album_id);
+    console.log(`editTrackAlbum: ${track.id},${track.name},${track.file},${track.author},${track.album_id},`);
     return this.put<Track>(`${this.homeUrlAl}/${track.album_id}/tracks/add/${track.id}`, track);
   }
 
@@ -87,7 +80,6 @@ export class HomeService extends IbaseServiceService {
     .set('size', size.toString())
     .set("sortColumn", sortColumn)
     .set("sortDirection", sortDirection);
-    console.log(chatId);
     return this.get<Page<Message>>(`${this.chats}/${chatId}`, params);
   }
 
@@ -102,22 +94,6 @@ export class HomeService extends IbaseServiceService {
     .set("trackIds", trackId);
     return this.get<Track>(`${this.homeUrlTrack}/send`, params);
   }
-  // updateSession(action: string, currentTime: number, chatId: number){
-  //   // Формируем сообщение для отправки на сервер
-  //   const message = {
-  //     action: action,
-  //     time: currentTime,
-  //     chatId: chatId
-  //   };
-
-  //   // Отправляем сообщение на сервер через веб-сокет и ожидаем ответа
-  //   this.webSocetServiceService.watch("/client/" + id).subscribe(() => {
-  //     this.getCurrentOrder()
-  //     .subscribe((data) => console.log("Reject from order " + data.id));
-  //     });
-  //     this.webSocetServiceService.publish({destination : "/customer/order/" + id, body: ORDER_ACTION_REQUEST.REJECT});
-  //     }
-
 
   createMessage(mess: Message,chatId: number, username: string, messgg: string): Observable<Message> {
     let params = new HttpParams()
@@ -131,7 +107,6 @@ export class HomeService extends IbaseServiceService {
     let params = new HttpParams()
     .set('username', usernmae)
     .set('messgg', messgg)
-    console.log('rrrrrrr',chatId);
     return this.post<Message>(`${this.chats}/${chatId}/add`, mess, params);
   }
 

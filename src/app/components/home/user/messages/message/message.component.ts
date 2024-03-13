@@ -10,7 +10,7 @@ import { Track } from 'src/app/model/track';
 })
 export class MessageComponent {
 
-  @Input() mess: any[]=[];
+  @Input() messageArray: any[]=[];
   @Input() track!: Track;
   @Input() selectChat!: Chat;
 

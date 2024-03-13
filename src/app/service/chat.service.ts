@@ -6,12 +6,12 @@ import { Track } from '../model/track';
   providedIn: 'root'
 })
 export class ChatService {
-  ee: EventEmitter<any> = new EventEmitter<any>();
+  eventEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
 
-  setSelectChat(selectedChat: Chat) {
-    this.ee.emit(selectedChat);
+  setSelectChat(selectedChat: any) {
+    this.eventEmitter.emit(selectedChat);
   }
 
 

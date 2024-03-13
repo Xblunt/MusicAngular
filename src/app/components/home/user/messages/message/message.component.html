@@ -1,6 +1,6 @@
 
 <div   *ngIf="this.selectChat"  class="component">
-  <div *ngFor="let message of mess" >
+  <div *ngFor="let message of messageArray" >
     <div *ngIf="message.textMess !== null">
           <p [ngClass]="{'text': this.selectChat.first_id == message.first, 'tex': this.selectChat.second_id == message.first}">{{ message.textMess }}</p>
     </div>
