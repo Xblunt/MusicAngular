@@ -1,49 +1,40 @@
 
 import { AdminServiceService } from 'src/app/service/admin-service.service';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/auth/auth.service';
-import { CredentialResponse } from 'src/app/auth/model/auth/credentialResponse';
 import { User } from 'src/app/model/user';
 import { Page } from 'src/app/service/page';
 import { DeleteComponentComponent } from '../../dialog/delete-component/delete-component/delete-component.component';
 import { EditComponent } from '../../dialog/edit-component/edit/edit.component';
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements  AfterViewInit{
+export class AdminComponent   {
 
-  displayedColumns: string[] = ['id', 'fio',  'action'];
   dataSource4 = new MatTableDataSource<User>();
+
   currentPage: number = 0;
   pageSize: number = 7;
   sortColumn: string = 'id';
   sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
-  length!: number;
-  usera!: CredentialResponse;
+
   fromUserComponent: boolean = true;
   users : any[]=[];
 
  constructor(public dialog:MatDialog, private http: HttpClient, private authService:AuthService, private adminService:AdminServiceService) {
     }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<any>;
-
-
-  ngAfterViewInit(): void {
-    this.usera = this.authService.LoggedUser;
-  }
 
 
   ngOnInit(): void {
@@ -76,7 +67,7 @@ export class AdminComponent implements  AfterViewInit{
     });
       dialogAddingNewStudent.afterClosed().subscribe((confirmDelete: boolean) => {
       if(confirmDelete == true) {
-        console.log("delete student: ");
+        console.log("delete user: ");
         this.adminService.deleteUser(user).subscribe(k=>
           this.adminService.getAllUsers(this.currentPage, this.pageSize, this.sort.active,this.sort.direction).subscribe(data => this.dataSource4.data= data.content) );
       }
@@ -92,7 +83,7 @@ export class AdminComponent implements  AfterViewInit{
     });
     dialogAddingNewStudent.afterClosed().subscribe((editedUser: User) => {
       if(editedUser  != null) {
-        console.log("edit student: " + user.fio);
+        console.log("edit user: " + user.fio);
         this.adminService.editUser(editedUser).subscribe(k=>
           this.adminService.getAllUsers(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource4.data = data.content) );
       }
@@ -108,7 +99,7 @@ export class AdminComponent implements  AfterViewInit{
     });
     dialogAddingNewStudent.afterClosed().subscribe((result: User) => {
       if(result != null) {
-        console.log("adding new student: " + result.fio);
+        console.log("adding new user: " + result.fio);
         this.adminService.addNewUser(result).subscribe(k=>
           this.adminService.getAllUsers(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource4.data = data.content) );
       }

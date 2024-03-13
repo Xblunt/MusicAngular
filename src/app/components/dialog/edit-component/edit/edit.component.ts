@@ -12,7 +12,6 @@ import { AdminServiceService } from 'src/app/service/admin-service.service';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent  implements OnInit {
-
   editingUser!: User;
   editingAlbum!: Album;
   editingTrack!: Track;
@@ -20,8 +19,6 @@ export class EditComponent  implements OnInit {
   fromTrackComponent!: boolean;
   fromAlbumComponent!: boolean;
   fromUserComponent!: boolean;
-  album: any= {};
-  track: any = {};
 
   constructor(public dialogRef: MatDialogRef<EditComponent>,@Inject(MAT_DIALOG_DATA) public data:any, private adminService: AdminServiceService) {
         this.fromTrackComponent = this.data.fromTrackComponent;
@@ -49,7 +46,7 @@ export class EditComponent  implements OnInit {
           console.log(reader.result)
           const base64Data = reader.result.substring(23);
           this.editingAlbum.picture = base64Data;
-          console.log(this.editingAlbum.picture);
+          console.log("Album picture:" + this.editingAlbum.picture);
         }
       };
       reader.readAsDataURL(file);
@@ -67,7 +64,7 @@ export class EditComponent  implements OnInit {
           console.log(reader.result)
           const base64Data = reader.result.substring(23);
           this.editingUser.photo = base64Data;
-          console.log(this.editingUser.photo);
+          console.log("User photo:" + this.editingUser.photo);
         }
       };
       reader.readAsDataURL(file);
@@ -85,7 +82,7 @@ export class EditComponent  implements OnInit {
           console.log(reader.result)
           const base64Data = reader.result.substring(reader.result.indexOf(',') + 1);
           this.editingTrack.file = base64Data;
-          console.log(this.editingTrack.file);
+          console.log("Track file:" + this.editingTrack.file);
         }
       };
       reader.readAsDataURL(file);
@@ -132,22 +129,18 @@ export class EditComponent  implements OnInit {
     else{
       if (this.fromTrackComponent) {
         this.adminService.addNewTrack(this.editingTrack);
-          this.editingTrack = new Track();
-
-          console.log(this.editingTrack);
+        this.editingTrack = new Track();
         this.dialogRef.close(editedTrack);
       }
       else if (this.fromAlbumComponent) {
         this.adminService.addNewAlbum(this.editingAlbum);
-          this.editingAlbum = new Album();
-
-
+        this.editingAlbum = new Album();
         this.dialogRef.close(editedAlbum);
       }
       else if (this.fromUserComponent) {
         this.adminService.addNewUser(this.editingUser);
-          this.editingUser = new User();
-          this.dialogRef.close(editedUser);
+        this.editingUser = new User();
+        this.dialogRef.close(editedUser);
         }
       }
     }

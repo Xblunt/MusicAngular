@@ -4,9 +4,6 @@ import { AdminComponent } from "./components/home/admin/admin.component";
 import { HomeComponent } from "./components/home/home/home.component";
 import { LoginComponent } from "./components/home/login/login.component";
 import { UserComponent } from "./components/home/user/user.component";
-import { DialogAddComponent } from "./components/user-editor/dialog-add/dialog-add.component";
-import { DialogDeleteComponent } from "./components/user-editor/dialog-delete/dialog-delete.component";
-import { DialogEditComponent } from "./components/user-editor/dialog-edit/dialog-edit.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { FormsModule } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -17,7 +14,6 @@ import { MatSortModule } from "@angular/material/sort";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { MatButtonModule } from "@angular/material/button";
 import { MatGridListModule } from "@angular/material/grid-list";
-import { BaseServiceService } from "./service/base-service.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
 import {MatInputModule} from '@angular/material/input';
@@ -47,9 +43,6 @@ import { MessageComponent } from './components/home/user/messages/message/messag
     AppComponent,
     AdminComponent,
     UserComponent,
-    DialogEditComponent,
-    DialogDeleteComponent,
-    DialogAddComponent,
     HomeComponent,
     LoginComponent,
     AlbumscComponent,
@@ -89,10 +82,10 @@ import { MessageComponent } from './components/home/user/messages/message/messag
 
 
   ],
-  providers: [BaseServiceService, SessionStorageService,
+  providers: [SessionStorageService,
     {
       provide : WebSocetServiceService,
-      useFactory: (http: HttpClient)=>{
+      useFactory: ()=>{
           const service = new WebSocetServiceService();
           service.configure(WebSocketConfig);
           // service.activate();

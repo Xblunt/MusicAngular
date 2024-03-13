@@ -25,7 +25,7 @@ export class ChatsListComponent {
 
   selectChat(chat: Chat) {
     this.chatService.setSelectChat(chat);
-    console.log(chat);
+    console.log("SelectChat:" + chat);
   }
 
 

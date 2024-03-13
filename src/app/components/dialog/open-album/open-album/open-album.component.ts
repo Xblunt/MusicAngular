@@ -1,22 +1,12 @@
-
 import { AdminServiceService } from 'src/app/service/admin-service.service';
-
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Track } from 'src/app/model/track';
-import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
-import { Album } from 'src/app/model/album';
 import { Page } from 'src/app/service/page';
-import { AlbumscComponent } from 'src/app/components/basic-components/albums/albumsc/albumsc.component';
-import { AddTrackAlbumComponent } from '../../addTrackAlbum/add-track-album/add-track-album.component';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/auth/auth.service';
 import { HomeService } from 'src/app/service/home.service';
-import { Pttt } from 'src/app/model/pt';
-import { Playlist } from 'src/app/model/playlist';
-import { CredentialResponse } from 'src/app/auth/model/auth/credentialResponse';
-// import { AlbumService } from 'src/app/service/album.service';
+import { PlaylistTrack } from 'src/app/model/pt';
 
 @Component({
   selector: 'app-open-album',
@@ -31,22 +21,19 @@ export class OpenAlbumComponent implements OnInit {
   sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
-  length!: number;
+
   idalbum: number;
   service: any;
-  editingStudent: Track;
-  trackId: number;
+
   tracks: any[]=[];
   clickedUserId!: number;
   usernamell!: string ;
-  pt: Pttt;
+  pt: PlaylistTrack;
   isIconActive: boolean = false;
 
   constructor( public dialogRef: MatDialogRef<OpenAlbumComponent>,public dialog:MatDialog,  @Inject(MAT_DIALOG_DATA) public data:any, private adminService: AdminServiceService, public authService:AuthService, private homeService:HomeService) {
     this.idalbum = data.id;
-    this.pt = new Pttt;
-    this.editingStudent = new Track;
-    this.trackId =  this.editingStudent.id;
+    this.pt = new PlaylistTrack;
     if (this.authService.isAdmin()){
       this.service = this.adminService;
     }
@@ -70,7 +57,6 @@ export class OpenAlbumComponent implements OnInit {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
           this.totalPages = response.totalPages;
-          this.length = response.content.length;
       });
   }
 
@@ -100,7 +86,7 @@ export class OpenAlbumComponent implements OnInit {
     if (selectedUser) {
       const trackId = selectedUser.id;
       const username = this.usernamell;
-      this.homeService.like( this.pt, username, trackId ).subscribe((newpt: Pttt) => {
+      this.homeService.like( this.pt, username, trackId ).subscribe((newpt: PlaylistTrack) => {
         this.loadTracks();
       });
     }

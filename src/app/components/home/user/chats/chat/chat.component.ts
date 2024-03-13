@@ -19,7 +19,6 @@ export class ChatComponent {
   sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
-  length!: number;
 
   currentPage: number = 0;
   pageSize: number = 10;
@@ -33,7 +32,7 @@ export class ChatComponent {
     this.chatService.eventEmitter.subscribe(chat=>{
       this.selectChat = chat;
       this.loadMessages(this.selectChat);
-      console.log(this.selectChat);
+      console.log("SelectChat" + this.selectChat);
     });
 
   }
@@ -47,7 +46,6 @@ export class ChatComponent {
       console.log('Received messages:', this.messageArray);
       this.totalElements = response.totalElements;
       this.totalPages = response.totalPages;
-      this.length = response.content.length;
 
       this.messageArray.forEach((message: Message) => {
           const trackId = message.track_id;

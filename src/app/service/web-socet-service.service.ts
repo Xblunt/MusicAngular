@@ -10,7 +10,6 @@ import { BehaviorSubject, Observable,Subject  } from 'rxjs';
   providedIn: 'root'
 })
 export  class WebSocetServiceService extends RxStomp {
-  private dataSubject = new Subject<any>();
   sessionData!: Session;
   private sessionDataSubject: BehaviorSubject<Session> = new BehaviorSubject<Session>(new Session());
 
@@ -84,55 +83,3 @@ export  class WebSocetServiceService extends RxStomp {
   }
 
 }
-  // getSessionData(chatId: number): Observable<Session> {
-  //   const subscriptionUrl = `/chats/session/${chatId}`;
-
-  //   return new Observable<Session>(observer => {
-  //     this.stompClient.subscribe(subscriptionUrl, (message) => {
-  //       const data = JSON.parse(message.body);
-  //       const sessionData = new Session();
-  //       sessionData.id = data.id;
-  //       sessionData.action = data.action;
-  //       sessionData.time = data.time;
-  //       sessionData.pause = data.pause;
-  //       sessionData.currentTimeOnDevice = data.currentTimeOnDevice;
-
-  //       this.sessionDataSubject.next(sessionData);
-  //       observer.next(sessionData);
-  //     });
-  //   });
-  // }
-
-
-
-
-
-  // getData(){
-  //   debugger
-  //   return this.dataSubject.asObservable();
-  // }
-
-
-
-  // getSessionData(chatId: number){
-  //   // return this.sessionData;
-  //   // return this.sessionDataSubject.asObservable();
-  //   const subscriptionUrl = `/chats/session/${chatId}`;
-  //   console.log(subscriptionUrl);
-  //   this.stompClient.subscribe(subscriptionUrl, (message) => {
-  //    const data = JSON.parse(message.body);
-  //    this.sessionData = new Session();
-
-  //    this.sessionData .id = data.id;
-  //    this.sessionData .action = data.action;
-  //    this.sessionData .time = data.time;
-  //    this.sessionData .pause = data.pause;
-  //    this.sessionData .currentTimeOnDevice = data.currentTimeOnDevice;
-  //    this.sessionDataSubject.next(this.sessionData);
-  //    // this.dataSubject.next(data);
-  //    console.log("Received message from server:",  this.sessionData);
-  //   //  console.log("Received message from server:", this.sessionData );
-  //    return  this.sessionData;
-  //   });
-  // }
-

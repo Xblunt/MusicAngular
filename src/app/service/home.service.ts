@@ -8,8 +8,9 @@ import { Observable } from 'rxjs';
 import { User } from '../model/user';
 import { Chat } from '../model/chat';
 import { Message } from '../model/message';
-import { Pttt } from '../model/pt';
+import { PlaylistTrack } from '../model/pt';
 import { Session } from '../model/session';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -99,7 +100,7 @@ export class HomeService extends IbaseServiceService {
     let params = new HttpParams()
     .set('username', username)
     .set('messgg', messgg)
-    console.log(chatId);
+    console.log("CreateMessage on chat:" + chatId);
     return this.post<Message>(`${this.chats}/${chatId}`, mess, params);
   }
 
@@ -137,11 +138,11 @@ export class HomeService extends IbaseServiceService {
     return this.post<Chat>(this.chats, chat,params);
   }
 
-  like(pt: Pttt, username: string, trackId: number): Observable<Pttt> {
+  like(pt: PlaylistTrack, username: string, trackId: number): Observable<PlaylistTrack> {
     let params = new HttpParams()
     .set('username', username)
     .set('trackId', trackId);
-    return this.post<Pttt>(this.play, pt, params);
+    return this.post<PlaylistTrack>(this.play, pt, params);
   }
 
 }

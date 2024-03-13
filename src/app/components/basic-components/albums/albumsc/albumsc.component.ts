@@ -1,12 +1,10 @@
 import { AdminServiceService } from 'src/app/service/admin-service.service';
-import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/auth/auth.service';
-import { CredentialResponse } from 'src/app/auth/model/auth/credentialResponse';
 import { Page } from 'src/app/service/page';
 import { Album } from 'src/app/model/album';
 import { OpenAlbumComponent } from 'src/app/components/dialog/open-album/open-album/open-album.component';
@@ -20,23 +18,23 @@ import { HomeService } from 'src/app/service/home.service';
   templateUrl: './albumsc.component.html',
   styleUrls: ['./albumsc.component.css']
 })
-export class AlbumscComponent implements AfterViewInit {
+export class AlbumscComponent implements OnInit{
 
   albums: any[] = [];
   dataSource2 = new MatTableDataSource<Album>();
+
   currentPage: number = 0;
   pageSize: number = 8;
   sortColumn: string = 'id';
   sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
-  length!: number;
-  user!: CredentialResponse;
-  selectedAlbum!: Album;
+
+
   fromAlbumComponent: boolean = true;
   service: any;
 
- constructor(public dialog:MatDialog, private http: HttpClient, public authService:AuthService, private adminService:AdminServiceService, private homeService:HomeService) {
+ constructor(public dialog:MatDialog, public authService:AuthService, private adminService:AdminServiceService, private homeService:HomeService) {
     if (this.authService.isStudent()){
       this.service = this.homeService;
     }
@@ -45,14 +43,7 @@ export class AlbumscComponent implements AfterViewInit {
     }
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<any>;
-
-
-  ngAfterViewInit(): void {
-    this.user = this.authService.LoggedUser;
-  }
 
 
   ngOnInit(): void {
@@ -84,9 +75,9 @@ export class AlbumscComponent implements AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        console.log('Изменения сохранены:', result);
+        console.log('Changes saved:', result);
       } else {
-        console.log(' Окно закрыто без сохранения изменений.');
+        console.log('The window is closed without saving changes.');
       }
     });
   }
@@ -99,7 +90,7 @@ export class AlbumscComponent implements AfterViewInit {
     });
       dialogAddingNewStudent.afterClosed().subscribe((confirmDelete: boolean) => {
       if(album != null) {
-        console.log("delete track: ");
+        console.log("delete album: ");
         this.adminService.deleteUAlbum(album).subscribe(k=>
           this.adminService.getAllAlbums(this.currentPage, this.pageSize, this.sort.active,this.sort.direction).subscribe(data => this.dataSource2.data= data.content) );
       }
@@ -114,7 +105,7 @@ export class AlbumscComponent implements AfterViewInit {
     });
     dialogAddingNewStudent.afterClosed().subscribe((editedAlbum: Album) => {
       if(editedAlbum  != null) {
-        console.log("edit student: " + album.name_album);
+        console.log("edit album: " + album.name_album);
         this.adminService.editAlbum(editedAlbum).subscribe(k=>
           this.adminService.getAllAlbums(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource2.data = data.content) );
       }
@@ -129,7 +120,7 @@ export class AlbumscComponent implements AfterViewInit {
     });
     dialogAddingNewStudent.afterClosed().subscribe((result: Album) => {
       if(result != null) {
-        console.log("adding new student: " + result.name_album);
+        console.log("adding new album: " + result.name_album);
         this.adminService.addNewAlbum(result).subscribe(k=>
           this.adminService.getAllAlbums(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource2.data = data.content) );
       }
@@ -143,9 +134,9 @@ export class AlbumscComponent implements AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        console.log('Изменения сохранены:', result);
+        console.log('Changes saved:', result);
       } else {
-        console.log('Окно закрыто без сохранения изменений.');
+        console.log('The window is closed without saving changes.');
       }
     });
   }

@@ -1,9 +1,5 @@
-
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTable } from '@angular/material/table';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Chat } from 'src/app/model/chat';
 import { User } from 'src/app/model/user';
@@ -23,7 +19,7 @@ export class AddChatsComponent implements OnInit {
   sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
-  length!: number;
+
   usernamell!: string ;
   users: any[ ] = [];
   chat: Chat;
@@ -32,11 +28,6 @@ export class AddChatsComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<AddChatsComponent>,@Inject(MAT_DIALOG_DATA) public data:any, private homeservice: HomeService, private authService:AuthService) {
       this.chat = new Chat;
     }
-
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<any>;
 
 
   ngOnInit(): void {

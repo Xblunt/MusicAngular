@@ -1,4 +1,3 @@
-
 import { SessionStorageService } from 'angular-web-storage';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
@@ -9,8 +8,6 @@ import { catchError, tap } from 'rxjs/operators';
 import { ROLE } from './role';
 import { CredentialResponse } from './model/auth/credentialResponse';
 import { Authority } from './model/auth/authority';
-// import { Student } from '../models/student';
-// import { Page } from '../service/page';
 
 @Injectable({
     providedIn: 'root'
@@ -118,15 +115,6 @@ export class AuthService {
         this.sessionStorage.set('auth', JSON.stringify(response));
     }
 
-
-
-
-
-
-    // getAllStudents(): Observable<Student[]> {
-    //   return this.http.get<Student[]>(this.studentsUrl);
-    // }
-
     logout() {
         this.clearLoginData();
         this.http.post('api/logout', {}).subscribe(response => {
@@ -143,13 +131,7 @@ export class AuthService {
         this.sessionStorage.remove('auth');
     }
 
-    // authentication(headers: any): Observable<any> {
-    //     return this.http.get('api/user', { headers: headers })
-    //         .pipe(
-    //             tap(data => console.log('login data:', data)),
-    //             catchError(this.handleLoginError('login error', []))
-    //         );
-    // }
+
     authentication(headers: any): Observable<any> {
       return this.http.get('api/user', { headers: headers })
           .pipe(

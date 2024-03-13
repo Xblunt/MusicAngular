@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Track } from 'src/app/model/track';
@@ -18,7 +18,7 @@ export class AddTrackAlbumComponent implements OnInit {
   sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
-  length!: number;
+
   idalbum: number;
   editingStudent!: Track;
   trackId: number;
@@ -43,7 +43,6 @@ export class AddTrackAlbumComponent implements OnInit {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
           this.totalPages = response.totalPages;
-          this.length = response.content.length;
       });
   }
 
@@ -63,7 +62,6 @@ export class AddTrackAlbumComponent implements OnInit {
   editAlbumTrack(updatedTrack: Track): void {
     const albumId = this.idalbum;
     const updatedTrackId = updatedTrack.id;
-    const oldAlbumId = updatedTrack.album_id;
     updatedTrack.album_id = albumId;
     const editedTrack: Track = {
       id: updatedTrack.id,
@@ -79,7 +77,6 @@ export class AddTrackAlbumComponent implements OnInit {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
           this.totalPages = response.totalPages;
-          this.length = response.content.length;
       }));
   }
 
