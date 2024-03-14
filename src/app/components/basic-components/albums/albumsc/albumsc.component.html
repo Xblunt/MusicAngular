@@ -51,7 +51,7 @@
           <p>{{ album.id }}   -   {{ album.name_album }} </p>
           <div *ngIf="authService.isAdmin()">
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit" (click)="editAlbum(album)"> </mat-icon>
-            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add" (click)="Addtracks(album)"> </mat-icon>
+            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add" (click)="addtracks(album)"> </mat-icon>
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="folder_open" (click)="openAlbum(album)"> </mat-icon>
           </div>
           <div  *ngIf="authService.isStudent()">

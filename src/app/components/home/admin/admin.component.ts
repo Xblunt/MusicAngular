@@ -1,7 +1,7 @@
 
 import { AdminServiceService } from 'src/app/service/admin-service.service';
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -17,7 +17,7 @@ import { EditComponent } from '../../dialog/edit-component/edit/edit.component';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent   {
+export class AdminComponent implements OnInit {
 
   dataSource4 = new MatTableDataSource<User>();
 

@@ -1,3 +1,4 @@
+import { ChatService } from 'src/app/service/chat.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -25,7 +26,7 @@ export class AddChatsComponent implements OnInit {
   chat: Chat;
   clickedUserId!: number;
 
-  constructor(public dialogRef: MatDialogRef<AddChatsComponent>,@Inject(MAT_DIALOG_DATA) public data:any, private homeservice: HomeService, private authService:AuthService) {
+  constructor(public dialogRef: MatDialogRef<AddChatsComponent>,@Inject(MAT_DIALOG_DATA) public data:any, private homeservice: HomeService, private authService:AuthService, private chatservice: ChatService) {
       this.chat = new Chat;
     }
 
@@ -79,7 +80,7 @@ export class AddChatsComponent implements OnInit {
       this.chat.chatname = "New chat";
       const secondId = selectedUser.id;
       const username = this.usernamell;
-      this.homeservice.addNewChat(this.chat,  username, secondId ).subscribe((newChat: Chat) => {
+      this.chatservice.addNewChat(this.chat,  username, secondId ).subscribe((newChat: Chat) => {
         this.getAllUsers();
       });
     }

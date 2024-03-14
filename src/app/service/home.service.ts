@@ -6,8 +6,6 @@ import { Album } from '../model/album';
 import { Track } from '../model/track';
 import { Observable } from 'rxjs';
 import { User } from '../model/user';
-import { Chat } from '../model/chat';
-import { Message } from '../model/message';
 import { PlaylistTrack } from '../model/pt';
 import { Session } from '../model/session';
 
@@ -15,10 +13,10 @@ import { Session } from '../model/session';
   providedIn: 'root'
 })
 export class HomeService extends IbaseServiceService {
+  private chats = 'client/chats';
   private  homeUrlAl = 'client/album';
   private  homeUrlTrack = 'client/tracks';
   private lkUrl = 'client/auth-user';
-  private chats = 'client/chats';
   private play = 'client/playlist';
 
 
@@ -30,6 +28,12 @@ export class HomeService extends IbaseServiceService {
     let params = new HttpParams()
     .set("chatId", chatId)
     return this.get<Session>("client/session", params);
+  }
+
+  getTrackId(trackId:number):Observable<Track>{
+    let params = new HttpParams()
+    .set("trackIds", trackId);
+    return this.get<Track>(`${this.homeUrlTrack}/send`, params);
   }
 
   getAllAlbums(page: number, size: number, sortColumn: string, sortDirection: string): Observable<Page<Album>> {
@@ -64,53 +68,6 @@ export class HomeService extends IbaseServiceService {
     return this.get<Page<Track>>(this.homeUrlTrack, params);
   }
 
-  editTrackAlbum(track: Track): Observable<Track> {
-    console.log(`editTrackAlbum: ${track.id},${track.name},${track.file},${track.author},${track.album_id},`);
-    return this.put<Track>(`${this.homeUrlAl}/${track.album_id}/tracks/add/${track.id}`, track);
-  }
-
-  getChats(username: string): Observable<Chat[]> {
-    let params = new HttpParams()
-    .set('username', username);
-    return this.get<Chat[]>(this.chats, params);
-  }
-
-  getAllMessages(page: number,chatId: number, size: number, sortColumn: string, sortDirection: string): Observable<Page<Message>> {
-    let params = new HttpParams()
-    .set('page', page.toString())
-    .set('size', size.toString())
-    .set("sortColumn", sortColumn)
-    .set("sortDirection", sortDirection);
-    return this.get<Page<Message>>(`${this.chats}/${chatId}`, params);
-  }
-
-  getTrackMessage(trackId: number): Observable<Track[]> {
-    let params = new HttpParams()
-    .set("trackId", trackId);
-    return this.get<Track[]>(`${this.homeUrlTrack}/mess`, params);
-  }
-
-  getTrackId(trackId:number):Observable<Track>{
-    let params = new HttpParams()
-    .set("trackIds", trackId);
-    return this.get<Track>(`${this.homeUrlTrack}/send`, params);
-  }
-
-  createMessage(mess: Message,chatId: number, username: string, messgg: string): Observable<Message> {
-    let params = new HttpParams()
-    .set('username', username)
-    .set('messgg', messgg)
-    console.log("CreateMessage on chat:" + chatId);
-    return this.post<Message>(`${this.chats}/${chatId}`, mess, params);
-  }
-
-  CreateTrackMessage(mess: Message,chatId: number, usernmae: string, messgg: number): Observable<Message> {
-    let params = new HttpParams()
-    .set('username', usernmae)
-    .set('messgg', messgg)
-    return this.post<Message>(`${this.chats}/${chatId}/add`, mess, params);
-  }
-
   getAllUsers(page: number, size: number, username: string, sortColumn: string, sortDirection: string): Observable<Page<User>> {
     let params = new HttpParams()
       .set('page', page.toString())
@@ -129,13 +86,6 @@ export class HomeService extends IbaseServiceService {
       .set("sortDirection", sortDirection)
       .set('username', username);
     return this.get<Page<Track>>(this.play, params);
-  }
-
-  addNewChat(chat: Chat, username: string, secondId: number): Observable<Chat> {
-    let params = new HttpParams()
-    .set('username', username)
-    .set('secondId', secondId);
-    return this.post<Chat>(this.chats, chat,params);
   }
 
   like(pt: PlaylistTrack, username: string, trackId: number): Observable<PlaylistTrack> {

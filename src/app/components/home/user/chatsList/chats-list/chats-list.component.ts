@@ -13,7 +13,7 @@ export class ChatsListComponent {
   usernamell!: string ;
   chats: Chat[] = [];
 
-  constructor(private authService:AuthService, private homeService: HomeService, private chatService: ChatService){
+  constructor(private authService:AuthService, private chatService: ChatService){
 
   }
 
@@ -25,20 +25,20 @@ export class ChatsListComponent {
 
   selectChat(chat: Chat) {
     this.chatService.setSelectChat(chat);
-    console.log("SelectChat:" + chat);
+    console.log("SelectChat: " + chat.id);
   }
 
 
   getAllUsers( ): void {
     if (this.usernamell) {
       const username = this.usernamell;
-        this.homeService.getChats(username).subscribe((data: Chat[]) => {
+        this.chatService.getChats(username).subscribe((data: Chat[]) => {
           this.chats = data;
         });
     }
     else {
       const username = this.authService.getUsername();
-      this.homeService.getChats( username).subscribe((data: Chat[]) => {
+      this.chatService.getChats( username).subscribe((data: Chat[]) => {
           this.chats = data;
         });
       this.usernamell = username;

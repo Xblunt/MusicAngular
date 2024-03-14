@@ -1,10 +1,10 @@
-
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Message } from 'src/app/model/message';
 import { Track } from 'src/app/model/track';
+import { ChatService } from 'src/app/service/chat.service';
 import { HomeService } from 'src/app/service/home.service';
 import { Page } from 'src/app/service/page';
 
@@ -27,7 +27,7 @@ export class PlaylistComponent {
   usernamell!: string ;
   message: Message;
 
-  constructor(public dialogRef: MatDialogRef<PlaylistComponent>,@Inject(MAT_DIALOG_DATA) public data:any, public dialog:MatDialog, public authService:AuthService,  private userService:HomeService) {
+  constructor(public dialogRef: MatDialogRef<PlaylistComponent>,@Inject(MAT_DIALOG_DATA) public data:any, public dialog:MatDialog, public authService:AuthService,  private userService:HomeService, private chatService: ChatService) {
       this.message = new Message;
   }
 
@@ -74,13 +74,13 @@ export class PlaylistComponent {
   }
 
 
-  CreateTrackMessage(track:Track):void{
+  createTrackMessage(track:Track):void{
     const chatId = this.data;
     console.log('chatId:'+ chatId)
     const trackIds =  track.id;
     const username = this.usernamell;
     console.log('this track ids:'+ trackIds)
-    this.userService.CreateTrackMessage(this.message, chatId,username, trackIds).subscribe(() => {
+    this.chatService.createTrackMessage(this.message, chatId,username, trackIds).subscribe(() => {
         this.getPlaylist();
       });
     this.getPlaylist();

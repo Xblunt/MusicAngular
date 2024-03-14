@@ -28,11 +28,11 @@ export class ChatComponent {
 
 
 
-  constructor(private chatService: ChatService, private homeService: HomeService){
+  constructor(private chatService: ChatService, private homeservice: HomeService){
     this.chatService.eventEmitter.subscribe(chat=>{
       this.selectChat = chat;
       this.loadMessages(this.selectChat);
-      console.log("SelectChat" + this.selectChat);
+      console.log("SelectChat: " + this.selectChat.id);
     });
 
   }
@@ -41,7 +41,7 @@ export class ChatComponent {
   loadMessages(chat: Chat): void {
     const chatId = chat.id;
 
-    this.homeService.getAllMessages(this.currentPage,chatId,this.pageSize,this.sortColumn,this.sortDirection).subscribe((response: Page<Message>) => {
+    this.chatService.getAllMessages(this.currentPage,chatId,this.pageSize,this.sortColumn,this.sortDirection).subscribe((response: Page<Message>) => {
       this.messageArray = response.content;
       console.log('Received messages:', this.messageArray);
       this.totalElements = response.totalElements;
@@ -51,7 +51,7 @@ export class ChatComponent {
           const trackId = message.track_id;
           console.log('TrackId for message:', trackId);
           if(trackId !== null && trackId !== 0) {
-            this.homeService.getTrackId(trackId).subscribe((data: Track) => {
+            this.homeservice.getTrackId(trackId).subscribe((data: Track) => {
               this.track = data;
               console.log(`trackId: ${trackId}, Resulting  track: ${data}`);
               message.track = this.track;

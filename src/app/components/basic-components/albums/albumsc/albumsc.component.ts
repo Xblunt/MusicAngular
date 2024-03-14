@@ -128,7 +128,7 @@ export class AlbumscComponent implements OnInit{
   }
 
 
-  Addtracks(album: Album): void {
+  addtracks(album: Album): void {
     const dialogRef = this.dialog.open(AddTrackAlbumComponent, {
       data: { id: album.id},
     });

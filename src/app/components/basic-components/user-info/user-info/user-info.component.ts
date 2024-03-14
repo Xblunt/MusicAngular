@@ -1,5 +1,5 @@
 import { HomeService } from 'src/app/service/home.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminServiceService } from 'src/app/service/admin-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -10,7 +10,7 @@ import { User } from 'src/app/model/user';
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.css']
 })
-export class UserInfoComponent   {
+export class UserInfoComponent implements OnInit {
 
   usernamell!: string ;
   user:  any[]=[];
