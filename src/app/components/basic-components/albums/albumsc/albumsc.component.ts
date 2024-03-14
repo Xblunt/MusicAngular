@@ -25,8 +25,6 @@ export class AlbumscComponent implements OnInit{
 
   currentPage: number = 0;
   pageSize: number = 8;
-  sortColumn: string = 'id';
-  sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
 
@@ -43,21 +41,17 @@ export class AlbumscComponent implements OnInit{
     }
   }
 
-  @ViewChild(MatSort) sort!: MatSort;
-
-
   ngOnInit(): void {
     console.log(this.albums);
     this.getAllAlbums();
   }
 
   getAllAlbums( ): void {
-    this.service.getAllAlbums(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection).subscribe((page: Page<Album>) => {
+    this.service.getAllAlbums(this.currentPage, this.pageSize).subscribe((page: Page<Album>) => {
       console.log(page);
       this.albums = page.content;
       this.totalPages = page.totalPages;
       this.totalElements = page.totalElements;
-      this.dataSource2.sort = this.sort;
     });
   }
 
@@ -92,7 +86,7 @@ export class AlbumscComponent implements OnInit{
       if(album != null) {
         console.log("delete album: ");
         this.adminService.deleteUAlbum(album).subscribe(k=>
-          this.adminService.getAllAlbums(this.currentPage, this.pageSize, this.sort.active,this.sort.direction).subscribe(data => this.dataSource2.data= data.content) );
+          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.dataSource2.data= data.content) );
       }
     });
   }
@@ -107,7 +101,7 @@ export class AlbumscComponent implements OnInit{
       if(editedAlbum  != null) {
         console.log("edit album: " + album.name_album);
         this.adminService.editAlbum(editedAlbum).subscribe(k=>
-          this.adminService.getAllAlbums(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource2.data = data.content) );
+          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.dataSource2.data = data.content) );
       }
     });
   }
@@ -122,7 +116,7 @@ export class AlbumscComponent implements OnInit{
       if(result != null) {
         console.log("adding new album: " + result.name_album);
         this.adminService.addNewAlbum(result).subscribe(k=>
-          this.adminService.getAllAlbums(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource2.data = data.content) );
+          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.dataSource2.data = data.content) );
       }
     });
   }

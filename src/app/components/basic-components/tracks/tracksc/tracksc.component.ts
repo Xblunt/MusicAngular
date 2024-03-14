@@ -21,8 +21,6 @@ export class TrackscComponent  {
 
   currentPage: number = 0;
   pageSize: number = 8;
-  sortColumn: string = 'id';
-  sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
 
@@ -44,9 +42,6 @@ export class TrackscComponent  {
   }
 
 
-  @ViewChild(MatSort) sort!: MatSort;
-
-
   ngOnInit(): void {
     const storedUsername = localStorage.getItem('username');
     this.usernamell = storedUsername !== null ? storedUsername : '';
@@ -54,7 +49,7 @@ export class TrackscComponent  {
   }
 
   getAllTracks( ): void {
-    this.service.getAllTracks(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection)
+    this.service.getAllTracks(this.currentPage, this.pageSize)
       .subscribe((page: Page<Track>) => {
         console.log(page);
         this.tracks = page.content;
@@ -98,7 +93,7 @@ export class TrackscComponent  {
       if(track != null) {
         console.log("delete track: ");
         this.adminService.deleteTrack(track).subscribe(k=>
-          this.adminService.getAllTracks(this.currentPage, this.pageSize, this.sort.active,this.sort.direction).subscribe(data => this.tracks= data.content) );
+          this.adminService.getAllTracks(this.currentPage, this.pageSize).subscribe(data => this.tracks= data.content) );
       }
     });
   }
@@ -113,7 +108,7 @@ export class TrackscComponent  {
       if(editedTrack  != null) {
         console.log("edit track: " + editedTrack.name);
         this.adminService.editTrack(editedTrack).subscribe(k=>
-          this.adminService.getAllTracks(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.tracks = data.content) );
+          this.adminService.getAllTracks(this.currentPage, this.pageSize).subscribe(data => this.tracks = data.content) );
         }
       });
   }
@@ -128,7 +123,7 @@ export class TrackscComponent  {
       if(result != null) {
         console.log("adding new track: " + result.name);
         this.adminService.addNewTrack(result).subscribe(k=>
-          this.adminService.getAllTracks(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.tracks = data.content) );
+          this.adminService.getAllTracks(this.currentPage, this.pageSize).subscribe(data => this.tracks = data.content) );
       }
     });
   }

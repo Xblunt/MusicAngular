@@ -36,11 +36,10 @@ export class HomeService extends IbaseServiceService {
     return this.get<Track>(`${this.homeUrlTrack}/send`, params);
   }
 
-  getAllAlbums(page: number, size: number, sortColumn: string, sortDirection: string): Observable<Page<Album>> {
+  getAllAlbums(page: number, size: number): Observable<Page<Album>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
-      .set("sortDirection", sortDirection);
     return this.get<Page<Album>>(this.homeUrlAl, params);
   }
 
@@ -50,40 +49,32 @@ export class HomeService extends IbaseServiceService {
     return this.get<User[]>(this.lkUrl, params);
   }
 
-  getAllTracksAlbums(page: number,albumId: number, size: number, sortColumn: string, sortDirection: string): Observable<Page<Track>> {
+  getAllTracksAlbums(page: number,albumId: number, size: number): Observable<Page<Track>> {
     let params = new HttpParams()
     .set('page', page.toString())
     .set('size', size.toString())
-    .set("sortColumn", sortColumn)
-    .set("sortDirection", sortDirection);
     return this.get<Page<Track>>(`${this.homeUrlAl}/${albumId}/tracks`, params);
   }
 
-  getAllTracks(page: number, size: number, sortColumn: string, sortDirection: string): Observable<Page<Track>> {
+  getAllTracks(page: number, size: number): Observable<Page<Track>> {
     let params = new HttpParams()
     .set('page', page.toString())
     .set('size', size.toString())
-    .set("sortColumn", sortColumn)
-    .set("sortDirection", sortDirection);
     return this.get<Page<Track>>(this.homeUrlTrack, params);
   }
 
-  getAllUsers(page: number, size: number, username: string, sortColumn: string, sortDirection: string): Observable<Page<User>> {
+  getAllUsers(page: number, size: number, username: string): Observable<Page<User>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
-      .set("sortColumn", sortColumn)
-      .set("sortDirection", sortDirection)
       .set('username', username);
     return this.get<Page<User>>(`${this.chats}/add`, params);
   }
 
-  getPlaylist(page: number, size: number, username: string, sortColumn: string, sortDirection: string): Observable<Page<Track>> {
+  getPlaylist(page: number, size: number, username: string): Observable<Page<Track>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
-      .set("sortColumn", sortColumn)
-      .set("sortDirection", sortDirection)
       .set('username', username);
     return this.get<Page<Track>>(this.play, params);
   }

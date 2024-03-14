@@ -23,8 +23,6 @@ export class AdminComponent implements OnInit {
 
   currentPage: number = 0;
   pageSize: number = 7;
-  sortColumn: string = 'id';
-  sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
 
@@ -34,8 +32,6 @@ export class AdminComponent implements OnInit {
  constructor(public dialog:MatDialog, private http: HttpClient, private authService:AuthService, private adminService:AdminServiceService) {
     }
 
-  @ViewChild(MatSort) sort!: MatSort;
-
 
   ngOnInit(): void {
     this.getAllUsers();
@@ -43,12 +39,11 @@ export class AdminComponent implements OnInit {
 
 
   getAllUsers( ): void {
-    this.adminService.getAllUsers(this.currentPage, this.pageSize,  this.sortColumn,this.sortDirection).subscribe((page: Page<User>) => {
+    this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;
         this.totalPages = page.totalPages;
         this.totalElements = page.totalElements;
-        this.dataSource4.sort = this.sort;
       });
   }
 
@@ -69,7 +64,7 @@ export class AdminComponent implements OnInit {
       if(confirmDelete == true) {
         console.log("delete user: ");
         this.adminService.deleteUser(user).subscribe(k=>
-          this.adminService.getAllUsers(this.currentPage, this.pageSize, this.sort.active,this.sort.direction).subscribe(data => this.dataSource4.data= data.content) );
+          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.dataSource4.data= data.content) );
       }
     });
   }
@@ -85,7 +80,7 @@ export class AdminComponent implements OnInit {
       if(editedUser  != null) {
         console.log("edit user: " + user.fio);
         this.adminService.editUser(editedUser).subscribe(k=>
-          this.adminService.getAllUsers(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource4.data = data.content) );
+          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.dataSource4.data = data.content) );
       }
     });
   }
@@ -101,7 +96,7 @@ export class AdminComponent implements OnInit {
       if(result != null) {
         console.log("adding new user: " + result.fio);
         this.adminService.addNewUser(result).subscribe(k=>
-          this.adminService.getAllUsers(this.currentPage, this.pageSize,  this.sort.active,this.sort.direction).subscribe(data => this.dataSource4.data = data.content) );
+          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.dataSource4.data = data.content) );
       }
     });
   }

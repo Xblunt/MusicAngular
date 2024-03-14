@@ -11,7 +11,7 @@ import { Chat } from '../model/chat';
 })
 export class ChatService extends IbaseServiceService{
   private chats = 'client/chats';
-  private  homeUrlTrack = 'client/tracks';
+
   eventEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(http: HttpClient) {
@@ -35,12 +35,10 @@ export class ChatService extends IbaseServiceService{
     return this.post<Chat>(this.chats, chat,params);
   }
 
-  getAllMessages(page: number,chatId: number, size: number, sortColumn: string, sortDirection: string): Observable<Page<Message>> {
+  getAllMessages(page: number,chatId: number, size: number): Observable<Page<Message>> {
     let params = new HttpParams()
     .set('page', page.toString())
     .set('size', size.toString())
-    .set("sortColumn", sortColumn)
-    .set("sortDirection", sortDirection);
     return this.get<Page<Message>>(`${this.chats}/${chatId}`, params);
   }
 

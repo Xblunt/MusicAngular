@@ -14,8 +14,6 @@ export class AddTrackAlbumComponent implements OnInit {
 
   currentPage: number = 0;
   pageSize: number = 2;
-  sortColumn: string = 'id';
-  sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
 
@@ -38,8 +36,7 @@ export class AddTrackAlbumComponent implements OnInit {
 
   loadTracks(): void {
     const albumId = this.idalbum;
-    this.adminService.getAllTracksAlbumsAdd(this.currentPage,this.trackId , albumId ,this.pageSize,this.sortColumn,this.sortDirection
-      ).subscribe( (response: Page<Track>) => {
+    this.adminService.getAllTracksAlbumsAdd(this.currentPage,this.trackId , albumId ,this.pageSize,).subscribe( (response: Page<Track>) => {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
           this.totalPages = response.totalPages;
@@ -72,8 +69,7 @@ export class AddTrackAlbumComponent implements OnInit {
       text: updatedTrack.text,
     };
     this.adminService.editTrackAlbum(editedTrack).subscribe(k=>
-        this.adminService.getAllTracksAlbumsAdd(this.currentPage, updatedTrackId, albumId ,this.pageSize,this.sortColumn,this.sortDirection
-      ).subscribe( (response: Page<Track>) => {
+        this.adminService.getAllTracksAlbumsAdd(this.currentPage, updatedTrackId, albumId ,this.pageSize).subscribe( (response: Page<Track>) => {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
           this.totalPages = response.totalPages;

@@ -16,8 +16,6 @@ export class AddChatsComponent implements OnInit {
 
   currentPage: number = 0;
   pageSize: number = 8;
-  sortColumn: string = 'id';
-  sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
 
@@ -41,7 +39,7 @@ export class AddChatsComponent implements OnInit {
   getAllUsers( ): void {
     if (this.usernamell) {
       const username = this.usernamell;
-      this.homeservice.getAllUsers(this.currentPage, this.pageSize,username,  this.sortColumn,this.sortDirection)
+      this.homeservice.getAllUsers(this.currentPage, this.pageSize,username)
       .subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;
@@ -51,7 +49,7 @@ export class AddChatsComponent implements OnInit {
     }
     else {
       const username = this.authService.getUsername();
-      this.homeservice.getAllUsers(this.currentPage, this.pageSize,username,  this.sortColumn,this.sortDirection)
+      this.homeservice.getAllUsers(this.currentPage, this.pageSize,username)
       .subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;

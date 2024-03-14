@@ -15,8 +15,6 @@ export class ChatComponent {
   selectChat!: Chat;
   messageText!: string;
 
-  sortColumn: string = 'id';
-  sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
 
@@ -28,20 +26,21 @@ export class ChatComponent {
 
 
 
-  constructor(private chatService: ChatService, private homeservice: HomeService){
+  constructor(private chatService: ChatService, private homeservice: HomeService) {}
+
+
+  ngOnInit(){
     this.chatService.eventEmitter.subscribe(chat=>{
       this.selectChat = chat;
       this.loadMessages(this.selectChat);
       console.log("SelectChat: " + this.selectChat.id);
     });
-
   }
-
 
   loadMessages(chat: Chat): void {
     const chatId = chat.id;
 
-    this.chatService.getAllMessages(this.currentPage,chatId,this.pageSize,this.sortColumn,this.sortDirection).subscribe((response: Page<Message>) => {
+    this.chatService.getAllMessages(this.currentPage,chatId,this.pageSize).subscribe((response: Page<Message>) => {
       this.messageArray = response.content;
       console.log('Received messages:', this.messageArray);
       this.totalElements = response.totalElements;

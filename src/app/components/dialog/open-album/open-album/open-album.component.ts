@@ -17,8 +17,6 @@ export class OpenAlbumComponent implements OnInit {
 
   currentPage: number = 0;
   pageSize: number = 2;
-  sortColumn: string = 'id';
-  sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
 
@@ -52,7 +50,7 @@ export class OpenAlbumComponent implements OnInit {
 
   loadTracks(): void {
     const albumId = this.idalbum;
-    this.service.getAllTracksAlbums(this.currentPage, albumId ,this.pageSize,this.sortColumn,this.sortDirection
+    this.service.getAllTracksAlbums(this.currentPage, albumId ,this.pageSize
       ).subscribe( (response: Page<Track>) => {
           this.tracks = response.content;
           this.totalElements = response.totalElements;

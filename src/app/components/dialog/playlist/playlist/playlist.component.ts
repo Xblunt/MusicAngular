@@ -19,8 +19,6 @@ export class PlaylistComponent {
 
   currentPage: number = 0;
   pageSize: number = 8;
-  sortColumn: string = 'id';
-  sortDirection: string = 'asc';
   totalPages: number = 0;
   totalElements: number = 0;
 
@@ -49,7 +47,7 @@ export class PlaylistComponent {
   getPlaylist( ): void {
     if (this.usernamell) {
       const username = this.usernamell;
-      this.userService.getPlaylist(this.currentPage,  this.pageSize, username, this.sortColumn,this.sortDirection).subscribe((page: Page<Track>) => {
+      this.userService.getPlaylist(this.currentPage,  this.pageSize, username).subscribe((page: Page<Track>) => {
         this.tracks = page.content;
         console.log(page.content);
         this.totalPages = page.totalPages;
@@ -58,7 +56,7 @@ export class PlaylistComponent {
     }
     else {
       const username = this.authService.getUsername();
-      this.userService.getPlaylist(this.currentPage, this.pageSize, username, this.sortColumn,this.sortDirection).subscribe((page: Page<Track>) => {
+      this.userService.getPlaylist(this.currentPage, this.pageSize, username).subscribe((page: Page<Track>) => {
         this.tracks = page.content;
         console.log(page.content);
         this.totalPages = page.totalPages;

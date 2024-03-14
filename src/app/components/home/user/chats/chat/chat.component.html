@@ -1,5 +1,5 @@
 <div *ngIf="this.selectChat" class="component square chats">
-  <div *ngFor="let message of messageArray" >
+  <div *ngFor="let message of messageArray">
   <app-message [message]="message" [track]="track" [selectChat]="selectChat"></app-message>
   </div>
   <input  [(ngModel)]="messageText" type="text" class="write-message" placeholder="Type your message here">
