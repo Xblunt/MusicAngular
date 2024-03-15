@@ -5,6 +5,8 @@ import { ChatService } from 'src/app/service/chat.service';
 import { Message } from 'src/app/model/message';
 import { HomeService } from 'src/app/service/home.service';
 import { Page } from 'src/app/service/page';
+import { PlaylistComponent } from 'src/app/components/dialog/playlist/playlist/playlist.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-chat',
@@ -16,16 +18,21 @@ export class ChatComponent {
   messageText!: string;
   pageSize: number = 10;
   messageArray: any[]=[];
-  track!: Track;
+  message: Message;
+  usernamell!: string;
 
-  constructor(private chatService: ChatService, private homeservice: HomeService) {}
+  constructor(private chatService: ChatService, private homeservice: HomeService, public dialog:MatDialog) {
+   this.message = new Message;
+  }
 
 
   ngOnInit(){
+    const storedUsername = localStorage.getItem('username');
+    this.usernamell = storedUsername !== null ? storedUsername : '';
     this.chatService.eventEmitter.subscribe(chat=>{
       this.selectChat = chat;
       this.loadMessages(this.selectChat);
-      console.log("SelectChat: " + this.selectChat.id);
+      console.log("SelectChat: ", this.selectChat.id);
     });
   }
 
@@ -41,8 +48,7 @@ export class ChatComponent {
           console.log('TrackId for message:', trackId);
           if(trackId !== null && trackId !== 0) {
             this.homeservice.getTrackId(trackId).subscribe((data: Track) => {
-              this.track = data;
-              message.track = this.track;
+              message.track = data;
               console.log(`trackId: ${trackId}, Resulting  track: ${data}`);
             });
           }
@@ -50,6 +56,29 @@ export class ChatComponent {
             console.log('TrackId = null');
           }
       });
+    });
+  }
+
+  createMessages(chat:Chat):void{
+    const chatId = this.selectChat.id;
+    const messgg =  this.messageText;
+    const username = this.usernamell;
+    this.chatService.createMessage(this.message, chatId, username,  messgg).subscribe(k => {
+      console.log('this chat:',this.selectChat);
+      this.loadMessages(chat);
+    });
+  }
+
+  openPlaylist(): void {
+    const dialogRef = this.dialog.open(PlaylistComponent, {
+    data: this.selectChat.id
+    });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (result) {
+        console.log('Changes saved:', result);
+      } else {
+        console.log('The window is closed without saving changes.');
+      }
     });
   }
 

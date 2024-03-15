@@ -1,7 +1,7 @@
 import { Component, Input} from '@angular/core';
 import { Chat } from 'src/app/model/chat';
-import { Track } from 'src/app/model/track';
 import { Message } from 'src/app/model/message';
+import { MusicService } from 'src/app/service/music.service';
 
 
 @Component({
@@ -11,14 +11,20 @@ import { Message } from 'src/app/model/message';
 })
 export class MessageComponent {
 
-
-  @Input() track!: Track;
   @Input() selectChat!: Chat;
   @Input() message!: Message;
 
-  constructor(){
+  constructor(private musicService: MusicService){
   }
 
+
+  playAudio(event: Event) {
+    this.musicService.playAudio(this.message.track.file, event);
+  }
+
+  pauseAudio(event: Event) {
+    this.musicService.pauseAudio(event);
+  }
 
 
 

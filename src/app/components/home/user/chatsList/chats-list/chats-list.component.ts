@@ -2,7 +2,6 @@ import { ChatService } from './../../../../../service/chat.service';
 import { Component} from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Chat } from 'src/app/model/chat';
-import { HomeService } from 'src/app/service/home.service';
 
 @Component({
   selector: 'app-chats-list',
