@@ -11,21 +11,16 @@ import { Page } from 'src/app/service/page';
   styleUrls: ['./add-track-album.component.css']
 })
 export class AddTrackAlbumComponent implements OnInit {
-
   currentPage: number = 0;
   pageSize: number = 2;
-  totalPages: number = 0;
   totalElements: number = 0;
-
   idalbum: number;
   editingStudent!: Track;
-  trackId: number;
   tracks: any[]=[];
 
   constructor(public dialogRef: MatDialogRef<AddTrackAlbumComponent>, @Inject(MAT_DIALOG_DATA) public data:any, private adminService: AdminServiceService) {
     this.idalbum = data.id;
     this.editingStudent = new Track;
-    this.trackId =  this.editingStudent.id;
   }
 
 
@@ -36,10 +31,9 @@ export class AddTrackAlbumComponent implements OnInit {
 
   loadTracks(): void {
     const albumId = this.idalbum;
-    this.adminService.getAllTracksAlbumsAdd(this.currentPage,this.trackId , albumId ,this.pageSize,).subscribe( (response: Page<Track>) => {
+    this.adminService.getAllTracksAlbumsAdd(this.currentPage, albumId ,this.pageSize,).subscribe( (response: Page<Track>) => {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
-          this.totalPages = response.totalPages;
       });
   }
 
@@ -58,7 +52,6 @@ export class AddTrackAlbumComponent implements OnInit {
 
   editAlbumTrack(updatedTrack: Track): void {
     const albumId = this.idalbum;
-    const updatedTrackId = updatedTrack.id;
     updatedTrack.album_id = albumId;
     const editedTrack: Track = {
       id: updatedTrack.id,
@@ -69,10 +62,9 @@ export class AddTrackAlbumComponent implements OnInit {
       text: updatedTrack.text,
     };
     this.adminService.editTrackAlbum(editedTrack).subscribe(k=>
-        this.adminService.getAllTracksAlbumsAdd(this.currentPage, updatedTrackId, albumId ,this.pageSize).subscribe( (response: Page<Track>) => {
+        this.adminService.getAllTracksAlbumsAdd(this.currentPage, albumId ,this.pageSize).subscribe( (response: Page<Track>) => {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
-          this.totalPages = response.totalPages;
       }));
   }
 

@@ -14,14 +14,10 @@ import { Page } from 'src/app/service/page';
   styleUrls: ['./playlist.component.css']
 })
 export class PlaylistComponent {
-
   tracks: any [] = [];
-
   currentPage: number = 0;
   pageSize: number = 8;
-  totalPages: number = 0;
   totalElements: number = 0;
-
   usernamell!: string ;
   message: Message;
 
@@ -50,7 +46,6 @@ export class PlaylistComponent {
       this.userService.getPlaylist(this.currentPage,  this.pageSize, username).subscribe((page: Page<Track>) => {
         this.tracks = page.content;
         console.log(page.content);
-        this.totalPages = page.totalPages;
         this.totalElements = page.totalElements;
       });
     }
@@ -59,7 +54,6 @@ export class PlaylistComponent {
       this.userService.getPlaylist(this.currentPage, this.pageSize, username).subscribe((page: Page<Track>) => {
         this.tracks = page.content;
         console.log(page.content);
-        this.totalPages = page.totalPages;
         this.totalElements = page.totalElements;
       });
     this.usernamell = username;
@@ -78,10 +72,9 @@ export class PlaylistComponent {
     const trackIds =  track.id;
     const username = this.usernamell;
     console.log('this track ids:'+ trackIds)
-    this.chatService.createTrackMessage(this.message, chatId,username, trackIds).subscribe(() => {
+    this.chatService.createTrackMessage(this.message, chatId, username, trackIds).subscribe(() => {
         this.getPlaylist();
       });
-    this.getPlaylist();
   }
 
 }

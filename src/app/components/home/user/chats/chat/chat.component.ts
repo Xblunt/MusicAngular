@@ -14,17 +14,9 @@ import { Page } from 'src/app/service/page';
 export class ChatComponent {
   selectChat!: Chat;
   messageText!: string;
-
-  totalPages: number = 0;
-  totalElements: number = 0;
-
-  currentPage: number = 0;
   pageSize: number = 10;
-
   messageArray: any[]=[];
   track!: Track;
-
-
 
   constructor(private chatService: ChatService, private homeservice: HomeService) {}
 
@@ -40,11 +32,9 @@ export class ChatComponent {
   loadMessages(chat: Chat): void {
     const chatId = chat.id;
 
-    this.chatService.getAllMessages(this.currentPage,chatId,this.pageSize).subscribe((response: Page<Message>) => {
+    this.chatService.getAllMessages(chatId,this.pageSize).subscribe((response: Page<Message>) => {
       this.messageArray = response.content;
       console.log('Received messages:', this.messageArray);
-      this.totalElements = response.totalElements;
-      this.totalPages = response.totalPages;
 
       this.messageArray.forEach((message: Message) => {
           const trackId = message.track_id;
@@ -52,8 +42,8 @@ export class ChatComponent {
           if(trackId !== null && trackId !== 0) {
             this.homeservice.getTrackId(trackId).subscribe((data: Track) => {
               this.track = data;
-              console.log(`trackId: ${trackId}, Resulting  track: ${data}`);
               message.track = this.track;
+              console.log(`trackId: ${trackId}, Resulting  track: ${data}`);
             });
           }
           else {

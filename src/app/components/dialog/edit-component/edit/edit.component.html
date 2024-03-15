@@ -40,7 +40,7 @@
   <div class="file-upload center-align"
      (dragenter)="highlightFileUpload($event)"
      (dragover)="allowFileDrop($event)"
-     (dragleave)="unhighlightFileUpload($event)"
+     (dragleave)="highlightFileUpload($event)"
      (drop)="handleSongFileUpload($event)">
     <div class="drop-area">
       Drag and drop file here

@@ -1,9 +1,6 @@
 import { AdminServiceService } from 'src/app/service/admin-service.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Page } from 'src/app/service/page';
 import { Album } from 'src/app/model/album';
@@ -19,16 +16,9 @@ import { HomeService } from 'src/app/service/home.service';
   styleUrls: ['./albumsc.component.css']
 })
 export class AlbumscComponent implements OnInit{
-
   albums: any[] = [];
-  dataSource2 = new MatTableDataSource<Album>();
-
-  currentPage: number = 0;
   pageSize: number = 8;
-  totalPages: number = 0;
-  totalElements: number = 0;
-
-
+  currentPage: number = 0;
   fromAlbumComponent: boolean = true;
   service: any;
 
@@ -50,18 +40,8 @@ export class AlbumscComponent implements OnInit{
     this.service.getAllAlbums(this.currentPage, this.pageSize).subscribe((page: Page<Album>) => {
       console.log(page);
       this.albums = page.content;
-      this.totalPages = page.totalPages;
-      this.totalElements = page.totalElements;
     });
   }
-
-
-  updatePageSizeAl(event: PageEvent): void {
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.getAllAlbums();
-  }
-
 
   openAlbum(albumId: Album): void {
     const dialogRef = this.dialog.open(OpenAlbumComponent, {
@@ -86,7 +66,7 @@ export class AlbumscComponent implements OnInit{
       if(album != null) {
         console.log("delete album: ");
         this.adminService.deleteUAlbum(album).subscribe(k=>
-          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.dataSource2.data= data.content) );
+          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.albums = data.content) );
       }
     });
   }
@@ -101,7 +81,7 @@ export class AlbumscComponent implements OnInit{
       if(editedAlbum  != null) {
         console.log("edit album: " + album.name_album);
         this.adminService.editAlbum(editedAlbum).subscribe(k=>
-          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.dataSource2.data = data.content) );
+          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.albums = data.content) );
       }
     });
   }
@@ -116,7 +96,7 @@ export class AlbumscComponent implements OnInit{
       if(result != null) {
         console.log("adding new album: " + result.name_album);
         this.adminService.addNewAlbum(result).subscribe(k=>
-          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.dataSource2.data = data.content) );
+          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.albums = data.content) );
       }
     });
   }

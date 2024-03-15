@@ -13,12 +13,8 @@ import { Page } from 'src/app/service/page';
   styleUrls: ['./add-chats.component.css']
 })
 export class AddChatsComponent implements OnInit {
-
   currentPage: number = 0;
   pageSize: number = 8;
-  totalPages: number = 0;
-  totalElements: number = 0;
-
   usernamell!: string ;
   users: any[ ] = [];
   chat: Chat;
@@ -43,8 +39,6 @@ export class AddChatsComponent implements OnInit {
       .subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;
-        this.totalPages = page.totalPages;
-        this.totalElements = page.totalElements;
       });
     }
     else {
@@ -53,8 +47,6 @@ export class AddChatsComponent implements OnInit {
       .subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;
-        this.totalPages = page.totalPages;
-        this.totalElements = page.totalElements;
       });
     this.usernamell = username;
     }

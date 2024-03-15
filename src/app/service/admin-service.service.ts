@@ -41,7 +41,7 @@ export class AdminServiceService extends IbaseServiceService {
     return this.get<Page<Track>>(`${this.adminUrlAl}/${albumId}/tracks`, params);
   }
 
-  getAllTracksAlbumsAdd(page: number,trackId: number, albumId: number, size: number): Observable<Page<Track>> {
+  getAllTracksAlbumsAdd(page: number, albumId: number, size: number): Observable<Page<Track>> {
     let params = new HttpParams()
     .set('page', page.toString())
     .set('size', size.toString())

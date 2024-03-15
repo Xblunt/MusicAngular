@@ -1,5 +1,5 @@
 <div class="screen">
-  <div class="panel panel-right new-flex-container">
+  <div class=" panel-right new-flex-container">
     <div class="content-wrapper">
       <div class=" panel-right top-right-menu">
         <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="account_circle" class="menu align-left" [matMenuTriggerFor]="menu" > </mat-icon>
@@ -9,8 +9,8 @@
         </mat-menu>
       </div>
       <div *ngFor="let user of users" class="track-container">
-        <div class="panel panel-wh">
-        <div class="panel panel-gray pau">
+        <div class=" panel-wh">
+        <div class=" panel-gray pau">
           {{ user.id }}: {{ user.fio }}
           <div class="right-align">
             <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit" (click)="editUser(user)"> </mat-icon>

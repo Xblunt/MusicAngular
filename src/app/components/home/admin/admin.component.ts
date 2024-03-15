@@ -1,12 +1,8 @@
-
 import { AdminServiceService } from 'src/app/service/admin-service.service';
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/model/user';
 import { Page } from 'src/app/service/page';
 import { DeleteComponentComponent } from '../../dialog/delete-component/delete-component/delete-component.component';
@@ -18,18 +14,13 @@ import { EditComponent } from '../../dialog/edit-component/edit/edit.component';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-
-  dataSource4 = new MatTableDataSource<User>();
-
   currentPage: number = 0;
   pageSize: number = 7;
-  totalPages: number = 0;
   totalElements: number = 0;
-
   fromUserComponent: boolean = true;
   users : any[]=[];
 
- constructor(public dialog:MatDialog, private http: HttpClient, private authService:AuthService, private adminService:AdminServiceService) {
+ constructor(public dialog:MatDialog, private http: HttpClient, private adminService:AdminServiceService) {
     }
 
 
@@ -42,7 +33,6 @@ export class AdminComponent implements OnInit {
     this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;
-        this.totalPages = page.totalPages;
         this.totalElements = page.totalElements;
       });
   }
@@ -64,7 +54,7 @@ export class AdminComponent implements OnInit {
       if(confirmDelete == true) {
         console.log("delete user: ");
         this.adminService.deleteUser(user).subscribe(k=>
-          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.dataSource4.data= data.content) );
+          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.users = data.content) );
       }
     });
   }
@@ -80,7 +70,7 @@ export class AdminComponent implements OnInit {
       if(editedUser  != null) {
         console.log("edit user: " + user.fio);
         this.adminService.editUser(editedUser).subscribe(k=>
-          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.dataSource4.data = data.content) );
+          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.users = data.content) );
       }
     });
   }
@@ -96,7 +86,7 @@ export class AdminComponent implements OnInit {
       if(result != null) {
         console.log("adding new user: " + result.fio);
         this.adminService.addNewUser(result).subscribe(k=>
-          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.dataSource4.data = data.content) );
+          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.users = data.content) );
       }
     });
   }

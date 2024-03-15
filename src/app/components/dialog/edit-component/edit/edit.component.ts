@@ -1,4 +1,3 @@
-
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Album } from 'src/app/model/album';
@@ -32,7 +31,6 @@ export class EditComponent  implements OnInit {
     this.editingUser = this.isEditMode ? this.data  : new User();
     this.editingAlbum = this.isEditMode ? this.data  : new Album();
     this.editingTrack = this.isEditMode ? this.data  : new Track();
-    this.editingUser.fio = this.data.fio;
   }
 
 
@@ -94,13 +92,6 @@ export class EditComponent  implements OnInit {
     event.preventDefault();
     event.stopPropagation();
   }
-
-
-  unhighlightFileUpload(event: DragEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
 
   allowFileDrop(event: any) {
     event.preventDefault();

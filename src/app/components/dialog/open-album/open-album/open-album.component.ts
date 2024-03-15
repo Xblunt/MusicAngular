@@ -14,15 +14,11 @@ import { PlaylistTrack } from 'src/app/model/pt';
   styleUrls: ['./open-album.component.css']
 })
 export class OpenAlbumComponent implements OnInit {
-
   currentPage: number = 0;
   pageSize: number = 2;
-  totalPages: number = 0;
   totalElements: number = 0;
-
   idalbum: number;
   service: any;
-
   tracks: any[]=[];
   clickedUserId!: number;
   usernamell!: string ;
@@ -54,7 +50,6 @@ export class OpenAlbumComponent implements OnInit {
       ).subscribe( (response: Page<Track>) => {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
-          this.totalPages = response.totalPages;
       });
   }
 
@@ -84,7 +79,7 @@ export class OpenAlbumComponent implements OnInit {
     if (selectedUser) {
       const trackId = selectedUser.id;
       const username = this.usernamell;
-      this.homeService.like( this.pt, username, trackId ).subscribe((newpt: PlaylistTrack) => {
+      this.homeService.like(this.pt, username, trackId).subscribe(() => {
         this.loadTracks();
       });
     }

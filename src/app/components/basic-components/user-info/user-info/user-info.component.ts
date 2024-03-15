@@ -11,7 +11,6 @@ import { User } from 'src/app/model/user';
   styleUrls: ['./user-info.component.css']
 })
 export class UserInfoComponent implements OnInit {
-
   usernamell!: string ;
   user:  any[]=[];
 

@@ -35,9 +35,8 @@ export class ChatService extends IbaseServiceService{
     return this.post<Chat>(this.chats, chat,params);
   }
 
-  getAllMessages(page: number,chatId: number, size: number): Observable<Page<Message>> {
+  getAllMessages(chatId: number, size: number): Observable<Page<Message>> {
     let params = new HttpParams()
-    .set('page', page.toString())
     .set('size', size.toString())
     return this.get<Page<Message>>(`${this.chats}/${chatId}`, params);
   }

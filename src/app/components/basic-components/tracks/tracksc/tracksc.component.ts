@@ -1,8 +1,7 @@
 import { AdminServiceService } from 'src/app/service/admin-service.service';
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Page } from 'src/app/service/page';
 import { Track } from 'src/app/model/track';
@@ -18,12 +17,9 @@ import { PlaylistTrack } from 'src/app/model/pt';
 })
 export class TrackscComponent  {
   tracks: any [] = [];
-
   currentPage: number = 0;
   pageSize: number = 8;
-  totalPages: number = 0;
   totalElements: number = 0;
-
   fromTrackComponent: boolean = true;
   service: any;
   usernamell!: string ;
@@ -53,7 +49,6 @@ export class TrackscComponent  {
       .subscribe((page: Page<Track>) => {
         console.log(page);
         this.tracks = page.content;
-        this.totalPages = page.totalPages;
         this.totalElements = page.totalElements;
       });
   }
