@@ -12,16 +12,16 @@ import { Session } from '../model/session';
 @Injectable({
   providedIn: 'root'
 })
-export class HomeService extends IbaseServiceService {
-  private chats = 'client/chats';
-  private  homeUrlAl = 'client/album';
-  private  homeUrlTrack = 'client/tracks';
-  private lkUrl = 'client/auth-user';
-  private play = 'client/playlist';
+export class ClientService extends IbaseServiceService {
+  private clientUrlChats = 'chats';
+  private clientUrlAlbum = 'album';
+  private clientUrlTrack = 'tracks';
+  private lkUrl = 'auth-user';
+  private playlistUrl = 'playlist';
 
 
   constructor(http: HttpClient) {
-    super(http, 'api');
+    super(http, 'api/client');
   }
 
   getSession(chatId:number): Observable<Session>{
@@ -33,14 +33,14 @@ export class HomeService extends IbaseServiceService {
   getTrackId(trackId:number):Observable<Track>{
     let params = new HttpParams()
     .set("trackIds", trackId);
-    return this.get<Track>(`${this.homeUrlTrack}/send`, params);
+    return this.get<Track>(`${this.clientUrlTrack}/send`, params);
   }
 
-  getAllAlbums(page: number, size: number): Observable<Page<Album>> {
+  getAllPageAlbums(page: number, size: number): Observable<Page<Album>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
-    return this.get<Page<Album>>(this.homeUrlAl, params);
+    return this.get<Page<Album>>(this.clientUrlAlbum, params);
   }
 
   getUserLK(username: string): Observable<User[]> {
@@ -49,26 +49,26 @@ export class HomeService extends IbaseServiceService {
     return this.get<User[]>(this.lkUrl, params);
   }
 
-  getAllTracksAlbums(page: number,albumId: number, size: number): Observable<Page<Track>> {
+  getAllPageTracksAlbums(page: number,albumId: number, size: number): Observable<Page<Track>> {
     let params = new HttpParams()
     .set('page', page.toString())
     .set('size', size.toString())
-    return this.get<Page<Track>>(`${this.homeUrlAl}/${albumId}/tracks`, params);
+    return this.get<Page<Track>>(`${this.clientUrlAlbum}/${albumId}/tracks`, params);
   }
 
-  getAllTracks(page: number, size: number): Observable<Page<Track>> {
+  getAllPageTracks(page: number, size: number): Observable<Page<Track>> {
     let params = new HttpParams()
     .set('page', page.toString())
     .set('size', size.toString())
-    return this.get<Page<Track>>(this.homeUrlTrack, params);
+    return this.get<Page<Track>>(this.clientUrlTrack, params);
   }
 
-  getAllUsers(page: number, size: number, username: string): Observable<Page<User>> {
+  getShortUsers(page: number, size: number, username: string): Observable<Page<User>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
       .set('username', username);
-    return this.get<Page<User>>(`${this.chats}/add`, params);
+    return this.get<Page<User>>(`${this.clientUrlChats}/add`, params);
   }
 
   getPlaylist(page: number, size: number, username: string): Observable<Page<Track>> {
@@ -76,14 +76,14 @@ export class HomeService extends IbaseServiceService {
       .set('page', page.toString())
       .set('size', size.toString())
       .set('username', username);
-    return this.get<Page<Track>>(this.play, params);
+    return this.get<Page<Track>>(this.playlistUrl, params);
   }
 
   like(pt: PlaylistTrack, username: string, trackId: number): Observable<PlaylistTrack> {
     let params = new HttpParams()
     .set('username', username)
     .set('trackId', trackId);
-    return this.post<PlaylistTrack>(this.play, pt, params);
+    return this.post<PlaylistTrack>(this.playlistUrl, pt, params);
   }
 
 }

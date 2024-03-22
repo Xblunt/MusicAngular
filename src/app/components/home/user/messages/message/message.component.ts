@@ -1,6 +1,7 @@
-import { Component, Input} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
+import { Track } from 'src/app/model/track';
 import { MusicService } from 'src/app/service/music.service';
 
 
@@ -10,22 +11,27 @@ import { MusicService } from 'src/app/service/music.service';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent {
-
+  currenTime: number = 0;
   @Input() selectChat!: Chat;
   @Input() message!: Message;
+  @Output() playEvent = new EventEmitter<Track>();
+  @Output() pauseEvent = new EventEmitter<any>();
 
   constructor(private musicService: MusicService){
   }
 
+  @ViewChild('myAudioElement') audioPlayer!: ElementRef;
 
-  playAudio(event: Event) {
-    this.musicService.playAudio(this.message.track.file, event);
+  playMessageAudio(track: Track) {
+    this.playEvent.emit(track);
   }
 
-  pauseAudio(event: Event) {
-    this.musicService.pauseAudio(event);
+  pauseMessageAudio(track: Track) {
+    this.pauseEvent.emit(track);
   }
 
-
+  getCurrentTime(track: Track) {
+    return this.musicService.getTrackTime(track.id, this.selectChat);
+  }
 
 }

@@ -1,4 +1,4 @@
-import { HomeService } from 'src/app/service/home.service';
+import { ClientService } from 'src/app/service/client.service';
 import { Component, OnInit } from '@angular/core';
 import { AdminServiceService } from 'src/app/service/admin-service.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,7 +14,7 @@ export class UserInfoComponent implements OnInit {
   usernamell!: string ;
   user:  any[]=[];
 
-  constructor(public dialog:MatDialog, public authService:AuthService, private adminService:AdminServiceService, private homeService:HomeService) {
+  constructor(public dialog:MatDialog, public authService:AuthService, private adminService:AdminServiceService, private clientService:ClientService) {
     }
 
   ngOnInit(): void {
@@ -27,7 +27,7 @@ export class UserInfoComponent implements OnInit {
   getUserLK(): void {
     if (this.usernamell) {
       const username = this.usernamell;
-      this.homeService.getUserLK(username).subscribe((users: User[]) => {
+      this.clientService.getUserLK(username).subscribe((users: User[]) => {
         console.log(`Before assigning users: ${ this.user}, ${users}`);
         this.user = users;
         console.log(`After assigning users: ${ this.user}, ${users}`);
@@ -35,7 +35,7 @@ export class UserInfoComponent implements OnInit {
     }
     else {
       const username = this.authService.getUsername();
-      this.homeService.getUserLK(username,).subscribe((users: User[]) => {
+      this.clientService.getUserLK(username,).subscribe((users: User[]) => {
         this.user = [users];
       });
       this.usernamell = username;

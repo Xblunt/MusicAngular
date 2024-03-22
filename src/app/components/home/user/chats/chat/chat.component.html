@@ -1,6 +1,6 @@
 <div *ngIf="this.selectChat" class="component square chats">
   <div *ngFor="let message of messageArray">
-  <app-message [message]="message"  [selectChat]="selectChat"></app-message>
+    <app-message #childAudioPlayer [message]="message"  [selectChat]="selectChat" (playEvent)="playAudio($event)" (pauseEvent)="pauseAudio($event)"></app-message>
   </div>
   <input  [(ngModel)]="messageText" type="text" class="write-message" placeholder="Type your message here">
   <button (click)="openPlaylist()">Open playlist</button>

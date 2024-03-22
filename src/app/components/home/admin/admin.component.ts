@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit {
 
 
   getAllUsers( ): void {
-    this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe((page: Page<User>) => {
+    this.adminService.getAllPageUsers(this.currentPage, this.pageSize).subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;
         this.totalElements = page.totalElements;
@@ -54,7 +54,7 @@ export class AdminComponent implements OnInit {
       if(confirmDelete == true) {
         console.log("delete user: ");
         this.adminService.deleteUser(user).subscribe(k=>
-          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.users = data.content) );
+          this.adminService.getAllPageUsers(this.currentPage, this.pageSize).subscribe(data => this.users = data.content) );
       }
     });
   }
@@ -70,7 +70,7 @@ export class AdminComponent implements OnInit {
       if(editedUser  != null) {
         console.log("edit user: " + user.fio);
         this.adminService.editUser(editedUser).subscribe(k=>
-          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.users = data.content) );
+          this.adminService.getAllPageUsers(this.currentPage, this.pageSize).subscribe(data => this.users = data.content) );
       }
     });
   }
@@ -86,7 +86,7 @@ export class AdminComponent implements OnInit {
       if(result != null) {
         console.log("adding new user: " + result.fio);
         this.adminService.addNewUser(result).subscribe(k=>
-          this.adminService.getAllUsers(this.currentPage, this.pageSize).subscribe(data => this.users = data.content) );
+          this.adminService.getAllPageUsers(this.currentPage, this.pageSize).subscribe(data => this.users = data.content) );
       }
     });
   }

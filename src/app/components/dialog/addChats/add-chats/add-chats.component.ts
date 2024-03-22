@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Chat } from 'src/app/model/chat';
 import { User } from 'src/app/model/user';
-import { HomeService } from 'src/app/service/home.service';
+import { ClientService } from 'src/app/service/client.service';
 import { Page } from 'src/app/service/page';
 
 @Component({
@@ -20,7 +20,7 @@ export class AddChatsComponent implements OnInit {
   chat: Chat;
   clickedUserId!: number;
 
-  constructor(public dialogRef: MatDialogRef<AddChatsComponent>,@Inject(MAT_DIALOG_DATA) public data:any, private homeservice: HomeService, private authService:AuthService, private chatservice: ChatService) {
+  constructor(public dialogRef: MatDialogRef<AddChatsComponent>,@Inject(MAT_DIALOG_DATA) public data:any, private clientService: ClientService, private authService:AuthService, private chatservice: ChatService) {
       this.chat = new Chat;
     }
 
@@ -35,7 +35,7 @@ export class AddChatsComponent implements OnInit {
   getAllUsers( ): void {
     if (this.usernamell) {
       const username = this.usernamell;
-      this.homeservice.getAllUsers(this.currentPage, this.pageSize,username)
+      this.clientService.getShortUsers(this.currentPage, this.pageSize,username)
       .subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;
@@ -43,7 +43,7 @@ export class AddChatsComponent implements OnInit {
     }
     else {
       const username = this.authService.getUsername();
-      this.homeservice.getAllUsers(this.currentPage, this.pageSize,username)
+      this.clientService.getShortUsers(this.currentPage, this.pageSize,username)
       .subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;

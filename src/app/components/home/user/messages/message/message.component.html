@@ -5,9 +5,9 @@
     <div *ngIf="message.textMess === null">
       <div *ngIf="message.track" class="track-container">
         <p [ngClass]="{'text': this.selectChat.first_id  == message.first, 'tex': this.selectChat.second_id== message.first}">
-          <audio #myAudioElement controls (play)="playAudio($event)" (pause)="pauseAudio($event)">
-            <source [src]="message.track.file" type="audio/mpeg">
-          </audio>
+          <mat-progress-bar mode="determinate" [value]="getCurrentTime(message.track)"></mat-progress-bar>
+          <button (click)="playMessageAudio(message.track) ">Play</button>
+          <button (click)="pauseMessageAudio(message.track)">Stop</button>
         </p>
       </div>
     </div>

@@ -11,44 +11,44 @@ import { Track } from '../model/track';
   providedIn: 'root'
 })
 export class AdminServiceService extends IbaseServiceService {
-  private  adminUrl = 'admin/users';
-  private  adminUrlAl = 'admin/album';
-  private  adminUrlTrack = 'admin/tracks';
+  private  adminUrl = 'users';
+  private  adminUrlAlbum = 'album';
+  private  adminUrlTrack = 'tracks';
 
 
   constructor(http: HttpClient) {
-    super(http, 'api');
+    super(http, 'api/admin');
   }
 
-  getAllUsers(page: number, size: number): Observable<Page<User>> {
+  getAllPageUsers(page: number, size: number): Observable<Page<User>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
     return this.get<Page<User>>(this.adminUrl, params);
   }
 
-  getAllAlbums(page: number, size: number): Observable<Page<Album>> {
+  getAllPageAlbums(page: number, size: number): Observable<Page<Album>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
-    return this.get<Page<Album>>(this.adminUrlAl, params);
+    return this.get<Page<Album>>(this.adminUrlAlbum, params);
   }
 
-  getAllTracksAlbums(page: number,albumId: number, size: number): Observable<Page<Track>> {
+  getAllTracksPageAlbums(page: number,albumId: number, size: number): Observable<Page<Track>> {
     let params = new HttpParams()
     .set('page', page.toString())
     .set('size', size.toString())
-    return this.get<Page<Track>>(`${this.adminUrlAl}/${albumId}/tracks`, params);
+    return this.get<Page<Track>>(`${this.adminUrlAlbum}/${albumId}/tracks`, params);
   }
 
   getAllTracksAlbumsAdd(page: number, albumId: number, size: number): Observable<Page<Track>> {
     let params = new HttpParams()
     .set('page', page.toString())
     .set('size', size.toString())
-    return this.get<Page<Track>>(`${this.adminUrlAl}/${albumId}/tracks/add`, params);
+    return this.get<Page<Track>>(`${this.adminUrlAlbum}/${albumId}/tracks/add`, params);
   }
 
-  getAllTracks(page: number, size: number): Observable<Page<Track>> {
+  getAllPageTracks(page: number, size: number): Observable<Page<Track>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
@@ -72,7 +72,7 @@ export class AdminServiceService extends IbaseServiceService {
 
   addNewTrack(track: Track): Observable<Track> {
     console.log(`addNewTrack: ${track.id},${track.name},${track.file},${track.author},${track.album_id},`);
-    return this.post<Track>(`${this.adminUrlAl}/${track.album_id}/tracks`, track);
+    return this.post<Track>(`${this.adminUrlAlbum}/${track.album_id}/tracks`, track);
   }
 
   editTrack(track: Track): Observable<Track> {
@@ -82,7 +82,7 @@ export class AdminServiceService extends IbaseServiceService {
 
   editTrackAlbum(track: Track): Observable<Track> {
     console.log(`editTrackAlbum: ${track.id},${track.name},${track.file},${track.author},${track.album_id},`);
-    return this.put<Track>(`${this.adminUrlAl}/${track.album_id}/tracks/add/${track.id}`, track);
+    return this.put<Track>(`${this.adminUrlAlbum}/${track.album_id}/tracks/add/${track.id}`, track);
   }
 
   deleteTrack(track: Track): Observable<Track> {
@@ -92,17 +92,17 @@ export class AdminServiceService extends IbaseServiceService {
 
   addNewAlbum(album: Album): Observable<Album> {
     console.log('addNewAlbum');
-    return this.post<Album>(this.adminUrlAl, album);
+    return this.post<Album>(this.adminUrlAlbum, album);
   }
 
   editAlbum(album: Album): Observable<Album> {
     console.log('editAlbum');
-    return this.put<Album>(`${this.adminUrlAl}/${album.id}`, album);
+    return this.put<Album>(`${this.adminUrlAlbum}/${album.id}`, album);
   }
 
   deleteUAlbum(album: Album): Observable<Album> {
     console.log("deleteUAlbum:" + album.id);
-    return this.delete<Album>(`${this.adminUrlAl}/${album.id}`);
+    return this.delete<Album>(`${this.adminUrlAlbum}/${album.id}`);
   }
 
 }

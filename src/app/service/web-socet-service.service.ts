@@ -1,5 +1,5 @@
 import { Message } from 'src/app/model/message';
-import { HomeService } from 'src/app/service/home.service';
+import { ClientService } from 'src/app/service/client.service';
 import { Injectable } from '@angular/core';
 import { RxStomp } from '@stomp/rx-stomp';
 import { WebSocketConfig } from '../auth/config/WebSocetConfig';

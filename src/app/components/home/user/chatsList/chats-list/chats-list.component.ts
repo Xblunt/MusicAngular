@@ -39,7 +39,7 @@ export class ChatsListComponent {
       const username = this.authService.getUsername();
       this.chatService.getChats( username).subscribe((data: Chat[]) => {
           this.chats = data;
-        });
+      });
       this.usernamell = username;
       }
     }

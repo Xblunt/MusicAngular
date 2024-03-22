@@ -37,6 +37,7 @@ import { WebSocketConfig } from "./auth/config/WebSocetConfig";
 import { ChatComponent } from './components/home/user/chats/chat/chat.component';
 import { ChatsListComponent } from './components/home/user/chatsList/chats-list/chats-list.component';
 import { MessageComponent } from './components/home/user/messages/message/message.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { MessageComponent } from './components/home/user/messages/message/messag
     MatMenuModule,
     PaginatorModule,
     MatIconModule,
-    MatTabsModule
+    MatTabsModule,
+    MatProgressBarModule
 
 
   ],

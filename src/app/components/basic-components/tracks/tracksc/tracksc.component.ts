@@ -7,7 +7,7 @@ import { Page } from 'src/app/service/page';
 import { Track } from 'src/app/model/track';
 import { EditComponent } from 'src/app/components/dialog/edit-component/edit/edit.component';
 import { DeleteComponentComponent } from 'src/app/components/dialog/delete-component/delete-component/delete-component.component';
-import { HomeService } from 'src/app/service/home.service';
+import { ClientService } from 'src/app/service/client.service';
 import { PlaylistTrack } from 'src/app/model/pt';
 
 @Component({
@@ -27,7 +27,7 @@ export class TrackscComponent  {
   clickedUserId!: number;
   isIconActive: boolean = false;
 
- constructor(public dialog:MatDialog, public authService:AuthService, private adminService:AdminServiceService, private userService:HomeService) {
+ constructor(public dialog:MatDialog, public authService:AuthService, private adminService:AdminServiceService, private userService:ClientService) {
       if (this.authService.isAdmin()){
         this.service = this.adminService;
       }
@@ -45,7 +45,7 @@ export class TrackscComponent  {
   }
 
   getAllTracks( ): void {
-    this.service.getAllTracks(this.currentPage, this.pageSize)
+    this.service.getAllPageTracks(this.currentPage, this.pageSize)
       .subscribe((page: Page<Track>) => {
         console.log(page);
         this.tracks = page.content;
@@ -88,7 +88,7 @@ export class TrackscComponent  {
       if(track != null) {
         console.log("delete track: ");
         this.adminService.deleteTrack(track).subscribe(k=>
-          this.adminService.getAllTracks(this.currentPage, this.pageSize).subscribe(data => this.tracks= data.content) );
+          this.adminService.getAllPageTracks(this.currentPage, this.pageSize).subscribe(data => this.tracks= data.content) );
       }
     });
   }
@@ -103,7 +103,7 @@ export class TrackscComponent  {
       if(editedTrack  != null) {
         console.log("edit track: " + editedTrack.name);
         this.adminService.editTrack(editedTrack).subscribe(k=>
-          this.adminService.getAllTracks(this.currentPage, this.pageSize).subscribe(data => this.tracks = data.content) );
+          this.adminService.getAllPageTracks(this.currentPage, this.pageSize).subscribe(data => this.tracks = data.content) );
         }
       });
   }
@@ -118,7 +118,7 @@ export class TrackscComponent  {
       if(result != null) {
         console.log("adding new track: " + result.name);
         this.adminService.addNewTrack(result).subscribe(k=>
-          this.adminService.getAllTracks(this.currentPage, this.pageSize).subscribe(data => this.tracks = data.content) );
+          this.adminService.getAllPageTracks(this.currentPage, this.pageSize).subscribe(data => this.tracks = data.content) );
       }
     });
   }

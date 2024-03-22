@@ -8,7 +8,7 @@ import { OpenAlbumComponent } from 'src/app/components/dialog/open-album/open-al
 import { DeleteComponentComponent } from 'src/app/components/dialog/delete-component/delete-component/delete-component.component';
 import { EditComponent } from 'src/app/components/dialog/edit-component/edit/edit.component';
 import { AddTrackAlbumComponent } from 'src/app/components/dialog/addTrackAlbum/add-track-album/add-track-album.component';
-import { HomeService } from 'src/app/service/home.service';
+import { ClientService } from 'src/app/service/client.service';
 
 @Component({
   selector: 'app-albumsc',
@@ -22,9 +22,9 @@ export class AlbumscComponent implements OnInit{
   fromAlbumComponent: boolean = true;
   service: any;
 
- constructor(public dialog:MatDialog, public authService:AuthService, private adminService:AdminServiceService, private homeService:HomeService) {
+ constructor(public dialog:MatDialog, public authService:AuthService, private adminService:AdminServiceService, private clientService:ClientService) {
     if (this.authService.isStudent()){
-      this.service = this.homeService;
+      this.service = this.clientService;
     }
     else if (this.authService.isAdmin()){
       this.service = this.adminService;
@@ -37,7 +37,7 @@ export class AlbumscComponent implements OnInit{
   }
 
   getAllAlbums( ): void {
-    this.service.getAllAlbums(this.currentPage, this.pageSize).subscribe((page: Page<Album>) => {
+    this.service.getAllPageAlbums(this.currentPage, this.pageSize).subscribe((page: Page<Album>) => {
       console.log(page);
       this.albums = page.content;
     });
@@ -66,7 +66,7 @@ export class AlbumscComponent implements OnInit{
       if(album != null) {
         console.log("delete album: ");
         this.adminService.deleteUAlbum(album).subscribe(k=>
-          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.albums = data.content) );
+          this.adminService.getAllPageAlbums(this.currentPage, this.pageSize).subscribe(data => this.albums = data.content) );
       }
     });
   }
@@ -81,7 +81,7 @@ export class AlbumscComponent implements OnInit{
       if(editedAlbum  != null) {
         console.log("edit album: " + album.name_album);
         this.adminService.editAlbum(editedAlbum).subscribe(k=>
-          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.albums = data.content) );
+          this.adminService.getAllPageAlbums(this.currentPage, this.pageSize).subscribe(data => this.albums = data.content) );
       }
     });
   }
@@ -96,7 +96,7 @@ export class AlbumscComponent implements OnInit{
       if(result != null) {
         console.log("adding new album: " + result.name_album);
         this.adminService.addNewAlbum(result).subscribe(k=>
-          this.adminService.getAllAlbums(this.currentPage, this.pageSize).subscribe(data => this.albums = data.content) );
+          this.adminService.getAllPageAlbums(this.currentPage, this.pageSize).subscribe(data => this.albums = data.content) );
       }
     });
   }

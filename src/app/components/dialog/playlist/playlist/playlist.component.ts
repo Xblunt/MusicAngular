@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { Message } from 'src/app/model/message';
 import { Track } from 'src/app/model/track';
 import { ChatService } from 'src/app/service/chat.service';
-import { HomeService } from 'src/app/service/home.service';
+import { ClientService } from 'src/app/service/client.service';
 import { Page } from 'src/app/service/page';
 
 @Component({
@@ -21,7 +21,7 @@ export class PlaylistComponent {
   usernamell!: string ;
   message: Message;
 
-  constructor(public dialogRef: MatDialogRef<PlaylistComponent>,@Inject(MAT_DIALOG_DATA) public data:any, public dialog:MatDialog, public authService:AuthService,  private userService:HomeService, private chatService: ChatService) {
+  constructor(public dialogRef: MatDialogRef<PlaylistComponent>,@Inject(MAT_DIALOG_DATA) public data:any, public dialog:MatDialog, public authService:AuthService,  private userService:ClientService, private chatService: ChatService) {
       this.message = new Message;
   }
 

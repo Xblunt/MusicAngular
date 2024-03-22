@@ -5,7 +5,7 @@ import { Track } from 'src/app/model/track';
 import { PageEvent } from '@angular/material/paginator';
 import { Page } from 'src/app/service/page';
 import { AuthService } from 'src/app/auth/auth.service';
-import { HomeService } from 'src/app/service/home.service';
+import { ClientService } from 'src/app/service/client.service';
 import { PlaylistTrack } from 'src/app/model/pt';
 
 @Component({
@@ -25,14 +25,14 @@ export class OpenAlbumComponent implements OnInit {
   pt: PlaylistTrack;
   isIconActive: boolean = false;
 
-  constructor( public dialogRef: MatDialogRef<OpenAlbumComponent>,public dialog:MatDialog,  @Inject(MAT_DIALOG_DATA) public data:any, private adminService: AdminServiceService, public authService:AuthService, private homeService:HomeService) {
+  constructor( public dialogRef: MatDialogRef<OpenAlbumComponent>,public dialog:MatDialog,  @Inject(MAT_DIALOG_DATA) public data:any, private adminService: AdminServiceService, public authService:AuthService, private clientService:ClientService) {
     this.idalbum = data.id;
     this.pt = new PlaylistTrack;
     if (this.authService.isAdmin()){
       this.service = this.adminService;
     }
     else if (this.authService.isStudent()){
-      this.service = this.homeService;
+      this.service = this.clientService;
     }
   }
 
@@ -79,7 +79,7 @@ export class OpenAlbumComponent implements OnInit {
     if (selectedUser) {
       const trackId = selectedUser.id;
       const username = this.usernamell;
-      this.homeService.like(this.pt, username, trackId).subscribe(() => {
+      this.clientService.like(this.pt, username, trackId).subscribe(() => {
         this.loadTracks();
       });
     }
