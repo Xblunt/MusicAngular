@@ -35,11 +35,11 @@ export  class WebSocetServiceService extends RxStomp {
     this.getSessionData(chatId).subscribe((sessionData: Session) => {
       console.log("message from server:", sessionData.action);
       console.log("message from server:", sessionData);
-  },
-    (error) => {
-        console.error("Error:", error);
-    }
-  );
+    },
+      (error) => {
+          console.error("Error:", error);
+      }
+    );
 
   }
 
@@ -47,23 +47,21 @@ export  class WebSocetServiceService extends RxStomp {
     const subscriptionUrl = `/chats/session/${chatId}`;
 
     return new Observable<Session>(observer => {
-    this.stompClient.subscribe(subscriptionUrl, (message) => {
-        const data = JSON.parse(message.body);
-        const sessionData: Session = {
-          id: data.id,
-          action: data.action,
-          time: data.time,
-          pause: data.pause,
-          currentTimeOnDevice: data.currentTimeOnDevice
-        };
+      this.stompClient.subscribe(subscriptionUrl, (message) => {
+          const data = JSON.parse(message.body);
+          const sessionData: Session = {
+            id: data.id,
+            action: data.action,
+            time: data.time,
+            pause: data.pause,
+            currentTimeOnDevice: data.currentTimeOnDevice
+          };
 
-        this.sessionDataSubject.next(sessionData);
-        observer.next(sessionData);
+          this.sessionDataSubject.next(sessionData);
+          observer.next(sessionData);
       });
-
-
-
     });
+
   }
 
 

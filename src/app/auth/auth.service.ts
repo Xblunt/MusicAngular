@@ -15,6 +15,7 @@ import { Authority } from './model/auth/authority';
 export class AuthService {
 
   private username: string = '';
+  private authUserId: number | undefined;
 
   setUsername(username: string): void {
     this.username = username;
@@ -86,25 +87,30 @@ export class AuthService {
         console.log('authenticate ')
         this.authentication(headers).subscribe((data: CredentialResponse) => {
             if (data != null) {
-                this.responseProcessing(data, failureHandler);
+                this.authUserId = data.id;
+                const { id, ...dataWithoutId } = data;
+                console.log('dataWithoutId', dataWithoutId);
+                this.responseProcessing(dataWithoutId, failureHandler);
             }
         });
     }
 
     private responseProcessing(data: any, failureHandler: any) {
-        const response: CredentialResponse = CredentialResponse.convertToObj(data);
-
-        if(response.authenticated == true) {
-          this.updateAuth(response);
+        console.log('data', data);
+        // const response: CredentialResponse = CredentialResponse.convertToObj(data);
+        console.log('data.principal.authenticated', data.principal.authenticated);
+        if(data.principal.authenticated == true) {
+          this.updateAuth(data.principal);
           this.loggedIn.next(true);
           if(this.isAdmin())
           this.router.navigate(['admin']);
-        else if(this.isStudent())
-        this.router.navigate(['client']);
+          else if(this.isStudent())
+          this.router.navigate(['client']);
 
           return true;
       }
       else {
+        debugger
           failureHandler();
       }
 
@@ -112,7 +118,9 @@ export class AuthService {
   }
 
     private updateAuth(response: CredentialResponse) {
-        this.sessionStorage.set('auth', JSON.stringify(response));
+        const { id, ...dataWithoutId } = response;
+        console.log('uodateRespones',response)
+        this.sessionStorage.set('auth', JSON.stringify(dataWithoutId));
     }
 
     logout() {
@@ -133,6 +141,7 @@ export class AuthService {
 
 
     authentication(headers: any): Observable<any> {
+      console.log("authentication")
       return this.http.get('api/user', { headers: headers })
           .pipe(
               tap(data => console.log('login data:', data)),

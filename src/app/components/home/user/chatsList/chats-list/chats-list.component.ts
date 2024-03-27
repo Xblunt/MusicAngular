@@ -2,6 +2,7 @@ import { ChatService } from './../../../../../service/chat.service';
 import { Component} from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Chat } from 'src/app/model/chat';
+import { WebSocetServiceService } from 'src/app/service/web-socet-service.service';
 
 @Component({
   selector: 'app-chats-list',
@@ -11,8 +12,9 @@ import { Chat } from 'src/app/model/chat';
 export class ChatsListComponent {
   usernamell!: string ;
   chats: Chat[] = [];
+  connected: boolean = false;
 
-  constructor(private authService:AuthService, private chatService: ChatService){
+  constructor(private authService:AuthService, private chatService: ChatService, private webSocetService: WebSocetServiceService){
 
   }
 
@@ -23,6 +25,12 @@ export class ChatsListComponent {
   }
 
   selectChat(chat: Chat) {
+    if(this.connected == true){
+    this.webSocetService.disconnectFromWebSocket();
+    this.connected = false
+    };
+    this.webSocetService.connectToWebSocket();
+    this.connected = true;
     this.chatService.setSelectChat(chat);
     console.log("SelectChat: " + chat.id);
   }

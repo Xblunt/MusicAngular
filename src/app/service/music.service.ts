@@ -1,5 +1,7 @@
+import { WebSocetServiceService } from 'src/app/service/web-socet-service.service';
 import {Injectable } from '@angular/core';
 import { Chat } from '../model/chat';
+import { Session } from '../model/session';
 
 
 @Injectable({
@@ -8,8 +10,9 @@ import { Chat } from '../model/chat';
 export class MusicService {
   private audios: { [chatId: number]: { [trackId: number]: HTMLAudioElement } } = {};
   private audioTimes: { [chatId: number]: { [trackId: number]: number } } = {};
+  firstPlayAudio: boolean = false;
 
-  constructor() { }
+  constructor(private webSocetService: WebSocetServiceService) { }
 
   playAudio(sourceUrl: string, trackId: number, chatId: Chat): void {
     if (!this.audios[chatId.id]) {
@@ -31,15 +34,31 @@ export class MusicService {
           this.audioTimes[chatId.id][trackId] = 0;
         }
 
+        const currentTimeOnDevice = Date.now();
+        const action = true;
+        const pause = false;
         const audio = this.audios[chatId.id][trackId];
         audio.src = sourceUrl;
-        audio.play();
 
         audio.addEventListener('timeupdate', () => {
           this.audioTimes[chatId.id][trackId] = audio.currentTime;
           // console.log(`Current time play for track ${trackId}: ${audio.currentTime}`);
         });
+
+        this.webSocetService.updateSession(audio.currentTime, action, chatId.id, pause, currentTimeOnDevice);
+        console.log("Статус проигрывания обновлён")
+
+        this.webSocetService.getStoredSessionData().subscribe((sessionData: Session) => {
+          audio.currentTime = sessionData.time/1000;
+          if(sessionData.pause == false){
+          audio.play();
+          } else {
+            audio.pause();
+          }
+        });
+
         console.log(`Now playing track ${trackId}`);
+
     } else {
         console.error(`No audio objects found for chatId: ${chatId}`);
     }
@@ -47,10 +66,23 @@ export class MusicService {
 
   pauseAudio(trackId: number, chatId: Chat): void {
     const audio = this.audios[chatId.id][trackId];
+    const currentTimeOnDevice = Date.now();
+    const action = false;
+    const pause = true;
+
     if (audio) {
-      audio.pause();
+
       this.audioTimes[chatId.id][trackId] = audio.currentTime;
       console.log(`Paused track ${trackId}`);
+      this.webSocetService.updateSession(audio.currentTime, action, chatId.id,pause, currentTimeOnDevice);
+      console.log("Статус остановки обновлён")
+
+      this.webSocetService.getStoredSessionData().subscribe((sessionData: Session) => {
+        audio.currentTime = sessionData.time/1000;
+        audio.pause();
+        this.firstPlayAudio = false;
+      });
+
     } else {
       console.log(`Track ${trackId} is not playing`);
     }
