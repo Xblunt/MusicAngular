@@ -11,34 +11,26 @@ import { User } from 'src/app/model/user';
   styleUrls: ['./user-info.component.css']
 })
 export class UserInfoComponent implements OnInit {
-  usernamell!: string ;
-  user:  any[]=[];
+  user:  any;
+  authUserId: number;
 
   constructor(public dialog:MatDialog, public authService:AuthService, private adminService:AdminServiceService, private clientService:ClientService) {
-    }
+    this.authUserId = this.authService.getAuthUserId();
+  }
 
   ngOnInit(): void {
-      const storedUsername = localStorage.getItem('username');
-      this.usernamell = storedUsername !== null ? storedUsername : '';
       this.getUserLK();
   }
 
 
   getUserLK(): void {
-    if (this.usernamell) {
-      const username = this.usernamell;
-      this.clientService.getUserLK(username).subscribe((users: User[]) => {
-        console.log(`Before assigning users: ${ this.user}, ${users}`);
-        this.user = users;
-        console.log(`After assigning users: ${ this.user}, ${users}`);
+    if (this.authUserId) {
+      const authUserId = this.authUserId;
+      this.clientService.getUserLK(authUserId).subscribe((user: User) => {
+        console.log(`Before assigning users: ${ this.user}, ${user}`);
+        this.user = user;
+        console.log(`After assigning users: ${ this.user}, ${user}`);
       });
-    }
-    else {
-      const username = this.authService.getUsername();
-      this.clientService.getUserLK(username,).subscribe((users: User[]) => {
-        this.user = [users];
-      });
-      this.usernamell = username;
     }
   }
 

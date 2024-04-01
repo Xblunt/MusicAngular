@@ -8,6 +8,7 @@ import { ClientService } from 'src/app/service/client.service';
 import { Page } from 'src/app/service/page';
 import { PlaylistComponent } from 'src/app/components/dialog/playlist/playlist/playlist.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from 'src/app/auth/auth.service';
 
 
 @Component({
@@ -21,19 +22,19 @@ export class ChatComponent {
   pageSize: number = 10;
   messageArray: any[]=[];
   message: Message;
-  usernamell!: string;
+  authUserId:number;
 
 
 
-  constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog, public musicService: MusicService) {
+  constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog, public musicService: MusicService, private authService: AuthService) {
    this.message = new Message;
+   this.authUserId = this.authService.getAuthUserId();
+   console.log(`userId: ${this.authUserId}`);
   }
 
 
 
   ngOnInit(){
-    const storedUsername = localStorage.getItem('username');
-    this.usernamell = storedUsername !== null ? storedUsername : '';
     this.chatService.eventEmitter.subscribe(chat=>{
       this.selectChat = chat;
       this.loadMessages(this.selectChat);
@@ -49,8 +50,10 @@ export class ChatComponent {
       console.log('Received messages:', this.messageArray);
 
       this.messageArray.forEach((message: Message) => {
-          const trackId = message.track_id;
+          const trackId = message.track.id;
           console.log('TrackId for message:', trackId);
+
+          /*
           if(trackId !== null && trackId !== 0) {
             this.clientService.getTrackId(trackId).subscribe((data: Track) => {
               message.track = data;
@@ -59,7 +62,7 @@ export class ChatComponent {
           }
           else {
             console.log('TrackId = null');
-          }
+          }*/
       });
     });
   }
@@ -67,8 +70,8 @@ export class ChatComponent {
   createMessages(chat:Chat):void{
     const chatId = this.selectChat.id;
     const messgg =  this.messageText;
-    const username = this.usernamell;
-    this.chatService.createMessage(this.message, chatId, username,  messgg).subscribe(k => {
+    const authUserId = this.authUserId;
+    this.chatService.createMessage(this.message, chatId, authUserId,  messgg).subscribe(k => {
       console.log('this chat:',this.selectChat);
       this.loadMessages(chat);
     });

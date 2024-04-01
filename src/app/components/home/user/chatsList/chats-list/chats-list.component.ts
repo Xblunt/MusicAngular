@@ -10,17 +10,16 @@ import { WebSocetServiceService } from 'src/app/service/web-socet-service.servic
   styleUrls: ['./chats-list.component.css']
 })
 export class ChatsListComponent {
-  usernamell!: string ;
   chats: Chat[] = [];
   connected: boolean = false;
+  authUserId: number;
 
   constructor(private authService:AuthService, private chatService: ChatService, private webSocetService: WebSocetServiceService){
-
+    this.authUserId = this.authService.getAuthUserId();
+    console.log(`userId: ${this.authUserId}`);
   }
 
   ngOnInit(): void {
-    const storedUsername = localStorage.getItem('username');
-    this.usernamell = storedUsername !== null ? storedUsername : '';
     this.getAllUsers();
   }
 
@@ -37,19 +36,12 @@ export class ChatsListComponent {
 
 
   getAllUsers( ): void {
-    if (this.usernamell) {
-      const username = this.usernamell;
-        this.chatService.getChats(username).subscribe((data: Chat[]) => {
+    if (this.authUserId) {
+      const authUserId = this.authUserId;
+        this.chatService.getChats(authUserId).subscribe((data: Chat[]) => {
           this.chats = data;
         });
     }
-    else {
-      const username = this.authService.getUsername();
-      this.chatService.getChats( username).subscribe((data: Chat[]) => {
-          this.chats = data;
-      });
-      this.usernamell = username;
-      }
-    }
+  }
 
 }

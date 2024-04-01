@@ -16,7 +16,7 @@ import { ClientService } from 'src/app/service/client.service';
   styleUrls: ['./albumsc.component.css']
 })
 export class AlbumscComponent implements OnInit{
-  albums: any[] = [];
+  albums: Album[] = [];
   pageSize: number = 8;
   currentPage: number = 0;
   fromAlbumComponent: boolean = true;

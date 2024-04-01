@@ -43,10 +43,10 @@ export class ClientService extends IbaseServiceService {
     return this.get<Page<Album>>(this.clientUrlAlbum, params);
   }
 
-  getUserLK(username: string): Observable<User[]> {
+  getUserLK(authUserId: number): Observable<User> {
     const params = new HttpParams()
-    .set('username', username);
-    return this.get<User[]>(this.lkUrl, params);
+    .set('authUserId', authUserId);
+    return this.get<User>(this.lkUrl, params);
   }
 
   getAllPageTracksAlbums(page: number,albumId: number, size: number): Observable<Page<Track>> {
@@ -63,25 +63,25 @@ export class ClientService extends IbaseServiceService {
     return this.get<Page<Track>>(this.clientUrlTrack, params);
   }
 
-  getShortUsers(page: number, size: number, username: string): Observable<Page<User>> {
+  getShortUsers(page: number, size: number, authUserId: number): Observable<Page<User>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
-      .set('username', username);
+      .set('authUserId', authUserId);
     return this.get<Page<User>>(`${this.clientUrlChats}/add`, params);
   }
 
-  getPlaylist(page: number, size: number, username: string): Observable<Page<Track>> {
+  getPlaylist(page: number, size: number, authUserId: number): Observable<Page<Track>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
-      .set('username', username);
+      .set('authUserId', authUserId);
     return this.get<Page<Track>>(this.playlistUrl, params);
   }
 
-  like(pt: PlaylistTrack, username: string, trackId: number): Observable<PlaylistTrack> {
+  like(pt: PlaylistTrack, authUserId: number, trackId: number): Observable<PlaylistTrack> {
     let params = new HttpParams()
-    .set('username', username)
+    .set('authUserId', authUserId)
     .set('trackId', trackId);
     return this.post<PlaylistTrack>(this.playlistUrl, pt, params);
   }

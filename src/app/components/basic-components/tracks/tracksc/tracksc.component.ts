@@ -22,12 +22,13 @@ export class TrackscComponent  {
   totalElements: number = 0;
   fromTrackComponent: boolean = true;
   service: any;
-  usernamell!: string ;
   pt: PlaylistTrack;
   clickedUserId!: number;
   isIconActive: boolean = false;
+  authUserId: number;
 
  constructor(public dialog:MatDialog, public authService:AuthService, private adminService:AdminServiceService, private userService:ClientService) {
+      this.authUserId = this.authService.getAuthUserId();
       if (this.authService.isAdmin()){
         this.service = this.adminService;
       }
@@ -39,8 +40,6 @@ export class TrackscComponent  {
 
 
   ngOnInit(): void {
-    const storedUsername = localStorage.getItem('username');
-    this.usernamell = storedUsername !== null ? storedUsername : '';
     this.getAllTracks();
   }
 
@@ -71,8 +70,8 @@ export class TrackscComponent  {
     const selectedUser = this.tracks.find(track => track.id === this.clickedUserId);
     if (selectedUser) {
       const trackId = selectedUser.id;
-      const username = this.usernamell;
-      this.userService.like( this.pt, username, trackId ).subscribe((newpt: PlaylistTrack) => {
+      const authUserId = this.authUserId;
+      this.userService.like( this.pt, authUserId, trackId ).subscribe((newpt: PlaylistTrack) => {
         this.getAllTracks();
       });
     }

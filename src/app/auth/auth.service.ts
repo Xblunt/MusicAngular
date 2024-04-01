@@ -14,16 +14,18 @@ import { Authority } from './model/auth/authority';
 })
 export class AuthService {
 
-  private username: string = '';
-  private authUserId: number | undefined;
 
-  setUsername(username: string): void {
-    this.username = username;
+  getAuthUserId():number{
+    const storedValue = sessionStorage.getItem('authUserId');
+    if (storedValue !== null) {
+    const parsedValue = parseInt(storedValue, 10);
+    return parsedValue;
+    }
+    else{
+      return 0;
+    }
   }
 
-  getUsername(): string {
-    return this.username;
-  }
     private loggedIn = new BehaviorSubject<boolean>(false);
 
 
@@ -84,11 +86,12 @@ export class AuthService {
         "X-Requested-With": "XMLHttpRequest"
         } : {});
 
+        debugger
         console.log('authenticate ')
         this.authentication(headers).subscribe((data: CredentialResponse) => {
             if (data != null) {
-                this.authUserId = data.id;
                 const { id, ...dataWithoutId } = data;
+                sessionStorage.setItem('authUserId', id.toString());
                 console.log('dataWithoutId', dataWithoutId);
                 this.responseProcessing(dataWithoutId, failureHandler);
             }
@@ -160,7 +163,9 @@ export class AuthService {
             if(error.status === 401) {
                 this.loggedIn.next(false);
                 return of(result as T);
+
             }
+
             else if(error.status == 404) {
                 this.loggedIn.next(false);
                 // @ts-ignore
@@ -170,7 +175,6 @@ export class AuthService {
                     }
                 );
             }
-
             return of(result as T);
         };
     }

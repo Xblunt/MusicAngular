@@ -13,18 +13,20 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-    localStorage.removeItem('username');
+    // localStorage.removeItem('username');
     this.authService.clearLoginData();
     this.credential = new Credential();
     this.authService.logoutWithoutRedirect();
   }
 
   login() {
+    debugger
     this.authService.authenticate(this.credential, () => {
+      debugger
       this.errorAuth = true;
     });
     // this.usernameEvent.emit(this.credential.username);
-    this.authService.setUsername(this.credential.username);
-    localStorage.setItem('username', this.credential.username);
+    // this.authService.setUsername(this.credential.username);
+    // localStorage.setItem('username', this.credential.username);
   }
 }

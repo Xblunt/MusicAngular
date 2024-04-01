@@ -21,11 +21,12 @@ export class OpenAlbumComponent implements OnInit {
   service: any;
   tracks: any[]=[];
   clickedUserId!: number;
-  usernamell!: string ;
   pt: PlaylistTrack;
   isIconActive: boolean = false;
+  authUserId:number;
 
   constructor( public dialogRef: MatDialogRef<OpenAlbumComponent>,public dialog:MatDialog,  @Inject(MAT_DIALOG_DATA) public data:any, private adminService: AdminServiceService, public authService:AuthService, private clientService:ClientService) {
+    this.authUserId = this.authService.getAuthUserId();
     this.idalbum = data.id;
     this.pt = new PlaylistTrack;
     if (this.authService.isAdmin()){
@@ -38,15 +39,13 @@ export class OpenAlbumComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const storedUsername = localStorage.getItem('username');
-    this.usernamell = storedUsername !== null ? storedUsername : '';
     this.loadTracks();
   }
 
 
   loadTracks(): void {
     const albumId = this.idalbum;
-    this.service.getAllTracksAlbums(this.currentPage, albumId ,this.pageSize
+    this.service.getAllPageTracksAlbums(this.currentPage, albumId ,this.pageSize
       ).subscribe( (response: Page<Track>) => {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
@@ -78,8 +77,8 @@ export class OpenAlbumComponent implements OnInit {
     const selectedUser = this.tracks.find(track => track.id === this.clickedUserId);
     if (selectedUser) {
       const trackId = selectedUser.id;
-      const username = this.usernamell;
-      this.clientService.like(this.pt, username, trackId).subscribe(() => {
+      const authUserId = this.authUserId;
+      this.clientService.like(this.pt, authUserId, trackId).subscribe(() => {
         this.loadTracks();
       });
     }

@@ -10,7 +10,7 @@ import { Session } from '../model/session';
 export class MusicService {
   private audios: { [chatId: number]: { [trackId: number]: HTMLAudioElement } } = {};
   private audioTimes: { [chatId: number]: { [trackId: number]: number } } = {};
-  firstPlayAudio: boolean = false;
+  // currentTrack: any;
 
   constructor(private webSocetService: WebSocetServiceService) { }
 
@@ -49,7 +49,8 @@ export class MusicService {
         console.log("Статус проигрывания обновлён")
 
         this.webSocetService.getStoredSessionData().subscribe((sessionData: Session) => {
-          audio.currentTime = sessionData.time/1000;
+          // audio.currentTime = sessionData.time;
+          audio.currentTime = sessionData.time + ((currentTimeOnDevice/1000 - sessionData.currentTimeOnDevice/1000));
           if(sessionData.pause == false){
           audio.play();
           } else {
@@ -80,7 +81,6 @@ export class MusicService {
       this.webSocetService.getStoredSessionData().subscribe((sessionData: Session) => {
         audio.currentTime = sessionData.time/1000;
         audio.pause();
-        this.firstPlayAudio = false;
       });
 
     } else {

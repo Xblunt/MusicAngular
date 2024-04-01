@@ -1,8 +1,8 @@
 export class Track {
-  id!: number;
-  name!:string;
-  author!: string;
-  text!:string;
-  file!:string;
-  album_id!:number;
+  id: number;
+  name:string;
+  author: string;
+  text:string;
+  file:string;
+  album_id:number;
 }

@@ -15,40 +15,30 @@ import { Page } from 'src/app/service/page';
 export class AddChatsComponent implements OnInit {
   currentPage: number = 0;
   pageSize: number = 8;
-  usernamell!: string ;
   users: any[ ] = [];
   chat: Chat;
   clickedUserId!: number;
+  authUserId: number;
 
   constructor(public dialogRef: MatDialogRef<AddChatsComponent>,@Inject(MAT_DIALOG_DATA) public data:any, private clientService: ClientService, private authService:AuthService, private chatservice: ChatService) {
+      this.authUserId = this.authService.getAuthUserId();
       this.chat = new Chat;
     }
 
 
   ngOnInit(): void {
-    const storedUsername = localStorage.getItem('username');
-    this.usernamell = storedUsername !== null ? storedUsername : '';
     this.getAllUsers( );
   }
 
 
   getAllUsers( ): void {
-    if (this.usernamell) {
-      const username = this.usernamell;
-      this.clientService.getShortUsers(this.currentPage, this.pageSize,username)
+    if (this.authUserId) {
+      const authUserId = this.authUserId;
+      this.clientService.getShortUsers(this.currentPage, this.pageSize,authUserId)
       .subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;
       });
-    }
-    else {
-      const username = this.authService.getUsername();
-      this.clientService.getShortUsers(this.currentPage, this.pageSize,username)
-      .subscribe((page: Page<User>) => {
-        console.log(page);
-        this.users = page.content;
-      });
-    this.usernamell = username;
     }
   }
 
@@ -69,8 +59,8 @@ export class AddChatsComponent implements OnInit {
     if (selectedUser) {
       this.chat.chatname = "New chat";
       const secondId = selectedUser.id;
-      const username = this.usernamell;
-      this.chatservice.addNewChat(this.chat,  username, secondId ).subscribe((newChat: Chat) => {
+      const authUserId = this.authUserId;
+      this.chatservice.addNewChat(this.chat,  authUserId, secondId ).subscribe((newChat: Chat) => {
         this.getAllUsers();
       });
     }

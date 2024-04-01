@@ -18,17 +18,16 @@ export class PlaylistComponent {
   currentPage: number = 0;
   pageSize: number = 8;
   totalElements: number = 0;
-  usernamell!: string ;
   message: Message;
+  authUserId:number;
 
   constructor(public dialogRef: MatDialogRef<PlaylistComponent>,@Inject(MAT_DIALOG_DATA) public data:any, public dialog:MatDialog, public authService:AuthService,  private userService:ClientService, private chatService: ChatService) {
-      this.message = new Message;
+    this.authUserId = this.authService.getAuthUserId();
+    this.message = new Message;
   }
 
 
   ngOnInit(): void {
-    const storedUsername = localStorage.getItem('username');
-    this.usernamell = storedUsername !== null ? storedUsername : '';
     this.getPlaylist();
   }
 
@@ -41,22 +40,13 @@ export class PlaylistComponent {
 
 
   getPlaylist( ): void {
-    if (this.usernamell) {
-      const username = this.usernamell;
-      this.userService.getPlaylist(this.currentPage,  this.pageSize, username).subscribe((page: Page<Track>) => {
+    if (this.authUserId) {
+      const authUserId = this.authUserId;
+      this.userService.getPlaylist(this.currentPage,  this.pageSize, authUserId).subscribe((page: Page<Track>) => {
         this.tracks = page.content;
         console.log(page.content);
         this.totalElements = page.totalElements;
       });
-    }
-    else {
-      const username = this.authService.getUsername();
-      this.userService.getPlaylist(this.currentPage, this.pageSize, username).subscribe((page: Page<Track>) => {
-        this.tracks = page.content;
-        console.log(page.content);
-        this.totalElements = page.totalElements;
-      });
-    this.usernamell = username;
     }
   }
 
@@ -70,9 +60,9 @@ export class PlaylistComponent {
     const chatId = this.data;
     console.log('chatId:'+ chatId)
     const trackIds =  track.id;
-    const username = this.usernamell;
+    const authUserId = this.authUserId;
     console.log('this track ids:'+ trackIds)
-    this.chatService.createTrackMessage(this.message, chatId, username, trackIds).subscribe(() => {
+    this.chatService.createTrackMessage(this.message, chatId, authUserId, trackIds).subscribe(() => {
         this.getPlaylist();
       });
   }
