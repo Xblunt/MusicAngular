@@ -1,15 +1,21 @@
 <div   *ngIf="this.selectChat"  class="component">
     <div *ngIf="message.textMess !== null">
-          <p [ngClass]="{'text': this.selectChat.first_id == message.first, 'tex': this.selectChat.second_id == message.first}">{{ message.textMess }}</p>
+          <p [ngClass]="{'text': this.authUserId == message.userId, 'tex': this.authUserId !== message.userId}">{{ message.textMess }}</p>
     </div>
     <div *ngIf="message.textMess === null">
-      <div *ngIf="message.track" class="track-container">
-        <p [ngClass]="{'text': this.selectChat.first_id  == message.first, 'tex': this.selectChat.second_id== message.first}">
-          <mat-progress-bar class=" progress" mode="determinate" [value]="getCurrentTime(message.track)" ></mat-progress-bar>
-          <button (click)="playMessageAudio(message.track) ">Play</button>
-          <button (click)="pauseMessageAudio(message.track)">Stop</button>
-        </p>
+      <div *ngIf="message.trackUrl" class="track-container">
+        <div [ngClass]="{'text': this.authUserId == message.userId, 'tex': this.authUserId !== message.userId}">
+          <!-- <mat-progress-bar class=" progress" mode="determinate" [value]="getCurrentTime(message.trackUrl)" ></mat-progress-bar> -->
+          {{message.trackName}}  -  {{message.trackAuthor}}
+          <mat-progress-bar class=" progress" mode="determinate"></mat-progress-bar>
+          <button (click)="playMessageAudio(message.trackUrl) ">Play</button>
+          <button (click)="pauseMessageAudio(message.trackUrl)">Stop</button>
+          <div *ngIf="this.connected === true">
+            <button (click)="diconnectedWebSocket()">Disconnect</button>
+          </div>
+        </div>
       </div>
     </div>
 </div>
+
 

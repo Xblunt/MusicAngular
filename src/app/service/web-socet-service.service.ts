@@ -1,16 +1,14 @@
-import { Message } from 'src/app/model/message';
-import { ClientService } from 'src/app/service/client.service';
 import { Injectable } from '@angular/core';
 import { RxStomp } from '@stomp/rx-stomp';
 import { WebSocketConfig } from '../auth/config/WebSocetConfig';
 import { Session } from '../model/session';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable,Subject  } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
 export  class WebSocetServiceService extends RxStomp {
-  sessionData!: Session;
+  sessionData: Session;
   private sessionDataSubject: BehaviorSubject<Session> = new BehaviorSubject<Session>(new Session());
 
   message = {};
@@ -47,6 +45,7 @@ export  class WebSocetServiceService extends RxStomp {
     const subscriptionUrl = `/chats/session/${chatId}`;
 
     return new Observable<Session>(observer => {
+      if (this.stompClient && this.stompClient.connected) {
       this.stompClient.subscribe(subscriptionUrl, (message) => {
           const data = JSON.parse(message.body);
           const sessionData: Session = {
@@ -60,6 +59,10 @@ export  class WebSocetServiceService extends RxStomp {
           this.sessionDataSubject.next(sessionData);
           observer.next(sessionData);
       });
+      }
+      else {
+        console.error('Подключение к STOMP отсутствует.');
+      }
     });
 
   }
@@ -76,6 +79,7 @@ export  class WebSocetServiceService extends RxStomp {
 
 
   connectToWebSocket() {
+
     this.configure(WebSocketConfig);
     this.activate();
   }

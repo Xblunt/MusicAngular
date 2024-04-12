@@ -1,7 +1,6 @@
-import { MusicService } from './../../../../../service/music.service';
+import { MusicService } from 'src/app/service/music.service';
 import { Component} from '@angular/core';
 import { Chat } from 'src/app/model/chat';
-import { Track } from 'src/app/model/track';
 import { ChatService } from 'src/app/service/chat.service';
 import { Message } from 'src/app/model/message';
 import { ClientService } from 'src/app/service/client.service';
@@ -17,8 +16,8 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent {
-  selectChat!: Chat;
-  messageText!: string;
+  selectChat: Chat;
+  messageText: string;
   pageSize: number = 10;
   messageArray: any[]=[];
   message: Message;
@@ -26,7 +25,7 @@ export class ChatComponent {
 
 
 
-  constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog, public musicService: MusicService, private authService: AuthService) {
+  constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog,  private authService: AuthService, private musicService: MusicService) {
    this.message = new Message;
    this.authUserId = this.authService.getAuthUserId();
    console.log(`userId: ${this.authUserId}`);
@@ -48,23 +47,7 @@ export class ChatComponent {
     this.chatService.getAllMessages(chatId,this.pageSize).subscribe((response: Page<Message>) => {
       this.messageArray = response.content;
       console.log('Received messages:', this.messageArray);
-
-      this.messageArray.forEach((message: Message) => {
-          const trackId = message.track.id;
-          console.log('TrackId for message:', trackId);
-
-          /*
-          if(trackId !== null && trackId !== 0) {
-            this.clientService.getTrackId(trackId).subscribe((data: Track) => {
-              message.track = data;
-              console.log(`trackId: ${trackId}, Resulting  track: ${data}`);
-            });
-          }
-          else {
-            console.log('TrackId = null');
-          }*/
       });
-    });
   }
 
   createMessages(chat:Chat):void{
@@ -90,13 +73,14 @@ export class ChatComponent {
     });
   }
 
-  playAudio(track: Track) {
-    this.musicService.playAudio(track.file, track.id, this.selectChat);
+  playAudio(track: string) {
+    this.musicService.setCurrentTrack(track);
+    this.musicService.playAudio(track, this.selectChat);
     console.log("PlayAudio Chat");
   }
 
-  pauseAudio(track:Track) {
-    this.musicService.pauseAudio(track.id,this.selectChat);
+  pauseAudio(track:string) {
+    this.musicService.pauseAudio(track,this.selectChat);
     console.log("PauseAudio Chat");
   }
 

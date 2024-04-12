@@ -86,8 +86,9 @@ export class AuthService {
         "X-Requested-With": "XMLHttpRequest"
         } : {});
 
-        debugger
+
         console.log('authenticate ')
+
         this.authentication(headers).subscribe((data: CredentialResponse) => {
             if (data != null) {
                 const { id, ...dataWithoutId } = data;
@@ -113,7 +114,7 @@ export class AuthService {
           return true;
       }
       else {
-        debugger
+
           failureHandler();
       }
 
