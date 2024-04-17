@@ -2,14 +2,17 @@
     <div *ngIf="message.textMess !== null">
           <p [ngClass]="{'text': this.authUserId == message.userId, 'tex': this.authUserId !== message.userId}">{{ message.textMess }}</p>
     </div>
-    <div *ngIf="message.textMess === null">
-      <div *ngIf="message.trackUrl" class="track-container">
+    <div *ngIf="message.textMess === null && message.track !== null">
+      <div *ngIf="message.track.trackUrl" class="track-container">
         <div [ngClass]="{'text': this.authUserId == message.userId, 'tex': this.authUserId !== message.userId}">
           <!-- <mat-progress-bar class=" progress" mode="determinate" [value]="getCurrentTime(message.trackUrl)" ></mat-progress-bar> -->
-          {{message.trackName}}  -  {{message.trackAuthor}}
+          {{message.track.trackName}}  -  {{message.track.trackAuthor}}
           <mat-progress-bar class=" progress" mode="determinate"></mat-progress-bar>
-          <button (click)="playMessageAudio(message.trackUrl) ">Play</button>
-          <button (click)="pauseMessageAudio(message.trackUrl)">Stop</button>
+          <button (click)="playMessageAudio(message.track.trackUrl, message.userId) ">Play</button>
+          <button (click)="pauseMessageAudio(message.userId)">Stop</button>
+          <div *ngIf="this.connected === false">
+          <button (click)="connectToWebSocket()">Connect</button>
+          </div>
           <div *ngIf="this.connected === true">
             <button (click)="diconnectedWebSocket()">Disconnect</button>
           </div>

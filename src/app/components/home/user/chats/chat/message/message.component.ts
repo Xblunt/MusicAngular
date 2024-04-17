@@ -1,10 +1,7 @@
 import { WebSocetServiceService } from 'src/app/service/web-socet-service.service';
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, Output} from '@angular/core';
 import { Chat } from 'src/app/model/chat';
 import { Message } from 'src/app/model/message';
-import { Track } from 'src/app/model/track';
-import { MusicService } from 'src/app/service/music.service';
-
 
 @Component({
   selector: 'app-message',
@@ -17,17 +14,17 @@ export class MessageComponent {
   @Input() selectChat: Chat;
   @Input() message: Message;
   @Input() authUserId: number;
-  @Output() playEvent = new EventEmitter<any>();
+  // @Output() playEvent = new EventEmitter<any>();
   @Output() pauseEvent = new EventEmitter<any>();
+  @Output() playEvent: EventEmitter<{ track: string, messageId: number }> = new EventEmitter();
 
   constructor(private webSocetService: WebSocetServiceService){
   }
 
-  playMessageAudio(track: string) {
-    this.playEvent.emit(track);
-    this.webSocetService.connectToWebSocket();
-    this.connected = true;
-    console.log("WS connected");
+
+  playMessageAudio(track: string, messageId: number) {
+    const eventData = { track: track, messageId: messageId };
+    this.playEvent.emit(eventData);
   }
 
   diconnectedWebSocket(){
@@ -36,8 +33,14 @@ export class MessageComponent {
     console.log("WS disconnected");
   }
 
-  pauseMessageAudio(track: string) {
-    this.pauseEvent.emit(track);
+  connectToWebSocket(){
+    this.webSocetService.connectToWebSocket();
+    this.connected = true;
+    console.log("WS connected");
+  }
+
+  pauseMessageAudio(messageId: number) {
+    this.pauseEvent.emit(messageId);
   }
 
   // getCurrentTime(track: string) {

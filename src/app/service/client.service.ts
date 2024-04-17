@@ -18,6 +18,7 @@ export class ClientService extends IbaseServiceService {
   private clientUrlTrack = 'tracks';
   private lkUrl = 'auth-user';
   private playlistUrl = 'playlist';
+  private sessionUrl = 'session';
 
 
   constructor(http: HttpClient) {
@@ -84,6 +85,11 @@ export class ClientService extends IbaseServiceService {
     .set('authUserId', authUserId)
     .set('trackId', trackId);
     return this.post<PlaylistTrack>(this.playlistUrl, pt, params);
+  }
+
+  editSession(session: Session): Observable<Session> {
+    console.log(`editSession: ${session.id},${session.action},${session.pause},${session.time},${session.currentTimeOnDevice}`);
+    return this.put<Session>(`${this.sessionUrl}/${session.id}`, session);
   }
 
 }

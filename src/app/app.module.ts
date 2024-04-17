@@ -91,6 +91,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
           const service = new WebSocetServiceService();
           service.configure(WebSocketConfig);
           // service.activate();
+          // service.connectToWebSocket();
           return service;
       }
   }

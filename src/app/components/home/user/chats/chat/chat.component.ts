@@ -25,19 +25,23 @@ export class ChatComponent {
 
 
 
-  constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog,  private authService: AuthService, private musicService: MusicService) {
+  constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog,
+    private authService: AuthService, private musicService: MusicService
+  ) {
    this.message = new Message;
    this.authUserId = this.authService.getAuthUserId();
    console.log(`userId: ${this.authUserId}`);
   }
-
-
 
   ngOnInit(){
     this.chatService.eventEmitter.subscribe(chat=>{
       this.selectChat = chat;
       this.loadMessages(this.selectChat);
       console.log("SelectChat: ", this.selectChat.id);
+
+//unsubscribe all
+//subscribe current chat
+
     });
   }
 
@@ -73,14 +77,15 @@ export class ChatComponent {
     });
   }
 
-  playAudio(track: string) {
-    this.musicService.setCurrentTrack(track);
-    this.musicService.playAudio(track, this.selectChat);
-    console.log("PlayAudio Chat");
+  playAudio(data: { track: string, messageId: number }) {
+      const track = data.track;
+      const messageId = data.messageId;
+      this.musicService.playAudio(track, this.selectChat, this.authUserId, messageId);
+      console.log("PlayAudio Chat");
   }
 
-  pauseAudio(track:string) {
-    this.musicService.pauseAudio(track,this.selectChat);
+  pauseAudio(messageId:number) {
+    this.musicService.pauseAudio(this.selectChat,messageId,this.authUserId);
     console.log("PauseAudio Chat");
   }
 
