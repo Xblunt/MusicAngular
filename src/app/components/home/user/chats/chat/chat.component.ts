@@ -1,3 +1,4 @@
+import { WebSocetServiceService } from 'src/app/service/web-socet-service.service';
 import { MusicService } from 'src/app/service/music.service';
 import { Component} from '@angular/core';
 import { Chat } from 'src/app/model/chat';
@@ -22,11 +23,12 @@ export class ChatComponent {
   messageArray: any[]=[];
   message: Message;
   authUserId:number;
+  check: boolean = false;
 
 
 
   constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog,
-    private authService: AuthService, private musicService: MusicService
+    private authService: AuthService, private musicService: MusicService, private webSocetServiceService:WebSocetServiceService
   ) {
    this.message = new Message;
    this.authUserId = this.authService.getAuthUserId();
@@ -38,11 +40,22 @@ export class ChatComponent {
       this.selectChat = chat;
       this.loadMessages(this.selectChat);
       console.log("SelectChat: ", this.selectChat.id);
+      if(this.check == true){
+        this.webSocetServiceService.disconnectFromWebSocket();
+        this.check = false
+        };
+        this.webSocetServiceService.connectToWebSocket();
+        this.check = true;
 
-//unsubscribe all
-//subscribe current chat
+        this.webSocetServiceService.unsubscribeUser(this.selectChat.id,this.authUserId);
+        this.webSocetServiceService.subscribeSession(this.selectChat.id, this.authUserId);
 
     });
+  }
+
+  ngOnDestroy() {
+    this.webSocetServiceService.unsubscribeAll(this.selectChat.id);
+    this.webSocetServiceService.sessionDataSubject.unsubscribe();
   }
 
   loadMessages(chat: Chat): void {

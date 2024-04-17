@@ -87,8 +87,8 @@ export class ClientService extends IbaseServiceService {
     return this.post<PlaylistTrack>(this.playlistUrl, pt, params);
   }
 
-  editSession(session: Session): Observable<Session> {
-    console.log(`editSession: ${session.id},${session.action},${session.pause},${session.time},${session.currentTimeOnDevice}`);
+  updateSession(session: Session): Observable<Session> {
+    console.log(`updateSession: ${session.id},${session.action},${session.pause},${session.time},${session.currentTimeOnDevice}`);
     return this.put<Session>(`${this.sessionUrl}/${session.id}`, session);
   }
 
