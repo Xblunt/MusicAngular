@@ -15,32 +15,31 @@ export class MessageComponent {
   @Input() message: Message;
   @Input() authUserId: number;
   // @Output() playEvent = new EventEmitter<any>();
-  @Output() pauseEvent = new EventEmitter<any>();
+  // @Output() pauseEvent = new EventEmitter<any>();
   @Output() playEvent: EventEmitter<{ track: string, messageId: number }> = new EventEmitter();
-
+  @Output() pauseEvent: EventEmitter<{ track: string, messageId: number }> = new EventEmitter();
   constructor(private webSocetService: WebSocetServiceService){
   }
 
+  // diconnectedWebSocket(){
+  //   this.webSocetService.disconnectFromWebSocket();
+  //   this.connected = false
+  //   console.log("WS disconnected");
+  // }
 
+  // connectToWebSocket(){
+  //   this.webSocetService.connectToWebSocket();
+  //   this.connected = true;
+  //   console.log("WS connected");
+  // }
   playMessageAudio(track: string, messageId: number) {
     const eventData = { track: track, messageId: messageId };
     this.playEvent.emit(eventData);
   }
 
-  diconnectedWebSocket(){
-    this.webSocetService.disconnectFromWebSocket();
-    this.connected = false
-    console.log("WS disconnected");
-  }
-
-  connectToWebSocket(){
-    this.webSocetService.connectToWebSocket();
-    this.connected = true;
-    console.log("WS connected");
-  }
-
-  pauseMessageAudio(messageId: number) {
-    this.pauseEvent.emit(messageId);
+  pauseMessageAudio(track: string, messageId: number) {
+    const eventData = { track: track, messageId: messageId };
+    this.pauseEvent.emit(eventData);
   }
 
   // getCurrentTime(track: string) {

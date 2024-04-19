@@ -52,10 +52,15 @@ export class ChatComponent {
 
     });
   }
+  // unsubscribe():void{
+  //   this.webSocetServiceService.unsubscribeUser(this.selectChat.id,this.authUserId);
+  // }
 
   ngOnDestroy() {
     this.webSocetServiceService.unsubscribeAll(this.selectChat.id);
     this.webSocetServiceService.sessionDataSubject.unsubscribe();
+    this.webSocetServiceService.disconnectFromWebSocket();
+    this.check = false
   }
 
   loadMessages(chat: Chat): void {
@@ -90,15 +95,26 @@ export class ChatComponent {
     });
   }
 
-  playAudio(data: { track: string, messageId: number }) {
-      const track = data.track;
-      const messageId = data.messageId;
-      this.musicService.playAudio(track, this.selectChat, this.authUserId, messageId);
-      console.log("PlayAudio Chat");
+  playAudio(data: { track: string, messageId:number}) {
+  // playAudio(track: string) {
+    const command = "Play";
+    if(this.authUserId ===data.messageId){
+      this.musicService.transferToWS(this.selectChat.id, command, data.track, this.selectChat, this.authUserId, data.messageId);
+    }
+    else{
+    this.musicService.subscriptionVerification(data.track, this.selectChat, this.authUserId, data.messageId);
+    }
+    console.log("PlayAudio Chat");
   }
 
-  pauseAudio(messageId:number) {
-    this.musicService.pauseAudio(this.selectChat,messageId,this.authUserId);
+  pauseAudio(data: { track: string, messageId:number}) {
+    const command = "Pause";
+    if(this.authUserId ===data.messageId){
+      this.musicService.transferToWS(this.selectChat.id, command, data.track, this.selectChat, this.authUserId, data.messageId);
+    }
+    else{
+      this.musicService.subscriptionVerification(data.track,this.selectChat,this.authUserId, data.messageId);
+    }
     console.log("PauseAudio Chat");
   }
 

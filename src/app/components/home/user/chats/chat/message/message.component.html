@@ -9,13 +9,13 @@
           {{message.track.trackName}}  -  {{message.track.trackAuthor}}
           <mat-progress-bar class=" progress" mode="determinate"></mat-progress-bar>
           <button (click)="playMessageAudio(message.track.trackUrl, message.userId) ">Play</button>
-          <button (click)="pauseMessageAudio(message.userId)">Stop</button>
-          <div *ngIf="this.connected === false">
+          <button (click)="pauseMessageAudio(message.track.trackUrl, message.userId)">Stop</button>
+          <!-- <div *ngIf="this.connected === false">
           <button (click)="connectToWebSocket()">Connect</button>
           </div>
           <div *ngIf="this.connected === true">
             <button (click)="diconnectedWebSocket()">Disconnect</button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

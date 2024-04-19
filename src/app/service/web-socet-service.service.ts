@@ -1,7 +1,6 @@
 import { SubscriptionUser } from './../model/subscriptionUser';
 import { Injectable } from '@angular/core';
 import { RxStomp } from '@stomp/rx-stomp';
-import { WebSocketConfig } from '../auth/config/WebSocetConfig';
 import { Session } from '../model/session';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
@@ -42,9 +41,14 @@ export class WebSocetServiceService {
 
       this.sessionDataSubject.next(sessionData);
     });
-    this.activeSubscriptions.push({ chatId:chatId, userId: userId, subscription: this.subscription });
+    const subscriptionUser: SubscriptionUser = { chatId: chatId, userId: userId, subscription: this.subscription };
+    this.activeSubscriptions.push(subscriptionUser);
     console.log('Новая подписка добавлена:', { userId: userId, subscription: this.subscription });
-    console.log('Все подписки:', this.activeSubscriptions);
+    console.log('Подписка пользователя:', this.subscription);
+  }
+
+  hasSubscriptionForUser(userId: number): boolean {
+    return this.activeSubscriptions.some(sub => sub.userId === userId && !sub.subscription.closed);
   }
 
   unsubscribeUser(chatId: number, userId: number): void {
@@ -55,10 +59,12 @@ export class WebSocetServiceService {
         filteredSubscription.subscription.unsubscribe();
         console.log('Подписка пользователя с userId', userId, 'успешно отписана.');
       });
-    } else {
-        console.error('Подписка пользователя с userId', userId, 'не найдена.');
+    }
+    else {
+      console.error('Подписка пользователя с userId', userId, 'не найдена.');
     }
     console.log('Оставшиеся подписки после отписки пользователя:', this.activeSubscriptions);
+    console.log('Отписка чувака:', this.subscription);
   }
 
   unsubscribeAll(chatId: number): void {
@@ -72,10 +78,6 @@ export class WebSocetServiceService {
     }
   }
 
-  getStoredSessionData(): Observable<Session> {
-    return this.sessionDataSubject.asObservable();
-  }
-
   disconnectFromWebSocket() {
     this.stompClient.deactivate();
     setTimeout(() => {
@@ -85,14 +87,15 @@ export class WebSocetServiceService {
             console.error('Отключено от STOMP');
         }
     }, 1000);
-}
+  }
+
   configure(webSocketConfig: any) {
     this.stompClient.configure(webSocketConfig);
   }
+
   activateWebSocket() {
     this.stompClient.activate();
   }
-
 
   connectToWebSocket() {
     // this.stompClient.configure(WebSocketConfig);
@@ -107,43 +110,6 @@ export class WebSocetServiceService {
         }
     }, 1000);
 }
+
 }
 
-
-
-  // updateSession(messageBody: any): void {
-  //   this.stompClient.publish({ destination: `/sinx/${messageBody.chatId}`, body: JSON.stringify(messageBody) });
-  //   console.log(JSON.stringify(messageBody));
-
-  //   this.getSessionData(messageBody.chatId).subscribe((sessionData: Session) => {
-  //     console.log("message from server:", sessionData.action);
-  //     console.log("message from server:", sessionData);
-  //   },
-  //   (error) => {
-  //     console.error("Error:", error);
-  //   });
-  // }
-
-
-  // getSessionData(chatId: number): Observable<Session> {
-  //   const subscriptionUrl = `/chats/session/${chatId}`;
-
-  //   if (this.messageSubscription) {
-  //     this.messageSubscription.unsubscribe();
-  //   }
-
-  //   this.messageSubscription = this.stompClient.watch(subscriptionUrl).subscribe((message) => {
-  //     const data = JSON.parse(message.body);
-  //     const sessionData: Session = {
-  //       id: data.id,
-  //       action: data.action,
-  //       time: data.time,
-  //       pause: data.pause,
-  //       currentTimeOnDevice: data.currentTimeOnDevice
-  //     };
-
-  //     this.sessionDataSubject.next(sessionData);
-  //   });
-
-  //   return this.sessionDataSubject.asObservable();
-  // }
