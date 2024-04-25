@@ -52,7 +52,9 @@ export class WebSocetServiceService {
   }
 
   unsubscribeUser(chatId: number, userId: number): void {
-    const filteredSubscriptions = this.activeSubscriptions.filter(subscriptionUser => subscriptionUser.chatId === chatId && subscriptionUser.userId === userId);
+    const filteredSubscriptions = this.activeSubscriptions.filter(subscriptionUser => subscriptionUser.chatId === chatId 
+      && subscriptionUser.userId === userId
+    );
 
     if (filteredSubscriptions.length > 0) {
       filteredSubscriptions.forEach(filteredSubscription => {

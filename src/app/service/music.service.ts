@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Chat } from '../model/chat';
 import { Session } from '../model/session';
 import { ClientService } from './client.service';
-import { Subscription } from 'rxjs';
 import { take, delay } from 'rxjs/operators';
 
 
@@ -24,19 +23,19 @@ export class MusicService {
     if (hasSubscription) {
       console.log(`Подписка для пользователя ${authUserId} существует.`);
       this.webSocetService.sessionDataSubject.pipe(delay(100),take(10)).subscribe((sessionData: Session) => {
-        this.definitionAction(trackUrl,chat,authUserId, sessionData,messageUserId);
+        this.definitionAction(trackUrl,authUserId, sessionData,messageUserId);
       });
     }
     else {
       console.log(`Подписки для пользователя ${authUserId} не существует.`);
       this.webSocetService.subscribeSession(chat.id, authUserId);
       this.webSocetService.sessionDataSubject.pipe(delay(100),take(10)).subscribe((sessionData: Session) => {
-        this.definitionAction(trackUrl,chat,authUserId, sessionData, messageUserId);
+        this.definitionAction(trackUrl,authUserId, sessionData, messageUserId);
       });
     }
   }
 
-  definitionAction(trackUrl: string, chat: Chat, authUserId: number,sessionData:Session, messageUserId:number){
+  definitionAction(trackUrl: string, authUserId: number,sessionData:Session, messageUserId:number){
     this.currentTrack = trackUrl;
 
     console.log('Полученные данные о сессии:', sessionData);

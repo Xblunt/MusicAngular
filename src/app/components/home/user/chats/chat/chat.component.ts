@@ -25,8 +25,6 @@ export class ChatComponent {
   authUserId:number;
   check: boolean = false;
 
-
-
   constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog,
     private authService: AuthService, private musicService: MusicService, private webSocetServiceService:WebSocetServiceService
   ) {
@@ -40,15 +38,16 @@ export class ChatComponent {
       this.selectChat = chat;
       this.loadMessages(this.selectChat);
       console.log("SelectChat: ", this.selectChat.id);
-      if(this.check == true){
+      if(this.check == true) {
         this.webSocetServiceService.disconnectFromWebSocket();
         this.check = false
-        };
-        this.webSocetServiceService.connectToWebSocket();
-        this.check = true;
+      };
 
-        this.webSocetServiceService.unsubscribeUser(this.selectChat.id,this.authUserId);
-        this.webSocetServiceService.subscribeSession(this.selectChat.id, this.authUserId);
+      this.webSocetServiceService.connectToWebSocket();
+      this.check = true;
+
+      this.webSocetServiceService.unsubscribeUser(this.selectChat.id,this.authUserId);
+      this.webSocetServiceService.subscribeSession(this.selectChat.id, this.authUserId);
 
     });
   }
@@ -69,7 +68,7 @@ export class ChatComponent {
     this.chatService.getAllMessages(chatId,this.pageSize).subscribe((response: Page<Message>) => {
       this.messageArray = response.content;
       console.log('Received messages:', this.messageArray);
-      });
+    });
   }
 
   createMessages(chat:Chat):void{
@@ -84,12 +83,13 @@ export class ChatComponent {
 
   openPlaylist(): void {
     const dialogRef = this.dialog.open(PlaylistComponent, {
-    data: this.selectChat.id
+      data: this.selectChat.id
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         console.log('Changes saved:', result);
-      } else {
+      } 
+      else {
         console.log('The window is closed without saving changes.');
       }
     });
@@ -98,7 +98,7 @@ export class ChatComponent {
   playAudio(data: { track: string, messageId:number}) {
   // playAudio(track: string) {
     const command = "Play";
-    if(this.authUserId ===data.messageId){
+    if(this.authUserId === data.messageId){
       this.musicService.transferToWS(this.selectChat.id, command, data.track, this.selectChat, this.authUserId, data.messageId);
     }
     else{
@@ -109,7 +109,7 @@ export class ChatComponent {
 
   pauseAudio(data: { track: string, messageId:number}) {
     const command = "Pause";
-    if(this.authUserId ===data.messageId){
+    if(this.authUserId === data.messageId){
       this.musicService.transferToWS(this.selectChat.id, command, data.track, this.selectChat, this.authUserId, data.messageId);
     }
     else{
