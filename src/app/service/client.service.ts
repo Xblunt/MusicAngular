@@ -88,8 +88,12 @@ export class ClientService extends IbaseServiceService {
   }
 
   updateSession(session: Session): Observable<Session> {
-    console.log(`updateSession: ${session.id},${session.action},${session.pause},${session.time},${session.currentTimeOnDevice}`);
+    console.log(`updateSession: ${session.id},${session.action},${session.time},${session.currentTimeOnDevice}`);
     return this.put<Session>(`${this.sessionUrl}/${session.id}`, session);
+  }
+
+  getSessionMap(chatId: number): Observable<Session> {
+    return this.get<Session>(`sessionMap/${chatId}`);
   }
 
 }

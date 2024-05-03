@@ -34,9 +34,10 @@ export class WebSocetServiceService {
       const sessionData: Session = {
         id: data.id,
         action: data.action,
-        time: data.time,
-        pause: data.pause,
-        currentTimeOnDevice: data.currentTimeOnDevice
+        trackTime: data.trackTime,
+        actionTime: data.actionTime,
+        playerId: data.playerId,
+        trackUrl:data.trackUrl
       };
 
       this.sessionDataSubject.next(sessionData);
@@ -52,7 +53,7 @@ export class WebSocetServiceService {
   }
 
   unsubscribeUser(chatId: number, userId: number): void {
-    const filteredSubscriptions = this.activeSubscriptions.filter(subscriptionUser => subscriptionUser.chatId === chatId 
+    const filteredSubscriptions = this.activeSubscriptions.filter(subscriptionUser => subscriptionUser.chatId === chatId
       && subscriptionUser.userId === userId
     );
 

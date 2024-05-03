@@ -9,6 +9,7 @@ import { Page } from 'src/app/service/page';
 import { PlaylistComponent } from 'src/app/components/dialog/playlist/playlist/playlist.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ActionStatus, Session } from 'src/app/model/session';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ChatComponent {
   messageArray: any[]=[];
   message: Message;
   authUserId:number;
-  check: boolean = false;
+
 
   constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog,
     private authService: AuthService, private musicService: MusicService, private webSocetServiceService:WebSocetServiceService
@@ -38,17 +39,8 @@ export class ChatComponent {
       this.selectChat = chat;
       this.loadMessages(this.selectChat);
       console.log("SelectChat: ", this.selectChat.id);
-      if(this.check == true) {
-        this.webSocetServiceService.disconnectFromWebSocket();
-        this.check = false
-      };
-
-      this.webSocetServiceService.connectToWebSocket();
-      this.check = true;
-
-      this.webSocetServiceService.unsubscribeUser(this.selectChat.id,this.authUserId);
       this.webSocetServiceService.subscribeSession(this.selectChat.id, this.authUserId);
-
+      this.getSessionMap(this.selectChat.id);
     });
   }
   // unsubscribe():void{
@@ -56,10 +48,14 @@ export class ChatComponent {
   // }
 
   ngOnDestroy() {
-    this.webSocetServiceService.unsubscribeAll(this.selectChat.id);
-    this.webSocetServiceService.sessionDataSubject.unsubscribe();
-    this.webSocetServiceService.disconnectFromWebSocket();
-    this.check = false
+    this.webSocetServiceService.unsubscribeUser(this.selectChat.id,this.authUserId);
+  }
+
+  getSessionMap(selectChat:number) {
+    this.clientService.getSessionMap(selectChat).subscribe((data: Session) => {
+      console.log('Map session data:', data);
+      this.actionTrackLogin(data);
+    });
   }
 
   loadMessages(chat: Chat): void {
@@ -88,33 +84,28 @@ export class ChatComponent {
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
         console.log('Changes saved:', result);
-      } 
+      }
       else {
         console.log('The window is closed without saving changes.');
       }
     });
   }
 
-  playAudio(data: { track: string, messageId:number}) {
-  // playAudio(track: string) {
-    const command = "Play";
-    if(this.authUserId === data.messageId){
-      this.musicService.transferToWS(this.selectChat.id, command, data.track, this.selectChat, this.authUserId, data.messageId);
-    }
-    else{
-    this.musicService.subscriptionVerification(data.track, this.selectChat, this.authUserId, data.messageId);
-    }
+   actionTrackLogin(session:Session){
+    this.musicService.subscriptionVerification(this.selectChat.id,this.authUserId)
+   }
+
+  // playAudio(data: { track: string, messageId:number}) {
+  playAudio(track: string) {
+    const command = ActionStatus.Play;
+    this.musicService.transferToWS(this.selectChat.id, command, track, this.authUserId);
     console.log("PlayAudio Chat");
   }
 
-  pauseAudio(data: { track: string, messageId:number}) {
-    const command = "Pause";
-    if(this.authUserId === data.messageId){
-      this.musicService.transferToWS(this.selectChat.id, command, data.track, this.selectChat, this.authUserId, data.messageId);
-    }
-    else{
-      this.musicService.subscriptionVerification(data.track,this.selectChat,this.authUserId, data.messageId);
-    }
+  // pauseAudio(data: { track: string, messageId:number}) {
+    pauseAudio(track: string) {
+    const command = ActionStatus.Pause;
+      this.musicService.transferToWS(this.selectChat.id, command, track,  this.authUserId);
     console.log("PauseAudio Chat");
   }
 

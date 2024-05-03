@@ -21,6 +21,10 @@ export class ChatsListComponent {
 
   ngOnInit(): void {
     this.getAllUsers();
+    this.webSocetService.connectToWebSocket();
+  }
+  ngOnDestroy(){
+    this.webSocetService.disconnectFromWebSocket();
   }
 
   selectChat(chat: Chat) {
