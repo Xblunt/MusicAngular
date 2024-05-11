@@ -16,24 +16,15 @@ export class MessageComponent {
   @Input() authUserId: number;
   @Output() playEvent = new EventEmitter<any>();
   @Output() pauseEvent = new EventEmitter<any>();
-  // @Output() playEvent: EventEmitter<{ track: string, messageId: number }> = new EventEmitter();
-  // @Output() pauseEvent: EventEmitter<{ track: string, messageId: number }> = new EventEmitter();
   constructor(private webSocetService: WebSocetServiceService){
   }
 
-
   playMessageAudio(track: string, messageId: number) {
-    // const eventData = { track: track, messageId: messageId };
     this.playEvent.emit(track);
   }
 
   pauseMessageAudio(track: string, messageId: number) {
-    // const eventData = { track: track, messageId: messageId };
     this.pauseEvent.emit(track);
   }
-
-  // getCurrentTime(track: string) {
-  //   return this.musicService.getTrackTime(track, this.selectChat);
-  // }
 
 }

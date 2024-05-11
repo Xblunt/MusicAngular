@@ -88,7 +88,7 @@ export class ClientService extends IbaseServiceService {
   }
 
   updateSession(session: Session): Observable<Session> {
-    console.log(`updateSession: ${session.id},${session.action},${session.time},${session.currentTimeOnDevice}`);
+    console.log(`updateSession: ${session.id},${session.action},${session.trackTime},${session.actionTime}`);
     return this.put<Session>(`${this.sessionUrl}/${session.id}`, session);
   }
 

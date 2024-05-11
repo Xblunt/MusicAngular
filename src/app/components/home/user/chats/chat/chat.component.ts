@@ -43,9 +43,6 @@ export class ChatComponent {
       this.getSessionMap(this.selectChat.id);
     });
   }
-  // unsubscribe():void{
-  //   this.webSocetServiceService.unsubscribeUser(this.selectChat.id,this.authUserId);
-  // }
 
   ngOnDestroy() {
     this.webSocetServiceService.unsubscribeUser(this.selectChat.id,this.authUserId);
@@ -91,19 +88,26 @@ export class ChatComponent {
     });
   }
 
-   actionTrackLogin(session:Session){
-    this.musicService.subscriptionVerification(this.selectChat.id,this.authUserId)
-   }
+  actionTrackLogin(session:Session){
+   this.musicService.definitionAction(this.selectChat.id,this.authUserId);
+    if(session.action == ActionStatus.Play){
+      this.musicService.playAudio(this.selectChat.id, session,this.authUserId);
+    }
+    else if(session.action == ActionStatus.Pause){
+      this.musicService.pauseAudio(this.selectChat.id, session,this.authUserId);
+    }
+    else{
+      console.error("MapSessionData null")
+    }
+  }
 
-  // playAudio(data: { track: string, messageId:number}) {
   playAudio(track: string) {
     const command = ActionStatus.Play;
     this.musicService.transferToWS(this.selectChat.id, command, track, this.authUserId);
     console.log("PlayAudio Chat");
   }
 
-  // pauseAudio(data: { track: string, messageId:number}) {
-    pauseAudio(track: string) {
+  pauseAudio(track: string) {
     const command = ActionStatus.Pause;
       this.musicService.transferToWS(this.selectChat.id, command, track,  this.authUserId);
     console.log("PauseAudio Chat");

@@ -11,7 +11,6 @@ import { WebSocetServiceService } from 'src/app/service/web-socet-service.servic
 })
 export class ChatsListComponent {
   chats: Chat[] = [];
-  // connected: boolean = false;
   authUserId: number;
 
   constructor(private authService:AuthService, private chatService: ChatService, private webSocetService: WebSocetServiceService){
@@ -28,12 +27,6 @@ export class ChatsListComponent {
   }
 
   selectChat(chat: Chat) {
-    // if(this.connected == true){
-    // this.webSocetService.disconnectFromWebSocket();
-    // this.connected = false
-    // };
-    // this.webSocetService.connectToWebSocket();
-    // this.connected = true;
     this.chatService.setSelectChat(chat);
     console.log("SelectChat: " + chat.id);
   }
