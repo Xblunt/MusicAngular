@@ -36,7 +36,7 @@ export class WebSocetServiceService {
         trackTime: data.trackTime,
         actionTime: data.actionTime,
         playerId: data.playerId,
-        trackUrl:data.trackUrl
+        trackUrl:data.trackUrl,
       };
 
       this.sessionDataSubject.next(sessionData);

@@ -24,6 +24,8 @@ export class ChatComponent {
   messageArray: any[]=[];
   message: Message;
   authUserId:number;
+  trackUrlToMessage: string;
+
 
 
   constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog,
@@ -89,7 +91,7 @@ export class ChatComponent {
   }
 
   actionTrackLogin(session:Session){
-   this.musicService.definitionAction(this.selectChat.id,this.authUserId);
+    this.musicService.definitionAction(this.selectChat.id,this.authUserId);
     if(session.action == ActionStatus.Play){
       this.musicService.playAudio(this.selectChat.id, session,this.authUserId);
     }
@@ -99,17 +101,18 @@ export class ChatComponent {
     else{
       console.error("MapSessionData null")
     }
+    this.trackUrlToMessage = session.trackUrl;
   }
 
   playAudio(track: string) {
     const command = ActionStatus.Play;
-    this.musicService.transferToWS(this.selectChat.id, command, track, this.authUserId);
+    this.musicService.updateChatSession(this.selectChat.id, command, track, this.authUserId);
     console.log("PlayAudio Chat");
   }
 
   pauseAudio(track: string) {
     const command = ActionStatus.Pause;
-      this.musicService.transferToWS(this.selectChat.id, command, track,  this.authUserId);
+      this.musicService.updateChatSession(this.selectChat.id, command, track,  this.authUserId);
     console.log("PauseAudio Chat");
   }
 

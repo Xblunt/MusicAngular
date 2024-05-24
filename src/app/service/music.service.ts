@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { ActionStatus, Session } from '../model/session';
 import { ClientService } from './client.service';
 import { take, delay } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 
 @Injectable({
@@ -14,11 +15,18 @@ export class MusicService {
   action: ActionStatus;
   сurrentTrack: string;
   trackDuration: number;
+  private trackDurationSubject = new BehaviorSubject<number>(0);
+  trackDuration$ = this.trackDurationSubject.asObservable();
+  trackTimeSubject: Subject<number> = new Subject<number>();
+
+  //currentTrackUrl: Subject<string> = new Subject<string>();
+  private currentTrackUrlSubject = new BehaviorSubject<string>("");
+  currentTrackUrl$ = this.currentTrackUrlSubject.asObservable();
 
   constructor(private webSocetService: WebSocetServiceService,private clientService: ClientService) { }
 
   definitionAction(selectChatId:number, authUserId: number){
-    this.webSocetService.sessionDataSubject.pipe(delay(100),take(3)).subscribe((sessionData: Session) => {
+    this.webSocetService.sessionDataSubject.pipe(delay(100),take(10)).subscribe((sessionData: Session) => {
       console.log('Полученные данные о сессии:', sessionData);
 
       if(sessionData.action === ActionStatus.Play){
@@ -32,7 +40,8 @@ export class MusicService {
     });
   }
 
-  transferToWS(selectChatId:number, command: ActionStatus, trackUrl:string,  authUserId: number){
+  updateChatSession(selectChatId:number, command: ActionStatus, trackUrl:string,  authUserId: number){
+
     const actionTime = Date.now();
     if(command == ActionStatus.Play) {
       this.action = command;
@@ -66,18 +75,23 @@ export class MusicService {
 
   playAudio(selectChatId:number, session:Session, authUserId:number){
     console.log('playAudio');
+
     if(selectChatId == session.id){
       this.сurrentTrack = session.trackUrl;
       this.song.src = session.trackUrl;
+      this.currentTrackUrlSubject.next(session.trackUrl);
 
-      // this.song.addEventListener('loadedmetadata', () => {
-      //   console.log('Длительность трека:', this.song.duration);
-      //   this.trackDuration = Math.floor(this.song.duration);
-      // });
+      this.song.addEventListener('loadedmetadata', () => {
+        //console.log('Длительность трека:', this.song.duration);
+        //this.trackDuration = Math.floor(this.song.duration);
+        this.trackDuration = this.song.duration;
+        this.trackDurationSubject.next(this.trackDuration);
+      });
 
-      // if(session.trackTime == this.trackDuration){
-      //   session.trackTime = 0;
-      // }
+      if(session.trackTime == this.trackDuration){
+        session.trackTime = 0;
+      }
+
 
       if(authUserId === session.playerId){
         this.song.currentTime = session.trackTime;
@@ -86,6 +100,10 @@ export class MusicService {
         const actionTimePlay = Date.now();
         this.song.currentTime = session.trackTime + ((actionTimePlay - session.actionTime)/1000);
       }
+
+      this.song.addEventListener('timeupdate', () => {
+        this.trackTimeSubject.next(this.song.currentTime);
+      });
       this.song.play();
     }
   }
@@ -97,6 +115,7 @@ export class MusicService {
       this.song.src = session.trackUrl;
       if(authUserId == session.playerId){
         this.song.currentTime = session.trackTime;
+        this.trackTimeSubject.next(this.song.currentTime);
       }
       else {
         const actionTimePause = Date.now();
@@ -105,5 +124,16 @@ export class MusicService {
       this.song.pause();
    }
   }
+
+  setVolume(volumeValue: number){
+    this.song.volume = volumeValue;
+  }
+
+  seekAudio(seekTime:number, track: string, authUserId: number, selectChat: number){
+    this.song.currentTime = seekTime;
+    this.updateChatSession(selectChat, ActionStatus.Play,track,authUserId);
+  }
+
+
 
 }
