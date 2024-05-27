@@ -1,9 +1,10 @@
 <div *ngIf="this.selectChat" class="component square chats">
   <div *ngFor="let message of messageArray">
-    <app-message #childAudioPlayer [trackUrlToMessage]="trackUrlToMessage" [message]="message"  [authUserId]="authUserId" [selectChat]="selectChat" (playEvent)="playAudio($event)" (pauseEvent)="pauseAudio($event)"></app-message>
+    <app-message #childAudioPlayer [trackUrlToMessage]="trackUrlToMessage" [message]="message"  [authUserId]="authUserId" (mediaEvent)="onMediaEvent($event)" (seekAudioEvent)="seekTrack($event)" (setVolumeEvent)="setVolumeTrack($event)"></app-message>
   </div>
-  <input  [(ngModel)]="messageText" type="text" class="write-message" placeholder="Type your message here">
-  <button (click)="openPlaylist()">Open playlist</button>
-  <button (click)="createMessages(selectChat)">Create message</button>
-  <!-- <button (click)="unsubscribe()">UNS</button> -->
+  <div class="input-container">
+    <input [(ngModel)]="messageText" type="text" class="write-message" placeholder="Type your message here">
+    <button class="send-button custom-bt btn-2" (click)="createMessages(selectChat)">Send</button>
+    <mat-icon class="send-button2" aria-hidden="false" aria-label="Example home icon" fontIcon="music_note" (click)="openPlaylist()"> </mat-icon>
+  </div>
 </div>

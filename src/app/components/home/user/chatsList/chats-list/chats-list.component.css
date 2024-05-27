@@ -1,6 +1,18 @@
 .square {
-  background-color: #30ed6c;
+  background-color: #ffffff;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(0, 0, 0);
+
 }
+/*
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} */
+
 
 .panel-gray {
   background-color: #D9D9D9;
@@ -16,12 +28,51 @@
   border: #000;
 }
 
-.panel-gray:active {
-  background-color: #c91414;
+
+
+.btn-gray {
+  background-color: #2C5420;
+  color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px;
+  height: 50px;
+  width: 50vh;
+  max-width: 100%;
+  margin: 10px;
+  border-width: 5px;
+  border: #000;
 }
+.btn-gray:hover {
+  background: rgb(47, 88, 1);
+background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
+}
+.selected {
+  color: rgb(46, 110, 57);
+}
+
+.panel-gray:active {
+  background-color: #1e3d16;
+  color: #ffffff;
+
+}
+
+
+/* .button {
+  background: #2C5420;
+  background: linear-gradient(0deg, #2C5420 0%, #2C5420 100%);
+  border: none;
+  color: #ffffff;
+  height: 50px;
+  width: 20vh;
+  max-width: 100%;
+  margin: 10px;
+  border-radius: 10px;
+} */
+
 
 .chat-list{
   width: fit-content;
-  height: 490px;
+  height: 100%;
   max-width: 100%;
 }

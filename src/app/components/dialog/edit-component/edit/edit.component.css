@@ -30,15 +30,17 @@
 .picture-btn::after {
   content: "ADD";
   position: absolute;
-  top: 50%; /* adjust the vertical position */
-  left: 50%; /* adjust the horizontal position */
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   font-weight: bold;
   color: black;
 }
+
 .right-align {
   margin: 0 0 0 auto !important;
 }
+
 .custom-btn {
   width: 120px;
   height: 35px;
@@ -52,28 +54,31 @@
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
-   7px 7px 20px 0px rgba(0,0,0,.1),
-   4px 4px 5px 0px rgba(0,0,0,.1);
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+  7px 7px 20px 0px rgba(0,0,0,.1),
+  4px 4px 5px 0px rgba(0,0,0,.1);
   outline: none;
 }
-.fff{
 
+.fff{
   margin-left: 30px;
 }
+
 .ttt{
   margin-right: 20px;
-
 }
+
 .btn-1 {
   background: #2C5420;
   background: linear-gradient(0deg, #2C5420 0%, #2C5420 100%);
   border: none;
 }
+
 .btn-1:hover {
   background: rgb(47, 88, 1);
-background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
+  background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
 }
+
 .example-form {
   min-width: 150px;
   max-width: 200px;
@@ -83,6 +88,7 @@ background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
 .example-full-width {
   width: 100%;
 }
+
 .user-details {
   display: flex;
 }
@@ -101,13 +107,15 @@ background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
   display: flex;
   justify-content: flex-end;
 }
+
 .user-details {
   display: flex;
   align-items: flex-start;
 }
+
 .button-container {
   display: flex;
-  gap: 10px; /* Отступ между кнопками */
+  gap: 10px;
 }
 .user-details .photo-wrapper {
   flex: 0 0 auto;
@@ -127,20 +135,24 @@ background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
 .user-details .file-upload {
   margin-top: 20px;
 }
+
 .actions {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
+
 .button-container {
   display: flex;
   justify-content: flex-end;
 }
+
 .mat-dialog-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .file-upload {
   position: relative;
 }
@@ -154,6 +166,7 @@ background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
 .file-upload.dragover .drop-area {
   border-color: #000;
 }
+
 .center-align {
   display: flex;
   flex-direction: column;
@@ -175,8 +188,8 @@ background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
   background-color: #D9D9D9;
   margin-bottom: 5px;
   margin-top: 5px;
-
 }
+
 .full-width-input {
   background-color: #D9D9D9;
   height: 50px;
@@ -204,10 +217,11 @@ background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
   justify-content: center;
   align-items: center;
 }
+
 .right-align2 {
   margin-left: auto;
 }
-.baa{
 
+.baa{
   margin-top: 100px;
 }

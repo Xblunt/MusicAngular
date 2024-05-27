@@ -1,4 +1,4 @@
-import { Page } from 'src/app/service/page';
+import { Page } from 'src/app/model/page';
 import { Observable } from 'rxjs';
 import { IbaseServiceService } from './ibase-service.service';
 import { User } from '../model/user';

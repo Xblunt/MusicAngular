@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { AuthService } from 'src/app/auth/auth.service';
-import { Page } from 'src/app/service/page';
+import { Page } from 'src/app/model/page';
 import { Track } from 'src/app/model/track';
 import { EditComponent } from 'src/app/components/dialog/edit-component/edit/edit.component';
 import { DeleteComponentComponent } from 'src/app/components/dialog/delete-component/delete-component/delete-component.component';
@@ -69,9 +69,7 @@ export class TrackscComponent  {
   like(): void {
     const selectedUser = this.tracks.find(track => track.id === this.clickedUserId);
     if (selectedUser) {
-      const trackId = selectedUser.id;
-      const authUserId = this.authUserId;
-      this.userService.like( this.pt, authUserId, trackId ).subscribe((newpt: PlaylistTrack) => {
+      this.userService.like( this.pt, this.authUserId, selectedUser.id ).subscribe((newpt: PlaylistTrack) => {
         this.getAllTracks();
       });
     }

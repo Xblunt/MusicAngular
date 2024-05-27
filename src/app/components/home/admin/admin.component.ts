@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { User } from 'src/app/model/user';
-import { Page } from 'src/app/service/page';
+import { Page } from 'src/app/model/page';
 import { DeleteComponentComponent } from '../../dialog/delete-component/delete-component/delete-component.component';
 import { EditComponent } from '../../dialog/edit-component/edit/edit.component';
 

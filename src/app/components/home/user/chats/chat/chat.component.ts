@@ -5,7 +5,7 @@ import { Chat } from 'src/app/model/chat';
 import { ChatService } from 'src/app/service/chat.service';
 import { Message } from 'src/app/model/message';
 import { ClientService } from 'src/app/service/client.service';
-import { Page } from 'src/app/service/page';
+import { Page } from 'src/app/model/page';
 import { PlaylistComponent } from 'src/app/components/dialog/playlist/playlist/playlist.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -58,22 +58,18 @@ export class ChatComponent {
   }
 
   loadMessages(chat: Chat): void {
-    const chatId = chat.id;
-
-    this.chatService.getAllMessages(chatId,this.pageSize).subscribe((response: Page<Message>) => {
+    this.chatService.getAllMessages(chat.id,this.pageSize).subscribe((response: Page<Message>) => {
       this.messageArray = response.content;
       console.log('Received messages:', this.messageArray);
     });
   }
 
   createMessages(chat:Chat):void{
-    const chatId = this.selectChat.id;
-    const messgg =  this.messageText;
-    const authUserId = this.authUserId;
-    this.chatService.createMessage(this.message, chatId, authUserId,  messgg).subscribe(k => {
+    this.chatService.createMessage(this.message, this.selectChat.id, this.authUserId,  this.messageText).subscribe(k => {
       console.log('this chat:',this.selectChat);
       this.loadMessages(chat);
     });
+    this.messageText = '';
   }
 
   openPlaylist(): void {
@@ -104,16 +100,24 @@ export class ChatComponent {
     this.trackUrlToMessage = session.trackUrl;
   }
 
-  playAudio(track: string) {
-    const command = ActionStatus.Play;
-    this.musicService.updateChatSession(this.selectChat.id, command, track, this.authUserId);
+  onMediaEvent(event: { action: string, track: string }) {
+    if(event.action == 'Play'){
+    this.musicService.updateChatSession(this.selectChat.id, ActionStatus.Play, event.track, this.authUserId);
     console.log("PlayAudio Chat");
+    }
+    else {
+    this.musicService.updateChatSession(this.selectChat.id, ActionStatus.Pause, event.track,  this.authUserId);
+    console.log("PauseAudio Chat");
+    }
+
   }
 
-  pauseAudio(track: string) {
-    const command = ActionStatus.Pause;
-      this.musicService.updateChatSession(this.selectChat.id, command, track,  this.authUserId);
-    console.log("PauseAudio Chat");
+  seekTrack(event:{time: number, track: string}){
+    this.musicService.seekAudio(event.time,event.track,this.authUserId,this.selectChat.id)
+  }
+
+  setVolumeTrack(volumeValue:number){
+    this.musicService.setVolume(volumeValue);
   }
 
 }

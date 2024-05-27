@@ -3,7 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Track } from 'src/app/model/track';
 import { PageEvent } from '@angular/material/paginator';
-import { Page } from 'src/app/service/page';
+import { Page } from 'src/app/model/page';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ClientService } from 'src/app/service/client.service';
 import { PlaylistTrack } from 'src/app/model/pt';
@@ -44,8 +44,7 @@ export class OpenAlbumComponent implements OnInit {
 
 
   loadTracks(): void {
-    const albumId = this.idalbum;
-    this.service.getAllPageTracksAlbums(this.currentPage, albumId ,this.pageSize
+    this.service.getAllPageTracksAlbums(this.currentPage, this.idalbum ,this.pageSize
       ).subscribe( (response: Page<Track>) => {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
@@ -76,9 +75,7 @@ export class OpenAlbumComponent implements OnInit {
   like(): void {
     const selectedUser = this.tracks.find(track => track.id === this.clickedUserId);
     if (selectedUser) {
-      const trackId = selectedUser.id;
-      const authUserId = this.authUserId;
-      this.clientService.like(this.pt, authUserId, trackId).subscribe(() => {
+      this.clientService.like(this.pt, this.authUserId, selectedUser.id).subscribe(() => {
         this.loadTracks();
       });
     }

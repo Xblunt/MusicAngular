@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Message } from '../model/message';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IbaseServiceService } from './ibase-service.service';
-import { Page } from './page';
+import { Page } from '../model/page';
 import { Observable } from 'rxjs';
 import { Chat } from '../model/chat';
 
@@ -30,7 +30,7 @@ export class ChatService extends IbaseServiceService{
 
   addNewChat(chat: Chat, authUserId: number, secondId: number): Observable<Chat> {
     let params = new HttpParams()
-    .set('authUserId', authUserId)
+    .set('username', authUserId)
     .set('secondId', secondId);
     return this.post<Chat>(this.chats, chat,params);
   }

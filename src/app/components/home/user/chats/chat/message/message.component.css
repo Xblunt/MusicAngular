@@ -1,11 +1,30 @@
 .text {
   background-color: #D9D9D9 !important;
   color: black;
+  width: fit-content;
+  float: right;
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 10px;
+  min-height: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
-
 .tex {
   background-color: #2C5420 !important;
-  color: white;
+  color: rgb(255, 255, 255);
+  width: fit-content;
+  float: left;
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  min-width: 10px;
+  min-height: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .progress{
 color: #2C5420 ;
@@ -16,3 +35,35 @@ height: 30px;
 ::ng-deep .mat-progress-bar-primary {
   height: 30px;
 }
+
+.buttonPlay {
+  width: 0;
+  height: 0;
+  margin-left: 8px;
+  border-style: solid;
+  border-width: 10px 0 10px 20px;
+  border-color: transparent transparent transparent #000000;
+  color: black;
+  }
+
+
+.play-button {
+  color: black;
+}
+.pause-button {
+  color: black;
+}
+
+
+
+.inputclass::-webkit-slider-thumb {
+  /* Цвет для ползунка */
+  background-color: green;
+}
+.play-button:active {
+    color: #2C5420;
+}
+.pause-button:active {
+  color: #2C5420;
+}
+

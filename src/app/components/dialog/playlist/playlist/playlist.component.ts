@@ -6,7 +6,7 @@ import { Message } from 'src/app/model/message';
 import { Track } from 'src/app/model/track';
 import { ChatService } from 'src/app/service/chat.service';
 import { ClientService } from 'src/app/service/client.service';
-import { Page } from 'src/app/service/page';
+import { Page } from 'src/app/model/page';
 
 @Component({
   selector: 'app-playlist',
@@ -41,8 +41,7 @@ export class PlaylistComponent {
 
   getPlaylist( ): void {
     if (this.authUserId) {
-      const authUserId = this.authUserId;
-      this.userService.getPlaylist(this.currentPage,  this.pageSize, authUserId).subscribe((page: Page<Track>) => {
+      this.userService.getPlaylist(this.currentPage,  this.pageSize, this.authUserId).subscribe((page: Page<Track>) => {
         this.tracks = page.content;
         console.log(page.content);
         this.totalElements = page.totalElements;
@@ -59,10 +58,8 @@ export class PlaylistComponent {
   createTrackMessage(track:Track):void{
     const chatId = this.data;
     console.log('chatId:'+ chatId)
-    const trackIds =  track.id;
-    const authUserId = this.authUserId;
-    console.log('this track ids:'+ trackIds)
-    this.chatService.createTrackMessage(this.message, chatId, authUserId, trackIds).subscribe(() => {
+    console.log('this track ids:'+  track.id)
+    this.chatService.createTrackMessage(this.message, chatId, this.authUserId, track.id).subscribe(() => {
         this.getPlaylist();
       });
   }

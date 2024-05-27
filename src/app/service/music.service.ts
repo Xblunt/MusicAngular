@@ -1,4 +1,3 @@
-
 import { WebSocetServiceService } from 'src/app/service/web-socet-service.service';
 import { Injectable } from '@angular/core';
 import { ActionStatus, Session } from '../model/session';
@@ -18,10 +17,6 @@ export class MusicService {
   private trackDurationSubject = new BehaviorSubject<number>(0);
   trackDuration$ = this.trackDurationSubject.asObservable();
   trackTimeSubject: Subject<number> = new Subject<number>();
-
-  //currentTrackUrl: Subject<string> = new Subject<string>();
-  private currentTrackUrlSubject = new BehaviorSubject<string>("");
-  currentTrackUrl$ = this.currentTrackUrlSubject.asObservable();
 
   constructor(private webSocetService: WebSocetServiceService,private clientService: ClientService) { }
 
@@ -79,16 +74,13 @@ export class MusicService {
     if(selectChatId == session.id){
       this.сurrentTrack = session.trackUrl;
       this.song.src = session.trackUrl;
-      this.currentTrackUrlSubject.next(session.trackUrl);
 
       this.song.addEventListener('loadedmetadata', () => {
-        //console.log('Длительность трека:', this.song.duration);
-        //this.trackDuration = Math.floor(this.song.duration);
-        this.trackDuration = this.song.duration;
+        this.trackDuration = Math.round(this.song.duration);
         this.trackDurationSubject.next(this.trackDuration);
       });
 
-      if(session.trackTime == this.trackDuration){
+      if(session.trackTime == this.trackDuration || !session){
         session.trackTime = 0;
       }
 

@@ -1,13 +1,13 @@
 <div *ngFor="let user of users" class="track-container">
-      <div class="panel panel-wh">
-      <div class="panel panel-gray pau">
-        {{ user.id }}: {{ user.fio }}
-        <div class="right-align">
-          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="chat" (click)="handleUserButtonClick(user)"> </mat-icon>
-        </div>
-      </div>
+  <div class=" panel-wh">
+    <div class=" panel-gray pau">
+      {{ user.id }}: {{ user.fio }}
+      <div class="right-align">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="chat" (click)="handleUserButtonClick(user)"> </mat-icon>
       </div>
     </div>
-    <div class="paginator-wrapper">
+  </div>
+</div>
+<div class="paginator-wrapper">
       <button class="custom-btn btn-1" (click)="onNoClick()">Close</button>
 </div>

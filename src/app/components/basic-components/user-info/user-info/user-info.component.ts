@@ -25,8 +25,7 @@ export class UserInfoComponent implements OnInit {
 
   getUserLK(): void {
     if (this.authUserId) {
-      const authUserId = this.authUserId;
-      this.clientService.getUserLK(authUserId).subscribe((user: User) => {
+      this.clientService.getUserLK(this.authUserId).subscribe((user: User) => {
         console.log(`Before assigning users: ${ this.user}, ${user}`);
         this.user = user;
         console.log(`After assigning users: ${ this.user}, ${user}`);

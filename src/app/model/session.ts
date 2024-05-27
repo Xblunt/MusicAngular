@@ -9,7 +9,7 @@ export class Session{
 
 
  export enum ActionStatus{
-   None = "None",
-   Play = "Play",
-   Pause = "Pause"
+   None = 'None',
+   Play = 'Play',
+   Pause = 'Pause'
  }

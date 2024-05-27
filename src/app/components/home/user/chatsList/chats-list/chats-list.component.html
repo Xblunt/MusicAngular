@@ -1,4 +1,5 @@
 <div class="square component chat-list ">
+  <button class="btn-gray " (click)="addChat()">Add chat</button>
   <div *ngFor="let chat of chats" >
     <button class="panel-gray" (click)="selectChat(chat)">{{ chat.chatname }}</button>
   </div>

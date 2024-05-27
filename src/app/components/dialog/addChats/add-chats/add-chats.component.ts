@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { Chat } from 'src/app/model/chat';
 import { User } from 'src/app/model/user';
 import { ClientService } from 'src/app/service/client.service';
-import { Page } from 'src/app/service/page';
+import { Page } from 'src/app/model/page';
 
 @Component({
   selector: 'app-add-chats',
@@ -33,8 +33,7 @@ export class AddChatsComponent implements OnInit {
 
   getAllUsers( ): void {
     if (this.authUserId) {
-      const authUserId = this.authUserId;
-      this.clientService.getShortUsers(this.currentPage, this.pageSize,authUserId)
+      this.clientService.getShortUsers(this.currentPage, this.pageSize, this.authUserId)
       .subscribe((page: Page<User>) => {
         console.log(page);
         this.users = page.content;
@@ -58,9 +57,7 @@ export class AddChatsComponent implements OnInit {
     const selectedUser = this.users.find(user => user.id === this.clickedUserId);
     if (selectedUser) {
       this.chat.chatname = "New chat";
-      const secondId = selectedUser.id;
-      const authUserId = this.authUserId;
-      this.chatservice.addNewChat(this.chat,  authUserId, secondId ).subscribe((newChat: Chat) => {
+      this.chatservice.addNewChat(this.chat,  this.authUserId, selectedUser.id ).subscribe((newChat: Chat) => {
         this.getAllUsers();
       });
     }

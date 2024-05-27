@@ -2,7 +2,7 @@ import { AdminServiceService } from 'src/app/service/admin-service.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth/auth.service';
-import { Page } from 'src/app/service/page';
+import { Page } from 'src/app/model/page';
 import { Album } from 'src/app/model/album';
 import { OpenAlbumComponent } from 'src/app/components/dialog/open-album/open-album/open-album.component';
 import { DeleteComponentComponent } from 'src/app/components/dialog/delete-component/delete-component/delete-component.component';

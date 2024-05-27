@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Track } from 'src/app/model/track';
 import { AdminServiceService } from 'src/app/service/admin-service.service';
-import { Page } from 'src/app/service/page';
+import { Page } from 'src/app/model/page';
 
 @Component({
   selector: 'app-add-track-album',
@@ -30,8 +30,7 @@ export class AddTrackAlbumComponent implements OnInit {
 
 
   loadTracks(): void {
-    const albumId = this.idalbum;
-    this.adminService.getAllTracksAlbumsAdd(this.currentPage, albumId ,this.pageSize,).subscribe( (response: Page<Track>) => {
+    this.adminService.getAllTracksAlbumsAdd(this.currentPage, this.idalbum ,this.pageSize,).subscribe( (response: Page<Track>) => {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
       });
@@ -51,18 +50,17 @@ export class AddTrackAlbumComponent implements OnInit {
 
 
   editAlbumTrack(updatedTrack: Track): void {
-    const albumId = this.idalbum;
-    updatedTrack.album_id = albumId;
+    updatedTrack.album_id = this.idalbum;
     const editedTrack: Track = {
       id: updatedTrack.id,
       name: updatedTrack.name,
       author: updatedTrack.author,
       file: updatedTrack.file,
-      album_id: albumId,
+      album_id: this.idalbum,
       text: updatedTrack.text,
     };
     this.adminService.editTrackAlbum(editedTrack).subscribe(k=>
-        this.adminService.getAllTracksAlbumsAdd(this.currentPage, albumId ,this.pageSize).subscribe( (response: Page<Track>) => {
+        this.adminService.getAllTracksAlbumsAdd(this.currentPage, this.idalbum ,this.pageSize).subscribe( (response: Page<Track>) => {
           this.tracks = response.content;
           this.totalElements = response.totalElements;
       }));

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IbaseServiceService } from './ibase-service.service';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Page } from './page';
+import { Page } from '../model/page';
 import { Album } from '../model/album';
 import { Track } from '../model/track';
 import { Observable } from 'rxjs';

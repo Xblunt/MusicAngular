@@ -1,13 +1,11 @@
 <div *ngFor="let track of tracks" class="track-container">
   <div class=" panel-wh">
-  <div class=" panel-gray pau">
-       <p class="track-id"> {{ track.name }}   -   {{ track.author }}</p>
-    <div class="right-align">
-
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add" (click)="editAlbumTrack(track)"> </mat-icon>
-
+    <div class=" panel-gray pau">
+      <p class="track-id"> {{ track.name }}   -   {{ track.author }}</p>
+      <div class="right-align">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add" (click)="editAlbumTrack(track)"> </mat-icon>=
+      </div>
     </div>
-  </div>
   </div>
 </div>
 <div class="paginator-wrapper">
