@@ -10,6 +10,7 @@ import { PlaylistComponent } from 'src/app/components/dialog/playlist/playlist/p
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ActionStatus, Session } from 'src/app/model/session';
+import { NGXLogger } from "ngx-logger";
 
 
 @Component({
@@ -29,18 +30,19 @@ export class ChatComponent {
 
 
   constructor(private chatService: ChatService, private clientService: ClientService, public dialog:MatDialog,
-    private authService: AuthService, private musicService: MusicService, private webSocetServiceService:WebSocetServiceService
+    private authService: AuthService, private musicService: MusicService, private webSocetServiceService:WebSocetServiceService, private logger: NGXLogger
   ) {
    this.message = new Message;
    this.authUserId = this.authService.getAuthUserId();
-   console.log(`userId: ${this.authUserId}`);
+   this.logger.log(`userId: ${this.authUserId}`);
   }
 
   ngOnInit(){
     this.chatService.eventEmitter.subscribe(chat=>{
       this.selectChat = chat;
       this.loadMessages(this.selectChat);
-      console.log("SelectChat: ", this.selectChat.id);
+      this.logger.log("SelectChat: ", this.selectChat.id);
+      this.logger.error("SelectChat: ", this.selectChat.id);
       this.webSocetServiceService.subscribeSession(this.selectChat.id, this.authUserId);
       this.getSessionMap(this.selectChat.id);
     });
@@ -52,7 +54,7 @@ export class ChatComponent {
 
   getSessionMap(selectChat:number) {
     this.clientService.getSessionMap(selectChat).subscribe((data: Session) => {
-      console.log('Map session data:', data);
+      this.logger.log('Map session data:', data);
       this.actionTrackLogin(data);
     });
   }
@@ -60,13 +62,13 @@ export class ChatComponent {
   loadMessages(chat: Chat): void {
     this.chatService.getAllMessages(chat.id,this.pageSize).subscribe((response: Page<Message>) => {
       this.messageArray = response.content;
-      console.log('Received messages:', this.messageArray);
+      this.logger.log('Received messages:', this.messageArray);
     });
   }
 
   createMessages(chat:Chat):void{
     this.chatService.createMessage(this.message, this.selectChat.id, this.authUserId,  this.messageText).subscribe(k => {
-      console.log('this chat:',this.selectChat);
+      this.logger.log('this chat:',this.selectChat);
       this.loadMessages(chat);
     });
     this.messageText = '';
@@ -78,10 +80,12 @@ export class ChatComponent {
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        console.log('Changes saved:', result);
+        this.logger.log('Changes saved:', result);
       }
       else {
-        console.log('The window is closed without saving changes.');
+        this.logger.log('The window is closed without saving changes.');
+        this.logger.warn('The window is closed without saving changes.');
+        this.logger.error('The window is closed without saving changes.');
       }
     });
   }
@@ -95,7 +99,7 @@ export class ChatComponent {
       this.musicService.pauseAudio(this.selectChat.id, session,this.authUserId);
     }
     else{
-      console.error("MapSessionData null")
+      this.logger.error("MapSessionData null")
     }
     this.trackUrlToMessage = session.trackUrl;
   }
@@ -103,11 +107,11 @@ export class ChatComponent {
   onMediaEvent(event: { action: string, track: string }) {
     if(event.action == 'Play'){
     this.musicService.updateChatSession(this.selectChat.id, ActionStatus.Play, event.track, this.authUserId);
-    console.log("PlayAudio Chat");
+    this.logger.log("PlayAudio Chat");
     }
     else {
     this.musicService.updateChatSession(this.selectChat.id, ActionStatus.Pause, event.track,  this.authUserId);
-    console.log("PauseAudio Chat");
+    this.logger.log("PauseAudio Chat");
     }
 
   }

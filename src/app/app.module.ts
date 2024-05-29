@@ -38,6 +38,7 @@ import { ChatComponent } from './components/home/user/chats/chat/chat.component'
 import { ChatsListComponent } from './components/home/user/chatsList/chats-list/chats-list.component';
 import { MessageComponent } from './components/home/user/chats/chat/message/message.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,12 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     PaginatorModule,
     MatIconModule,
     MatTabsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    LoggerModule.forRoot({
+      level: NgxLoggerLevel.INFO,
+      disableConsoleLogging: false,
+      serverLogLevel: NgxLoggerLevel.OFF,
+    })
 
 
   ],
