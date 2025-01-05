@@ -6,15 +6,15 @@
 }
 
 .write-message {
-  width:150vh;
+  width: 150vh;
   height: 50px;
   padding: 10px;
   align-items: center;
   border-radius: 10px;
   border-color: rgb(255, 255, 255);
   box-shadow: #ffffff;
-  background-color: #D9D9D9 ;
-  position:relative;
+  background-color: #d9d9d9;
+  position: relative;
 }
 
 .write-message input {
@@ -30,7 +30,7 @@
   color: #ff2727; /* цвет плейсхолдера */
 }
 
-.chats{
+.chats {
   /* width: fit-content; */
   max-width: 100%;
   height: 100%;
@@ -42,7 +42,7 @@
   color: #fff;
   border-radius: 10px;
   padding: 10px 25px;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: 90;
   background: transparent;
 
@@ -50,37 +50,34 @@
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
-   7px 7px 20px 0px rgba(0,0,0,.1),
-   4px 4px 5px 0px rgba(0,0,0,.1);
+  box-shadow:
+    inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+    4px 4px 5px 0px rgba(0, 0, 0, 0.1);
   outline: none;
 }
 
 .btn-2 {
-
-  background: #2C5420;
-  background: linear-gradient(0deg, #2C5420 0%, #2C5420 100%);
+  background: #2c5420;
+  background: linear-gradient(0deg, #2c5420 0%, #2c5420 100%);
   border: none;
   flex: 1;
 }
 .btn-2::after {
-
-  background-color: #2C5420;
-  background: linear-gradient(0deg, #2C5420 0%, #2C5420 100%);
+  background-color: #2c5420;
+  background: linear-gradient(0deg, #2c5420 0%, #2c5420 100%);
   border: none;
 }
 .btn-2:hover {
   background: rgb(47, 88, 1);
-background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
+  background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
 }
-
 
 .input-container {
   position: relative;
   display: inline-block;
   width: 100%;
 }
-
 
 .send-button {
   position: absolute;
@@ -99,7 +96,5 @@ background: linear-gradient(0deg, rgb(47, 88, 1) 0%, rgb(76, 139, 4) 100%);
 }
 
 .send-button2:active {
-  color: #2C5420;
+  color: #2c5420;
 }
-
-

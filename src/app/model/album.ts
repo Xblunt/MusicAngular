@@ -1,5 +1,5 @@
 export class Album {
   id: number;
-  picture:string;
+  picture: string;
   name_album: string;
 }

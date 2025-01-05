@@ -26,7 +26,7 @@
 }
 
 .panel-gray {
-  background-color: #D9D9D9;
+  background-color: #d9d9d9;
   flex: 1;
   display: flex;
   justify-content: left;
@@ -49,9 +49,8 @@
 .panel-right {
   background-color: white;
   flex: 1;
-
 }
-.menu{
+.menu {
   width: 50px;
   height: 50px;
   flex: 1;
@@ -71,11 +70,11 @@
   background-color: #ffffff;
 }
 
-.pau{
+.pau {
   color: #000;
 }
 
-.pag{
+.pag {
   justify-content: left;
   color: #000;
 }
@@ -86,22 +85,23 @@
   color: #fff;
   border-radius: 10px;
   padding: 10px 25px;
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: 90;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
-  7px 7px 20px 0px rgba(0,0,0,.1),
-  4px 4px 5px 0px rgba(0,0,0,.1);
+  box-shadow:
+    inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5),
+    7px 7px 20px 0px rgba(0, 0, 0, 0.1),
+    4px 4px 5px 0px rgba(0, 0, 0, 0.1);
   outline: none;
 }
 
 .btn-1 {
-  background: #2C5420;
-  background: linear-gradient(0deg, #2C5420 0%, #2C5420 100%);
+  background: #2c5420;
+  background: linear-gradient(0deg, #2c5420 0%, #2c5420 100%);
   border: none;
 }
 

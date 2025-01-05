@@ -13,7 +13,7 @@ export class AuthGuard{
   constructor(private authService : AuthService,
       private router: Router) {}
 
-  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 
     return this.authService.isLoggedIn.pipe(
           take(1),
